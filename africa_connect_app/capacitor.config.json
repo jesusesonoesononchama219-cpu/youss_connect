@@ -1,0 +1,10 @@
+{
+  "appId": "com.kyacorporation.africaconnect",
+  "appName": "AFRICA CONNECT",
+  "webDir": ".",
+  "bundledWebRuntime": false,
+  "backgroundColor": "#F8F9FF",
+  "server": {
+    "androidScheme": "https"
+  }
+}
