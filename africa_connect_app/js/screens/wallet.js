@@ -161,7 +161,7 @@
       </div>
       <h2 class="font-title-md text-title-md">${ACState.user.fullName}</h2>
       <p class="font-body-sm text-body-sm text-on-surface-variant">${ACState.user.phone}</p>
-      <p class="font-body-sm text-body-sm text-on-surface-variant max-w-[260px]">Faites scanner ce code par un autre utilisateur AFRICA CONNECT pour recevoir un paiement instantané.</p>
+      <p class="font-body-sm text-body-sm text-on-surface-variant max-w-[260px]">Faites scanner ce code par un autre utilisateur YOUSS CONNECT pour recevoir un paiement instantané.</p>
       <div class="w-full px-space-20">${UI.secondaryButton("Partager mon code", "Screens._shareQr()")}</div>
     </div>`;
     Shell.render(container, { topbar, body, nav: false });

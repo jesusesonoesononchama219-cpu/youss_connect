@@ -1,6 +1,6 @@
 {
-  "name": "AFRICA CONNECT",
-  "short_name": "AfricaConnect",
+  "name": "YOUSS CONNECT",
+  "short_name": "YoussConnect",
   "description": "Une seule application pour vivre l'Afrique au quotidien. Par KYA CORPORATION.",
   "start_url": "./index.html",
   "scope": "./",

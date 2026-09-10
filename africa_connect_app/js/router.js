@@ -53,9 +53,7 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     UI.initOfflineBanner();
-    container.innerHTML = UI.skeletonBoot();
-    setTimeout(function () {
-      show(ACState.session.authenticated ? "home" : "splash", {});
-    }, 350);
+    /* Ouverture directe sur la landing (pas de skeleton / flash bleu). */
+    show("splash", {});
   });
 })();

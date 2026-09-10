@@ -209,7 +209,7 @@
       App.nav("paymentFailed", { retry: "transportRating", amount: trip.price, reason: res.reason });
       return;
     }
-    UI.toast("Paiement effectué. Merci d'avoir voyagé avec AFRICA CONNECT !", "success");
+    UI.toast("Paiement effectué. Merci d'avoir voyagé avec YOUSS CONNECT !", "success");
     trip.destination = ""; trip.driver = null;
     App.resetTo("home");
   };

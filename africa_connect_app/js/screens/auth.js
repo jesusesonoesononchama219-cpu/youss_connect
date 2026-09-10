@@ -2,22 +2,50 @@
   "use strict";
   window.Screens = window.Screens || {};
 
+  /* Landing : JPEG (sans boutons) + une seule rangée de boutons HTML cliquables. */
   Screens.splash = function (container) {
+    const services = [
+      { id: "transport", label: "TRANSPORT", icon: "directions_car", color: "#2E9B45" },
+      { id: "livraison", label: "LIVRAISON", icon: "delivery_dining", color: "#F5A623" },
+      { id: "restaurants", label: "RESTAURANTS", icon: "restaurant", color: "#3B6FE8" },
+      { id: "culture", label: "TOURISME &\nCULTURE", icon: "account_balance", color: "#7A2FBF" },
+      { id: "securite", label: "SÉCURITÉ", icon: "verified_user", color: "#0E7C6B" }
+    ];
+
     container.innerHTML = `
-      <div class="flex-1 flex flex-col items-center justify-center bg-primary-container text-on-primary px-space-32 text-center">
-        <div class="w-24 h-24 rounded-3xl bg-white/15 flex items-center justify-center mb-space-24">
-          ${UI.icon("public", "text-[52px]")}
-        </div>
-        <h1 class="font-display-lg text-display-lg mb-space-8">AFRICA CONNECT</h1>
-        <p class="font-body-lg text-body-lg opacity-90 mb-space-40">Une seule application pour vivre l'Afrique au quotidien.</p>
-        <div class="w-full max-w-[260px]">
-          ${UI.secondaryButton("Commencer", "App.nav('onboarding')")}
-        </div>
-        <p class="font-label-sm text-label-sm opacity-70 mt-space-24">Propulsé par KYA CORPORATION</p>
+      <div class="ac-landing flex-1 flex flex-col bg-white select-none overflow-x-hidden overflow-y-auto">
+        <main class="ac-landing-main w-full max-w-[1536px] mx-auto flex flex-col">
+          <img
+            src="./assets/youss-connect-hero.jpg"
+            alt="YOUSS CONNECT — Se déplacer. Découvrir. Se connecter."
+            class="ac-landing-photo block w-full h-auto pointer-events-none"
+            draggable="false"
+          />
+          <nav class="ac-service-row grid grid-cols-5 gap-1 px-3 pb-8 pt-1 shrink-0" aria-label="Services YOUSS Connect">
+            ${services.map((s) => `
+              <button type="button" data-service="${s.id}"
+                class="ac-service-btn flex flex-col items-center gap-2 outline-none"
+                onclick="Screens._landingTap('${s.id}')"
+                aria-label="${s.label.replace('\\n', ' ')}">
+                <span class="ac-service-disc" style="background:${s.color}">
+                  ${UI.icon(s.icon, "text-[24px] text-white", true)}
+                </span>
+                <span class="ac-service-label">${s.label}</span>
+              </button>
+            `).join("")}
+          </nav>
+        </main>
       </div>`;
   };
 
-  const services = [
+  Screens._landingTap = function (id) {
+    const btn = document.querySelector(`.ac-service-btn[data-service="${id}"]`);
+    if (!btn) return;
+    btn.classList.add("ac-service-btn--pressed");
+    setTimeout(function () { btn.classList.remove("ac-service-btn--pressed"); }, 220);
+  };
+
+  const onboardingServices = [
     { icon: "directions_car", title: "Transport", body: "Réservez une course en quelques secondes, partout où vous êtes." },
     { icon: "restaurant", title: "Restaurants & Livraison", body: "Commandez vos plats préférés et suivez la livraison en direct." },
     { icon: "account_balance_wallet", title: "Africa Wallet", body: "Un seul portefeuille numérique pour payer tous les services." },
@@ -26,7 +54,7 @@
   let onbIndex = 0;
 
   Screens.onboarding = function (container) {
-    const s = services[onbIndex];
+    const s = onboardingServices[onbIndex];
     container.innerHTML = `
       <div class="flex-1 flex flex-col px-space-20 pt-space-40 pb-space-24">
         <div class="flex-1 flex flex-col items-center justify-center text-center">
@@ -37,15 +65,15 @@
           <p class="font-body-md text-body-md text-on-surface-variant max-w-[280px]">${s.body}</p>
         </div>
         <div class="flex items-center justify-center space-x-2 mb-space-24">
-          ${services.map((_, i) => `<span class="w-2 h-2 rounded-full ${i === onbIndex ? "bg-primary-container w-6" : "bg-outline-variant"} transition-all"></span>`).join("")}
+          ${onboardingServices.map((_, i) => `<span class="w-2 h-2 rounded-full ${i === onbIndex ? "bg-primary-container w-6" : "bg-outline-variant"} transition-all"></span>`).join("")}
         </div>
-        ${UI.primaryButton(onbIndex === services.length - 1 ? "Créer mon compte" : "Suivant", "Screens._onbNext()", { icon: "arrow_forward" })}
+        ${UI.primaryButton(onbIndex === onboardingServices.length - 1 ? "Créer mon compte" : "Suivant", "Screens._onbNext()", { icon: "arrow_forward" })}
         <button onclick="App.nav('login')" class="mt-space-16 font-label-md text-label-md text-on-surface-variant">J'ai déjà un compte</button>
       </div>`;
   };
 
   Screens._onbNext = function () {
-    if (onbIndex < services.length - 1) { onbIndex++; App.replace("onboarding"); }
+    if (onbIndex < onboardingServices.length - 1) { onbIndex++; App.replace("onboarding"); }
     else { App.nav("signup"); }
   };
 
@@ -54,7 +82,7 @@
       ${UI.statusBar()}
       ${UI.topBar({ title: "Créer un compte", back: "App.back()" })}
       <main class="flex-1 flex flex-col px-space-20 space-y-space-16">
-        <p class="font-body-sm text-body-sm text-on-surface-variant">Rejoignez AFRICA CONNECT pour accéder à tous les services KYA CORPORATION.</p>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Rejoignez YOUSS CONNECT pour accéder à tous les services KYA CORPORATION.</p>
         ${field("su-name", "Nom complet", "text", "Alassane Kouassi")}
         ${field("su-phone", "Numéro de téléphone", "tel", "+229 97 00 00 00")}
         ${field("su-email", "Email (optionnel)", "email", "vous@example.com")}

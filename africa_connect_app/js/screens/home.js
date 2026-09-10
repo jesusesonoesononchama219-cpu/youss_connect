@@ -89,7 +89,7 @@
     </section>
 
     <footer class="pt-space-12 pb-space-8 text-center">
-      <p class="font-label-sm text-label-sm text-outline">AFRICA CONNECT • Propulsé par KYA CORPORATION</p>
+      <p class="font-label-sm text-label-sm text-outline">YOUSS CONNECT • Propulsé par KYA CORPORATION</p>
     </footer>`;
 
     Shell.render(container, { topbar, body, nav: "home" });

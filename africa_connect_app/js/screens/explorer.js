@@ -39,7 +39,7 @@
     const results = q ? window.ACSearch.run(q) : [];
     const body = `
     <section class="w-full flex flex-col space-y-2">
-      ${!q ? UI.emptyState({ icon: "search", title: "Recherchez sur AFRICA CONNECT", body: "Restaurants, produits, événements, lieux culturels et services." }) : (
+      ${!q ? UI.emptyState({ icon: "search", title: "Recherchez sur YOUSS CONNECT", body: "Restaurants, produits, événements, lieux culturels et services." }) : (
         results.length ? results.map(r => `
         <div onclick="App.nav('${r.route}', ${JSON.stringify(r.params || {}).replace(/"/g, "&quot;")})" class="flex items-center justify-between bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-space-16 cursor-pointer">
           <div class="flex items-center space-x-3"><div class="w-9 h-9 rounded-full bg-surface-container-low text-primary flex items-center justify-center">${UI.icon(r.icon)}</div>

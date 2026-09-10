@@ -46,7 +46,7 @@
   Screens._logout = function () {
     UI.openSheet(`
       <h3 class="font-headline-sm text-headline-sm font-bold mb-space-8">Se déconnecter ?</h3>
-      <p class="font-body-sm text-body-sm text-on-surface-variant mb-space-20">Vous devrez vous reconnecter avec votre numéro de téléphone pour accéder à nouveau à AFRICA CONNECT.</p>
+      <p class="font-body-sm text-body-sm text-on-surface-variant mb-space-20">Vous devrez vous reconnecter avec votre numéro de téléphone pour accéder à nouveau à YOUSS CONNECT.</p>
       ${UI.primaryButton("Déconnexion", "Screens._confirmLogout()")}
       <div class="mt-3">${UI.secondaryButton("Annuler", "UI.closeSheet()")}</div>
     `);
@@ -161,7 +161,7 @@
   };
   Screens._toggleLang = function () { UI.toast("Langue : Français (par défaut).", "info"); };
   Screens._aboutSheet = function () {
-    UI.openSheet(`<h3 class="font-headline-sm text-headline-sm font-bold mb-2">AFRICA CONNECT</h3>
+    UI.openSheet(`<h3 class="font-headline-sm text-headline-sm font-bold mb-2">YOUSS CONNECT</h3>
       <p class="font-body-sm text-body-sm text-on-surface-variant mb-space-16">Une seule application pour vivre l'Afrique au quotidien. Développée par KYA CORPORATION.</p>
       ${UI.secondaryButton("Fermer", "UI.closeSheet()")}`);
   };

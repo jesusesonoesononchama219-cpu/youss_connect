@@ -1,4 +1,4 @@
-# AFRICA CONNECT — App de démonstration (KYA CORPORATION)
+# YOUSS CONNECT — App de démonstration (KYA CORPORATION)
 
 ## Lancer l'application
 Ouvrez `index.html` dans un navigateur, ou servez le dossier via n'importe
