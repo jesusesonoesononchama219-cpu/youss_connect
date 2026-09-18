@@ -3,26 +3,47 @@
   window.Screens = window.Screens || {};
 
   Screens.profile = function (container) {
-    const topbar = UI.topBar({ title: "Profil", back: "App.nav('home')" });
+    const pts = ACState.rewards.points;
+    const next = ACState.rewards.nextTierAt;
+    const pct = Math.min(100, Math.round((pts / next) * 100));
+    const topbar = `
+    <div class="w-full px-space-20 py-space-12 flex items-center justify-between bg-surface flex-shrink-0">
+      <div class="flex items-center gap-3">
+        <img class="w-14 h-14 rounded-full object-cover border-2 border-primary" src="${ACState.user.avatar}" alt=""/>
+        <div>
+          <h1 class="font-headline-sm text-headline-sm font-bold">${ACState.user.name}</h1>
+          <button type="button" onclick="App.nav('editProfile')" class="font-label-md text-label-md text-primary font-semibold">Voir mon profil</button>
+        </div>
+      </div>
+      <button type="button" onclick="App.nav('settings')" class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-on-surface">${UI.icon("settings")}</button>
+    </div>`;
+
     const body = `
-    <section class="w-full flex flex-col items-center text-center space-y-2 py-space-8">
-      <img class="w-20 h-20 rounded-full object-cover border-2 border-primary-container p-0.5" src="${ACState.user.avatar}"/>
-      <h2 class="font-headline-md text-headline-md font-bold">${ACState.user.fullName}</h2>
-      <p class="font-body-sm text-body-sm text-on-surface-variant">${ACState.user.phone}</p>
-      ${ACState.user.verified ? UI.badge("Compte vérifié", "success") : UI.badge("Non vérifié", "warn")}
+    <section class="w-full rounded-2xl bg-gradient-to-br from-primary to-primary-container p-space-16 text-white shadow-lg shadow-primary/15">
+      <div class="flex items-center justify-between mb-space-12">
+        <div>
+          <p class="font-label-sm text-label-sm text-white/70 uppercase tracking-wider">Youss Bonus</p>
+          <p class="font-headline-md text-headline-md font-extrabold">${pts.toLocaleString("fr-FR")} pts</p>
+        </div>
+        <button type="button" onclick="App.nav('rewards')" class="h-9 px-3 rounded-xl bg-yc-green font-label-md text-label-md font-bold">Récompenses</button>
+      </div>
+      <div class="flex justify-between font-label-sm text-label-sm text-white/80 mb-1">
+        <span>${ACState.rewards.tier}</span>
+        <span>${ACState.rewards.nextTier}</span>
+      </div>
+      <div class="h-2 rounded-full bg-white/20 overflow-hidden">
+        <div class="h-full rounded-full bg-yc-green" style="width:${pct}%"></div>
+      </div>
+      <p class="font-label-sm text-label-sm text-white/60 mt-2">${next - pts} pts pour passer ${ACState.rewards.nextTier}</p>
     </section>
-    <section class="grid grid-cols-3 gap-3">
-      ${statCard(ACStore.fmtFCFA(ACState.wallet.balance), "Solde Wallet", "wallet")}
-      ${statCard(ACState.rewards.points + " pts", "Rewards", "rewards")}
-      ${statCard(ACState.activities.length.toString(), "Activités", "activities")}
-    </section>
+
     <section class="w-full flex flex-col space-y-2">
-      ${menuRow("edit", "Modifier mon profil", "App.nav('editProfile')")}
-      ${menuRow("home_pin", "Adresses enregistrées", "App.nav('addresses')")}
-      ${menuRow("credit_card", "Moyens de paiement", "App.nav('paymentMethods')")}
-      ${menuRow("shield", "Sécurité du compte", "App.nav('security')")}
-      ${menuRow("business_center", "Passer en mode Business", "App.nav('business')")}
-      ${menuRow("settings", "Paramètres", "App.nav('settings')")}
+      ${menuRow("directions_car", "Mes courses", "App.nav('activities')")}
+      ${menuRow("local_shipping", "Mes livraisons", "App.nav('activities')")}
+      ${menuRow("favorite", "Mes favoris", "App.nav('addresses')")}
+      ${menuRow("home_pin", "Mes adresses", "App.nav('addresses')")}
+      ${menuRow("account_balance_wallet", "Youss Wallet", "App.nav('wallet')")}
+      ${menuRow("shield", "Sécurité", "App.nav('security')")}
       ${menuRow("logout", "Déconnexion", "Screens._logout()", true)}
     </section>`;
     Shell.render(container, { topbar, body, nav: "profile" });
@@ -54,7 +75,7 @@
   Screens._confirmLogout = function () {
     UI.closeSheet();
     ACState.session.authenticated = false;
-    App.resetTo("login");
+    App.resetTo("splash");
   };
 
   Screens.editProfile = function (container) {

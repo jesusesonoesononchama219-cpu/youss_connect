@@ -10,9 +10,12 @@
     return `<span class="material-symbols-outlined ${cls || ""} ${fill ? "fill-icon" : ""}">${name}</span>`;
   }
 
-  function statusBar() {
+  function statusBar(opts) {
+    opts = opts || {};
+    const light = opts.light;
+    const color = light ? "text-white/85" : "text-on-surface";
     return `
-    <header class="w-full h-11 px-space-20 flex items-center justify-between text-on-surface select-none pt-space-2 z-50 flex-shrink-0">
+    <header class="relative z-10 w-full h-11 px-space-20 flex items-center justify-between ${color} select-none pt-space-2 flex-shrink-0">
       <span class="font-label-md text-label-md font-semibold tracking-tight">9:41</span>
       <div class="flex items-center space-x-1.5">
         ${icon("signal_cellular_alt", "text-[16px]")}
@@ -37,30 +40,34 @@
   }
 
   function bottomNav(active) {
-    const items = [
-      { id: "home", label: "Accueil", icon: "home" },
-      { id: "explorer", label: "Explorer", icon: "explore" },
-      { id: "activities", label: "Activités", icon: "schedule" },
-      { id: "wallet", label: "Wallet", icon: "account_balance_wallet" },
-      { id: "profile", label: "Profil", icon: "person" }
-    ];
+    const side = (id, label, ic) => `
+      <a href="javascript:void(0)" onclick="App.nav('${id}')"
+        class="flex flex-col items-center justify-center w-14 ${active === id ? "text-primary font-semibold" : "text-on-surface-variant"} py-space-4 active:scale-95 transition-transform duration-150">
+        ${icon(ic, "text-[24px]", active === id)}
+        <span class="font-label-sm text-label-sm mt-1">${label}</span>
+      </a>`;
     return `
-    <nav class="w-full bg-surface-container-lowest border-t border-outline-variant/30 px-space-8 py-space-8 shadow-md flex-shrink-0">
-      <div class="flex items-center justify-around w-full">
-        ${items.map(it => `
-          <a href="javascript:void(0)" onclick="App.nav('${it.id}')" class="flex flex-col items-center justify-center ${active === it.id ? "text-primary font-semibold" : "text-on-surface-variant"} py-space-4 active:scale-95 transition-transform duration-150">
-            ${icon(it.icon, "text-[24px]", active === it.id)}
-            <span class="font-label-sm text-label-sm mt-1">${it.label}</span>
-          </a>`).join("")}
+    <nav class="w-full bg-surface-container-lowest border-t border-outline-variant/30 px-space-4 pt-space-4 pb-space-8 shadow-[0_-4px_20px_rgba(59,20,102,.06)] flex-shrink-0">
+      <div class="flex items-end justify-between w-full px-space-8">
+        ${side("home", "Accueil", "home")}
+        ${side("activities", "Activités", "receipt_long")}
+        <a href="javascript:void(0)" onclick="App.nav('culturalScanner')"
+          class="flex flex-col items-center justify-center active:scale-95 transition-transform" aria-label="Scanner">
+          <span class="yc-nav-fab">${icon("qr_code_scanner", "text-[28px]", true)}</span>
+          <span class="font-label-sm text-label-sm mt-1 ${active === "culturalScanner" || active === "culture" ? "text-yc-green font-semibold" : "text-on-surface-variant"}">Scan</span>
+        </a>
+        ${side("notifications", "Messages", "chat_bubble")}
+        ${side("profile", "Profil", "person")}
       </div>
-      <div class="w-32 h-1 bg-outline-variant/60 rounded-full mx-auto mt-2"></div>
+      <div class="w-28 h-1 bg-outline-variant/50 rounded-full mx-auto mt-2"></div>
     </nav>`;
   }
 
   function primaryButton(label, onclick, opts) {
     opts = opts || {};
     const disabled = opts.disabled ? "opacity-40 pointer-events-none" : "";
-    return `<button onclick="${onclick}" class="w-full h-12 rounded-xl bg-primary-container text-on-primary font-label-lg text-label-lg active:bg-primary transition-colors duration-150 shadow-sm flex items-center justify-center space-x-2 ${disabled}">
+    const green = opts.green ? "bg-yc-green text-white active:brightness-95" : "bg-primary-container text-on-primary active:bg-primary";
+    return `<button onclick="${onclick}" class="w-full h-12 rounded-xl ${green} font-label-lg text-label-lg transition-colors duration-150 shadow-sm flex items-center justify-center space-x-2 ${disabled}">
       <span>${label}</span>${opts.icon ? icon(opts.icon, "text-[18px]") : ""}
     </button>`;
   }

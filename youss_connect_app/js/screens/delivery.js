@@ -1,30 +1,44 @@
 (function () {
   "use strict";
   window.Screens = window.Screens || {};
-  const parcel = { from: "", to: "", size: "petit", recipient: "" };
-  const SIZES = [{ id: "petit", label: "Petit colis", price: 1000 }, { id: "moyen", label: "Colis moyen", price: 2000 }, { id: "grand", label: "Grand colis", price: 3500 }];
+  const parcel = { from: "Cadjèhoun", to: "Ganhi", size: "moto", recipient: "Ami · 97 00 00 00", mode: "colis" };
+  const SIZES = [
+    { id: "velo", label: "Vélo", icon: "pedal_bike", price: 1000 },
+    { id: "moto", label: "Moto", icon: "two_wheeler", price: 1500 },
+    { id: "voiture", label: "Voiture", icon: "directions_car", price: 2500 }
+  ];
 
   Screens.delivery = function (container) {
-    const topbar = UI.topBar({ title: "Livraison", subtitle: "Envoyez un colis rapidement", back: "App.nav('home')" });
+    const topbar = UI.topBar({ title: "Livraison", subtitle: "Que souhaitez-vous faire livrer ?", back: "App.nav('home')" });
     const body = `
+    <section class="flex rounded-xl bg-surface-container-low p-1">
+      <button type="button" onclick="Screens._dlMode('repas')" class="flex-1 h-10 rounded-lg font-label-md text-label-md font-semibold ${parcel.mode === "repas" ? "bg-white text-primary shadow-sm" : "text-on-surface-variant"}">Livrer un repas</button>
+      <button type="button" onclick="Screens._dlMode('colis')" class="flex-1 h-10 rounded-lg font-label-md text-label-md font-semibold ${parcel.mode === "colis" ? "bg-white text-primary shadow-sm" : "text-on-surface-variant"}">Envoyer un colis</button>
+    </section>
     <section class="flex flex-col space-y-3">
-      <label class="flex flex-col space-y-1"><span class="font-label-md text-label-md text-on-surface-variant">Adresse de départ</span>
-        <input id="dl-from" value="${parcel.from}" placeholder="Ex : Domicile, Cadjèhoun" class="h-12 rounded-xl border border-outline-variant/50 bg-surface-container-lowest px-space-16 font-body-md text-body-md focus:outline-none"/></label>
-      <label class="flex flex-col space-y-1"><span class="font-label-md text-label-md text-on-surface-variant">Adresse d'arrivée</span>
-        <input id="dl-to" value="${parcel.to}" placeholder="Ex : Ganhi, Cotonou" class="h-12 rounded-xl border border-outline-variant/50 bg-surface-container-lowest px-space-16 font-body-md text-body-md focus:outline-none"/></label>
+      <label class="flex flex-col space-y-1"><span class="font-label-md text-label-md text-on-surface-variant">Adresse de récupération</span>
+        <input id="dl-from" value="${parcel.from}" placeholder="Point de départ" class="h-12 rounded-xl border border-outline-variant/50 bg-surface-container-lowest px-space-16 font-body-md text-body-md focus:outline-none"/></label>
+      <label class="flex flex-col space-y-1"><span class="font-label-md text-label-md text-on-surface-variant">Adresse de livraison</span>
+        <input id="dl-to" value="${parcel.to}" placeholder="Destination" class="h-12 rounded-xl border border-outline-variant/50 bg-surface-container-lowest px-space-16 font-body-md text-body-md focus:outline-none"/></label>
       <label class="flex flex-col space-y-1"><span class="font-label-md text-label-md text-on-surface-variant">Destinataire</span>
         <input id="dl-recipient" value="${parcel.recipient}" placeholder="Nom et téléphone" class="h-12 rounded-xl border border-outline-variant/50 bg-surface-container-lowest px-space-16 font-body-md text-body-md focus:outline-none"/></label>
     </section>
     <section class="flex flex-col space-y-2">
-      <h2 class="font-headline-sm text-headline-sm font-bold">Taille du colis</h2>
-      ${SIZES.map(s => `
-      <div onclick="Screens._pickSize('${s.id}')" class="flex items-center justify-between rounded-xl p-space-16 border cursor-pointer ${parcel.size === s.id ? "border-primary-container bg-surface-container-low" : "border-outline-variant/30 bg-surface-container-lowest"}">
-        <span class="font-title-md text-title-md">${s.label}</span><span class="font-label-lg text-label-lg font-bold text-primary">${ACStore.fmtFCFA(s.price)}</span>
-      </div>`).join("")}
+      <h2 class="font-headline-sm text-headline-sm font-bold">Véhicule</h2>
+      <div class="flex gap-2 overflow-x-auto no-scrollbar">
+        ${SIZES.map((s) => `
+        <button type="button" onclick="Screens._pickSize('${s.id}')"
+          class="min-w-[110px] rounded-2xl p-space-12 border-2 text-left ${parcel.size === s.id ? "border-primary bg-primary/5" : "border-outline-variant/30 bg-surface-container-lowest"}">
+          ${UI.icon(s.icon, "text-primary text-[28px]")}
+          <p class="font-title-md text-title-md font-bold mt-2">${s.label}</p>
+          <p class="font-label-md text-label-md text-yc-green font-semibold">${ACStore.fmtFCFA(s.price)}</p>
+        </button>`).join("")}
+      </div>
     </section>
-    <div class="pt-space-8">${UI.primaryButton("Voir le résumé", "Screens._deliverySummary()", { icon: "arrow_forward" })}</div>`;
+    <div class="pt-space-8">${UI.primaryButton("Confirmer la livraison", "Screens._deliverySummary()", { icon: "local_shipping" })}</div>`;
     Shell.render(container, { topbar, body, nav: false });
   };
+  Screens._dlMode = function (mode) { parcel.mode = mode; App.replace("delivery"); };
   Screens._pickSize = function (id) { parcel.size = id; App.replace("delivery"); };
   Screens._deliverySummary = function () {
     parcel.from = document.getElementById("dl-from").value.trim();

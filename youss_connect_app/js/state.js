@@ -29,17 +29,18 @@
       mode: "particulier" // or "business"
     },
     user: {
-      name: "Alassane",
-      fullName: "Alassane Kouassi",
+      name: "Youss",
+      fullName: "Youss Adjovi",
       phone: "+229 97 00 00 00",
-      email: "alassane.kouassi@example.com",
+      email: "youss@example.com",
       city: "Cotonou",
       country: "Bénin",
+      dial: "+229",
       avatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuBiNsNoL3bFz6CndYM6dyvtP5xsVzyyBs-5Ikb8DpzmFLN5qwh-O2mnTHCJkhp5uYKoO6DmrTi7VOJ9HgEBibYplwh9q735sMKe-pqk8H4rrcAARSM1MhYmF3mM6E-efCCWt8bwKDDCokR9Q6BiPs2EaVMErhJdSKyNrIXpT-ZP9C8XCRemBWWPgnmRYpR2QfEDtrcvgd_vcJfw4f9w8thWKKzBa-tRD5Mv6m4iQb94wjNZagPx-TQ",
       verified: true
     },
     wallet: {
-      balance: 42500,
+      balance: 12450,
       currency: "FCFA",
       transactions: [
         { id: uid("txn"), label: "Rechargement Mobile Money", amount: 25000, type: "credit", date: "Hier à 09:12" },
@@ -48,10 +49,10 @@
       ]
     },
     rewards: {
-      points: 1280,
-      tier: "Argent",
-      nextTier: "Or",
-      nextTierAt: 2000,
+      points: 12450,
+      tier: "Silver",
+      nextTier: "Gold",
+      nextTierAt: 20000,
       history: [
         { id: uid("rwd"), label: "Course terminée", points: 25, date: "Hier" },
         { id: uid("rwd"), label: "Commande restaurant", points: 84, date: "Hier" }
@@ -104,9 +105,9 @@
   function addRewardPoints(points, label) {
     State.rewards.points += points;
     State.rewards.history.unshift({ id: uid("rwd"), label, points, date: "Aujourd'hui" });
-    if (State.rewards.points >= State.rewards.nextTierAt && State.rewards.tier === "Argent") {
-      State.rewards.tier = "Or";
-      addNotification("Nouveau statut débloqué", "Félicitations, vous êtes passé au statut Or Africa Rewards.", "rewards");
+    if (State.rewards.points >= State.rewards.nextTierAt && State.rewards.tier === "Silver") {
+      State.rewards.tier = "Gold";
+      addNotification("Nouveau statut débloqué", "Félicitations, vous êtes passé Gold Youss Bonus.", "rewards");
     }
   }
 

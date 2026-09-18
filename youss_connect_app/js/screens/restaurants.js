@@ -3,33 +3,47 @@
   window.Screens = window.Screens || {};
 
   const RESTAURANTS = {
-    rest1: { id: "rest1", name: "La Pirogue Cotonou", tag: "Fruits de mer · Haie Vive", rating: 4.7, delivery: "25-35 min",
+    rest1: { id: "rest1", name: "La Pirogue", tag: "Cuisine béninoise · Haie Vive", rating: 4.8, delivery: "25-35 min",
       menu: [
         { id: "d1", name: "Poisson braisé & attiéké", price: 4500 },
         { id: "d2", name: "Crevettes sauce piquante", price: 6000 },
-        { id: "d3", name: "Jus de bissap frais", price: 1000 }
+        { id: "d3", name: "Jus de bissap", price: 800 }
       ] },
-    rest2: { id: "rest2", name: "Chez Maman Bénin", tag: "Cuisine locale · Ganhi", rating: 4.5, delivery: "20-30 min",
+    rest2: { id: "rest2", name: "Chez Maman Bénin", tag: "Fast-food · Ganhi", rating: 4.6, delivery: "20-30 min",
       menu: [
         { id: "d4", name: "Pâte rouge & poulet", price: 3000 },
-        { id: "d5", name: "Igname pilée & sauce arachide", price: 3200 },
-        { id: "d6", name: "Beignets de haricot (akara)", price: 800 }
+        { id: "d5", name: "Igname pilée", price: 2800 },
+        { id: "d6", name: "Akara", price: 1000 }
+      ] },
+    rest3: { id: "rest3", name: "Le Jardin d'Éden", tag: "International · Cadjèhoun", rating: 4.5, delivery: "30-40 min",
+      menu: [
+        { id: "d7", name: "Pizza maison", price: 4500 },
+        { id: "d8", name: "Salade fraîche", price: 2500 },
+        { id: "d9", name: "Café", price: 1200 }
       ] }
   };
 
   Screens.restaurants = function (container) {
-    const topbar = UI.topBar({ title: "Restaurants", subtitle: "Découverte à " + ACState.user.city, back: "App.nav('home')" });
+    const cats = ["Tout", "Africain", "Fast Food", "Pizzeria", "Buvette"];
+    const topbar = UI.topBar({ title: "Restaurants", subtitle: ACState.user.city, back: "App.nav('home')" });
     const body = `
-    <section class="grid grid-cols-4 gap-2">
-      ${["Tout", "Local", "Fruits de mer", "Fast-food"].map((c, i) => `<span class="px-2 h-8 flex items-center justify-center rounded-full font-label-sm text-label-sm text-center ${i === 0 ? "bg-primary-container text-on-primary" : "bg-surface-container-lowest border border-outline-variant/30"}">${c}</span>`).join("")}
+    <section class="w-full">
+      <div class="h-11 rounded-xl border border-outline-variant/40 bg-surface-container-lowest px-space-12 flex items-center gap-2">
+        ${UI.icon("search", "text-outline")}
+        <span class="font-body-md text-body-md text-outline">Rechercher un restaurant ou un plat</span>
+      </div>
+    </section>
+    <section class="flex gap-2 overflow-x-auto no-scrollbar">
+      ${cats.map((c, i) => `<span class="px-3 h-8 flex items-center justify-center rounded-full font-label-sm text-label-sm whitespace-nowrap ${i === 0 ? "bg-primary text-white" : "bg-surface-container-lowest border border-outline-variant/30"}">${c}</span>`).join("")}
     </section>
     <section class="flex flex-col space-y-3">
-      ${Object.values(RESTAURANTS).map(r => `
-      <div onclick="App.nav('restaurantDetail', {id:'${r.id}'})" class="rounded-xl overflow-hidden border border-outline-variant/30 bg-surface-container-lowest cursor-pointer">
-        <div class="h-28 bg-surface-container-low flex items-center justify-center text-primary-container">${UI.icon("restaurant", "text-[32px]")}</div>
+      <h2 class="font-headline-sm text-headline-sm font-bold">Populaires</h2>
+      ${Object.values(RESTAURANTS).map((r) => `
+      <div onclick="App.nav('restaurantDetail', {id:'${r.id}'})" class="rounded-2xl overflow-hidden border border-outline-variant/30 bg-surface-container-lowest cursor-pointer active:scale-[0.99]">
+        <div class="h-28 bg-gradient-to-br from-orange-100 to-amber-50 flex items-center justify-center text-orange-500">${UI.icon("restaurant", "text-[36px]")}</div>
         <div class="p-space-16 flex items-center justify-between">
-          <div class="flex flex-col min-w-0"><span class="font-title-md text-title-md truncate">${r.name}</span><span class="font-body-sm text-body-sm text-on-surface-variant">${r.tag}</span></div>
-          <div class="flex flex-col items-end flex-shrink-0"><span class="font-label-md text-label-md text-primary font-bold">★ ${r.rating}</span><span class="font-label-sm text-label-sm text-on-surface-variant">${r.delivery}</span></div>
+          <div class="flex flex-col min-w-0"><span class="font-title-md text-title-md font-bold truncate">${r.name}</span><span class="font-body-sm text-body-sm text-on-surface-variant">${r.tag}</span></div>
+          <div class="flex flex-col items-end flex-shrink-0"><span class="font-label-md text-label-md text-yc-green font-bold">★ ${r.rating}</span><span class="font-label-sm text-label-sm text-on-surface-variant">${r.delivery}</span></div>
         </div>
       </div>`).join("")}
     </section>`;

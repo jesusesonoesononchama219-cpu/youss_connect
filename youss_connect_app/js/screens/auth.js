@@ -2,93 +2,113 @@
   "use strict";
   window.Screens = window.Screens || {};
 
-  /* Landing : JPEG (sans boutons) + une seule rangée de boutons HTML cliquables. */
+  var splashTimer = null;
+  var splashLeaving = false;
+  var LOGO_FULL = "./assets/youss-logo-full.png";
+  var LOGO_CLEAR = "./assets/youss-logo-full.png";
+
+  /* Splash blanc — logo complet (emblème + YOUSS + CONNECT + barres), 2s max */
   Screens.splash = function (container) {
-    const services = [
-      { id: "transport", label: "TRANSPORT", icon: "directions_car", color: "#2E9B45" },
-      { id: "livraison", label: "LIVRAISON", icon: "delivery_dining", color: "#F5A623" },
-      { id: "restaurants", label: "RESTAURANTS", icon: "restaurant", color: "#3B6FE8" },
-      { id: "culture", label: "TOURISME &\nCULTURE", icon: "account_balance", color: "#7A2FBF" },
-      { id: "securite", label: "SÉCURITÉ", icon: "verified_user", color: "#0E7C6B" }
-    ];
+    if (splashTimer) {
+      clearTimeout(splashTimer);
+      splashTimer = null;
+    }
+    splashLeaving = false;
 
     container.innerHTML = `
-      <div class="ac-landing flex-1 flex flex-col bg-white select-none overflow-x-hidden overflow-y-auto">
-        <main class="ac-landing-main w-full max-w-[1536px] mx-auto flex flex-col">
+      <div id="yc-splash-root" class="yc-splash-white relative flex-1 flex flex-col overflow-hidden select-none">
+        ${UI.statusBar()}
+
+        <main class="flex-1 flex flex-col items-center justify-center px-space-24 text-center">
           <img
-            src="./assets/youss-connect-hero.jpg"
-            alt="YOUSS CONNECT — Se déplacer. Découvrir. Se connecter."
-            class="ac-landing-photo block w-full h-auto pointer-events-none"
+            src="${LOGO_FULL}"
+            alt="YOUSS CONNECT"
+            class="yc-splash-brand-logo"
             draggable="false"
           />
-          <nav class="ac-service-row grid grid-cols-5 gap-1 px-3 pb-8 pt-1 shrink-0" aria-label="Services YOUSS Connect">
-            ${services.map((s) => `
-              <button type="button" data-service="${s.id}"
-                class="ac-service-btn flex flex-col items-center gap-2 outline-none"
-                onclick="Screens._landingTap('${s.id}')"
-                aria-label="${s.label.replace('\\n', ' ')}">
-                <span class="ac-service-disc" style="background:${s.color}">
-                  ${UI.icon(s.icon, "text-[24px] text-white", true)}
-                </span>
-                <span class="ac-service-label">${s.label}</span>
-              </button>
-            `).join("")}
-          </nav>
+          <p class="yc-anim yc-anim-d1 mt-space-20 font-body-md text-body-md text-on-surface-variant max-w-[260px]">
+            Se déplacer. Découvrir. Se connecter.
+          </p>
+        </main>
+
+        <footer class="relative z-10 px-space-20 pb-space-24 flex items-end justify-between">
+          <p class="font-label-sm text-label-sm text-primary/50">par DYNASTY KYA</p>
+        </footer>
+        <div class="yc-splash-waves" aria-hidden="true">
+          <span class="w1"></span>
+          <span class="w2"></span>
+          <span class="w3"></span>
+        </div>
+      </div>`;
+
+    splashTimer = setTimeout(function () {
+      Screens._leaveSplash();
+    }, 2000);
+  };
+
+  Screens._leaveSplash = function () {
+    if (splashLeaving) return;
+    if (App.current && App.current.id !== "splash") return;
+    splashLeaving = true;
+    if (splashTimer) {
+      clearTimeout(splashTimer);
+      splashTimer = null;
+    }
+    var root = document.getElementById("yc-splash-root");
+    if (root) root.classList.add("yc-splash--exit");
+    setTimeout(function () {
+      App.replace("onboarding");
+    }, 240);
+  };
+
+  /* Onboarding (écran 1 maquette) — fond violet + boutons */
+  Screens.onboarding = function (container) {
+    container.innerHTML = `
+      <div class="yc-onboard relative flex-1 flex flex-col overflow-hidden text-white select-none">
+        <div class="yc-splash-skyline" aria-hidden="true"></div>
+        ${UI.statusBar({ light: true })}
+
+        <main class="relative z-10 flex-1 flex flex-col px-space-24 pb-space-32 justify-end">
+          <div class="flex-1 flex flex-col items-center justify-center text-center pt-8">
+            <div class="yc-onboard-logo-plate">
+              <img
+                src="${LOGO_FULL}"
+                alt="YOUSS CONNECT"
+                class="yc-onboard-logo"
+                draggable="false"
+              />
+            </div>
+            <h1 class="mt-space-20 font-headline-lg text-headline-lg font-extrabold leading-tight mb-space-12 max-w-[300px]">
+              Se déplacer.<br/>Découvrir.<br/>Se connecter.
+            </h1>
+            <p class="font-body-md text-body-md text-white/75 max-w-[280px]">
+              Tout ce dont vous avez besoin, en une seule application.
+            </p>
+          </div>
+
+          <div class="flex flex-col gap-3 mt-space-24">
+            <button type="button" onclick="App.nav('signup')"
+              class="yc-btn-green w-full h-14 rounded-2xl flex items-center justify-center font-label-lg text-label-lg active:scale-[0.98] transition-transform">
+              Créer un compte
+            </button>
+            <button type="button" onclick="App.nav('login')"
+              class="yc-btn-ghost w-full h-12 rounded-2xl flex items-center justify-center font-label-lg text-label-lg active:scale-[0.98] transition-transform">
+              Se connecter
+            </button>
+            <button type="button" onclick="Screens._enterDemo()"
+              class="mt-1 text-center font-label-md text-label-md text-white/55">
+              Continuer en démo
+            </button>
+            <p class="text-center font-label-sm text-label-sm text-white/35 pt-2">Propulsé par Dynasty KYA</p>
+          </div>
         </main>
       </div>`;
   };
 
-  Screens._landingTap = function (id) {
-    const btn = document.querySelector(`.ac-service-btn[data-service="${id}"]`);
-    if (!btn) return;
-    btn.classList.add("ac-service-btn--pressed");
-    setTimeout(function () { btn.classList.remove("ac-service-btn--pressed"); }, 220);
-  };
-
-  const onboardingServices = [
-    { icon: "directions_car", title: "Transport", body: "Réservez une course en quelques secondes, partout où vous êtes." },
-    { icon: "restaurant", title: "Restaurants & Livraison", body: "Commandez vos plats préférés et suivez la livraison en direct." },
-    { icon: "account_balance_wallet", title: "Africa Wallet", body: "Un seul portefeuille numérique pour payer tous les services." },
-    { icon: "workspace_premium", title: "Africa Rewards", body: "Gagnez des points à chaque activité et échangez-les contre des récompenses." }
-  ];
-  let onbIndex = 0;
-
-  Screens.onboarding = function (container) {
-    const s = onboardingServices[onbIndex];
-    container.innerHTML = `
-      <div class="flex-1 flex flex-col px-space-20 pt-space-40 pb-space-24">
-        <div class="flex-1 flex flex-col items-center justify-center text-center">
-          <div class="w-28 h-28 rounded-3xl bg-surface-container-low flex items-center justify-center text-primary-container mb-space-24">
-            ${UI.icon(s.icon, "text-[56px]")}
-          </div>
-          <h2 class="font-headline-lg text-headline-lg font-bold mb-space-8">${s.title}</h2>
-          <p class="font-body-md text-body-md text-on-surface-variant max-w-[280px]">${s.body}</p>
-        </div>
-        <div class="flex items-center justify-center space-x-2 mb-space-24">
-          ${onboardingServices.map((_, i) => `<span class="w-2 h-2 rounded-full ${i === onbIndex ? "bg-primary-container w-6" : "bg-outline-variant"} transition-all"></span>`).join("")}
-        </div>
-        ${UI.primaryButton(onbIndex === onboardingServices.length - 1 ? "Créer mon compte" : "Suivant", "Screens._onbNext()", { icon: "arrow_forward" })}
-        <button onclick="App.nav('login')" class="mt-space-16 font-label-md text-label-md text-on-surface-variant">J'ai déjà un compte</button>
-      </div>`;
-  };
-
-  Screens._onbNext = function () {
-    if (onbIndex < onboardingServices.length - 1) { onbIndex++; App.replace("onboarding"); }
-    else { App.nav("signup"); }
-  };
-
-  Screens.signup = function (container) {
-    container.innerHTML = `
-      ${UI.statusBar()}
-      ${UI.topBar({ title: "Créer un compte", back: "App.back()" })}
-      <main class="flex-1 flex flex-col px-space-20 space-y-space-16">
-        <p class="font-body-sm text-body-sm text-on-surface-variant">Rejoignez YOUSS CONNECT pour accéder à tous les services KYA CORPORATION.</p>
-        ${field("su-name", "Nom complet", "text", "Alassane Kouassi")}
-        ${field("su-phone", "Numéro de téléphone", "tel", "+229 97 00 00 00")}
-        ${field("su-email", "Email (optionnel)", "email", "vous@example.com")}
-        <div id="su-error" class="hidden font-body-sm text-body-sm text-error"></div>
-        <div class="pt-space-8">${UI.primaryButton("Recevoir mon code", "Screens._doSignup()")}</div>
-      </main>`;
+  Screens._enterDemo = function () {
+    ACState.session.authenticated = true;
+    ACState.session.onboardingSeen = true;
+    App.resetTo("home");
   };
 
   function field(id, label, type, placeholder) {
@@ -99,28 +119,103 @@
     </label>`;
   }
 
+  function showErr(el, msg) {
+    el.textContent = msg;
+    el.classList.remove("hidden");
+  }
+
+  var COUNTRIES = [
+    { code: "BJ", name: "Bénin", dial: "+229", city: "Cotonou" }
+  ];
+  var defaultCountry = COUNTRIES[0]; // Bénin +229
+
+  function countryOptions(selectedDial) {
+    return COUNTRIES.map(function (c) {
+      var sel = c.dial === selectedDial ? " selected" : "";
+      return '<option value="' + c.dial + '" data-code="' + c.code + '" data-name="' + c.name + '" data-city="' + c.city + '"' + sel + ">" + c.name + " (" + c.dial + ")</option>";
+    }).join("");
+  }
+
+  function findCountry(dial) {
+    for (var i = 0; i < COUNTRIES.length; i++) {
+      if (COUNTRIES[i].dial === dial) return COUNTRIES[i];
+    }
+    return defaultCountry;
+  }
+
+  Screens.signup = function (container) {
+    var dial = defaultCountry.dial;
+    container.innerHTML = `
+      ${UI.statusBar()}
+      ${UI.topBar({ title: "Créer un compte", back: "App.back()" })}
+      <main class="flex-1 flex flex-col px-space-20 space-y-space-16 overflow-y-auto pb-space-24">
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Rejoignez YOUSS CONNECT — Dynasty KYA.</p>
+        ${field("su-name", "Nom complet", "text", "Youss Adjovi")}
+        <label class="flex flex-col space-y-1">
+          <span class="font-label-md text-label-md text-on-surface-variant">Pays</span>
+          <div class="h-12 rounded-xl border border-outline-variant/50 bg-surface-container-low px-space-16 flex items-center font-body-md text-body-md text-on-surface">
+            Bénin (+229)
+          </div>
+          <input type="hidden" id="su-country" value="+229"/>
+        </label>
+        <label class="flex flex-col space-y-1">
+          <span class="font-label-md text-label-md text-on-surface-variant">Numéro de téléphone</span>
+          <div class="flex items-center h-12 rounded-xl border border-outline-variant/50 bg-surface-container-lowest overflow-hidden focus-within:ring-2 focus-within:ring-primary-container/30 focus-within:border-primary-container">
+            <span id="su-dial" class="px-space-12 font-label-lg text-label-lg font-bold text-primary border-r border-outline-variant/40 bg-surface-container-low h-full flex items-center">${dial}</span>
+            <input id="su-phone" type="tel" inputmode="tel" placeholder="97 00 00 00"
+              class="flex-1 h-full px-space-12 bg-transparent font-body-md text-body-md focus:outline-none"/>
+          </div>
+        </label>
+        ${field("su-email", "Email (optionnel)", "email", "vous@example.com")}
+        <div id="su-error" class="hidden font-body-sm text-body-sm text-error"></div>
+        <div class="pt-space-8">${UI.primaryButton("Recevoir mon code", "Screens._doSignup()")}</div>
+        <button onclick="App.nav('login')" class="font-label-md text-label-md text-primary text-center">J'ai déjà un compte</button>
+      </main>`;
+  };
+
   Screens._doSignup = function () {
-    const name = document.getElementById("su-name").value.trim();
-    const phone = document.getElementById("su-phone").value.trim();
-    const err = document.getElementById("su-error");
-    const digits = phone.replace(/\D/g, "");
+    var name = document.getElementById("su-name").value.trim();
+    var dial = defaultCountry.dial;
+    var local = document.getElementById("su-phone").value.trim();
+    var err = document.getElementById("su-error");
+    var digits = local.replace(/\D/g, "");
     if (!name) return showErr(err, "Veuillez indiquer votre nom complet.");
-    if (digits.length < 8) return showErr(err, "Veuillez indiquer un numéro de téléphone valide.");
+    if (digits.length < 7) return showErr(err, "Veuillez indiquer un numéro de téléphone valide.");
     err.classList.add("hidden");
+    var country = defaultCountry;
+    var phone = dial + " " + local.replace(/^\+?\d{1,3}\s*/, "");
     ACState.user.fullName = name;
     ACState.user.name = name.split(" ")[0];
     ACState.user.phone = phone;
+    ACState.user.dial = dial;
+    ACState.user.country = country.name;
+    ACState.user.city = country.city;
+    var emailEl = document.getElementById("su-email");
+    if (emailEl && emailEl.value.trim()) ACState.user.email = emailEl.value.trim();
     App.nav("otp", { next: "home" });
   };
 
-  function showErr(el, msg) { el.textContent = msg; el.classList.remove("hidden"); }
-
   Screens.login = function (container) {
+    var dial = defaultCountry.dial;
     container.innerHTML = `
       ${UI.statusBar()}
       ${UI.topBar({ title: "Connexion", back: "App.back()" })}
       <main class="flex-1 flex flex-col px-space-20 space-y-space-16">
-        ${field("li-phone", "Numéro de téléphone", "tel", "+229 97 00 00 00")}
+        <label class="flex flex-col space-y-1">
+          <span class="font-label-md text-label-md text-on-surface-variant">Pays</span>
+          <div class="h-12 rounded-xl border border-outline-variant/50 bg-surface-container-low px-space-16 flex items-center font-body-md text-body-md text-on-surface">
+            Bénin (+229)
+          </div>
+          <input type="hidden" id="li-country" value="+229"/>
+        </label>
+        <label class="flex flex-col space-y-1">
+          <span class="font-label-md text-label-md text-on-surface-variant">Numéro de téléphone</span>
+          <div class="flex items-center h-12 rounded-xl border border-outline-variant/50 bg-surface-container-lowest overflow-hidden focus-within:ring-2 focus-within:ring-primary-container/30 focus-within:border-primary-container">
+            <span id="li-dial" class="px-space-12 font-label-lg text-label-lg font-bold text-primary border-r border-outline-variant/40 bg-surface-container-low h-full flex items-center">${dial}</span>
+            <input id="li-phone" type="tel" inputmode="tel" placeholder="97 00 00 00"
+              class="flex-1 h-full px-space-12 bg-transparent font-body-md text-body-md focus:outline-none"/>
+          </div>
+        </label>
         <div id="li-error" class="hidden font-body-sm text-body-sm text-error"></div>
         <div class="pt-space-8">${UI.primaryButton("Recevoir mon code", "Screens._doLogin()")}</div>
         <button onclick="App.nav('signup')" class="font-label-md text-label-md text-primary text-center pt-space-8">Créer un compte</button>
@@ -128,11 +223,17 @@
   };
 
   Screens._doLogin = function () {
-    const phone = document.getElementById("li-phone").value.trim();
-    const err = document.getElementById("li-error");
-    if (phone.replace(/\D/g, "").length < 8) return showErr(err, "Numéro de téléphone invalide.");
+    var dial = defaultCountry.dial;
+    var local = document.getElementById("li-phone").value.trim();
+    var err = document.getElementById("li-error");
+    var digits = local.replace(/\D/g, "");
+    if (digits.length < 7) return showErr(err, "Numéro de téléphone invalide.");
     err.classList.add("hidden");
-    ACState.user.phone = phone;
+    var country = defaultCountry;
+    ACState.user.phone = dial + " " + local;
+    ACState.user.dial = dial;
+    ACState.user.country = country.name;
+    ACState.user.city = country.city;
     App.nav("otp", { next: "home" });
   };
 
@@ -141,16 +242,16 @@
       ${UI.statusBar()}
       ${UI.topBar({ title: "Vérification", back: "App.back()" })}
       <main class="flex-1 flex flex-col px-space-20 space-y-space-20">
-        <p class="font-body-md text-body-md text-on-surface-variant">Entrez le code à 4 chiffres envoyé au ${ACState.user.phone}. (Démo : utilisez <b>1234</b>)</p>
+        <p class="font-body-md text-body-md text-on-surface-variant">Entrez le code à 4 chiffres envoyé au ${ACState.user.phone}. (Démo : <b>1234</b>)</p>
         <input id="otp-code" inputmode="numeric" maxlength="4" placeholder="••••" class="h-14 rounded-xl border border-outline-variant/50 bg-surface-container-lowest px-space-16 text-center tracking-[0.5em] font-headline-md text-headline-md focus:outline-none focus:ring-2 focus:ring-primary-container/30 focus:border-primary-container"/>
         <div id="otp-error" class="hidden font-body-sm text-body-sm text-error text-center"></div>
-        ${UI.primaryButton("Valider", `Screens._doOtp('${params.next || "home"}')`)}
+        ${UI.primaryButton("Valider", "Screens._doOtp('" + (params.next || "home") + "')")}
       </main>`;
   };
 
   Screens._doOtp = function (next) {
-    const code = document.getElementById("otp-code").value.trim();
-    const err = document.getElementById("otp-error");
+    var code = document.getElementById("otp-code").value.trim();
+    var err = document.getElementById("otp-error");
     if (code !== "1234") return showErr(err, "Code incorrect. Réessayez (indice : 1234).");
     ACState.session.authenticated = true;
     ACState.session.onboardingSeen = true;

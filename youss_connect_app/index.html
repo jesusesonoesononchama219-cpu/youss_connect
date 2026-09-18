@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
-<title>YOUSS CONNECT by KYA CORPORATION</title>
+<title>YOUSS CONNECT — Dynasty KYA</title>
 <link rel="manifest" href="./manifest.webmanifest"/>
 <link rel="icon" href="./icons/favicon.ico" sizes="any"/>
 <link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32.png"/>
 <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png"/>
 <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png"/>
-<meta name="theme-color" content="#0D1B2A"/>
+<meta name="theme-color" content="#3B1466"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="YoussConnect"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script id="tailwind-config">
   tailwind.config = {
@@ -25,52 +25,55 @@
       extend: {
         colors: {
           "on-primary": "#ffffff",
-          "primary-fixed": "#dbe1ff",
-          "surface-container-low": "#eff4ff",
-          "surface-container-highest": "#d5e3fd",
-          "on-surface": "#0d1c2f",
-          "surface-bright": "#f8f9ff",
-          "surface-variant": "#d5e3fd",
-          "secondary-fixed-dim": "#b1c5ff",
-          "primary": "#004dc6",
-          "inverse-on-surface": "#ebf1ff",
+          "primary-fixed": "#edd8ff",
+          "surface-container-low": "#f6f1fb",
+          "surface-container-highest": "#e8dff2",
+          "on-surface": "#1a1228",
+          "surface-bright": "#fbf8fe",
+          "surface-variant": "#e8dff2",
+          "secondary-fixed-dim": "#7dffb5",
+          "primary": "#3B1466",
+          "inverse-on-surface": "#f5eefc",
           "on-error-container": "#93000a",
-          "outline-variant": "#c2c6d8",
-          "surface-container": "#e6eeff",
-          "inverse-surface": "#233144",
-          "surface-tint": "#0054d7",
-          "on-secondary-fixed": "#001947",
-          "background": "#f8f9ff",
+          "outline-variant": "#d0c6d9",
+          "surface-container": "#efe8f6",
+          "inverse-surface": "#2a1f3a",
+          "surface-tint": "#5B2A8F",
+          "on-secondary-fixed": "#002112",
+          "background": "#fbf8fe",
           "surface-container-lowest": "#ffffff",
-          "secondary": "#345baf",
-          "secondary-container": "#83a6ff",
-          "on-primary-fixed-variant": "#003fa5",
-          "primary-fixed-dim": "#b3c5ff",
-          "secondary-fixed": "#dae2ff",
+          "secondary": "#0E9F5B",
+          "secondary-container": "#22C55E",
+          "on-primary-fixed-variant": "#4A1A7A",
+          "primary-fixed-dim": "#d4b3f5",
+          "secondary-fixed": "#b8f5d2",
           "on-tertiary-fixed-variant": "#005236",
           "tertiary-fixed-dim": "#4edea3",
           "on-tertiary": "#ffffff",
           "error": "#ba1a1a",
-          "surface-container-high": "#dde9ff",
-          "surface-dim": "#ccdbf4",
+          "surface-container-high": "#e8dff2",
+          "surface-dim": "#ddd3e8",
           "error-container": "#ffdad6",
-          "inverse-primary": "#b3c5ff",
+          "inverse-primary": "#d4b3f5",
           "tertiary-fixed": "#6ffbbe",
-          "on-background": "#0d1c2f",
-          "on-secondary-container": "#00388c",
-          "on-surface-variant": "#424655",
-          "tertiary-container": "#007f57",
+          "on-background": "#1a1228",
+          "on-secondary-container": "#00391f",
+          "on-surface-variant": "#52465f",
+          "tertiary-container": "#0E9F5B",
           "on-tertiary-container": "#ccffe2",
-          "tertiary": "#006443",
-          "primary-container": "#1264f5",
+          "tertiary": "#0B7A46",
+          "primary-container": "#5B2A8F",
           "on-tertiary-fixed": "#002113",
-          "outline": "#737687",
-          "surface": "#f8f9ff",
-          "on-secondary-fixed-variant": "#144296",
-          "on-primary-container": "#f2f2ff",
-          "on-primary-fixed": "#001849",
+          "outline": "#7a7088",
+          "surface": "#fbf8fe",
+          "on-secondary-fixed-variant": "#006b3d",
+          "on-primary-container": "#f8f0ff",
+          "on-primary-fixed": "#230047",
           "on-error": "#ffffff",
-          "on-secondary": "#ffffff"
+          "on-secondary": "#ffffff",
+          "yc-green": "#22C55E",
+          "yc-purple": "#3B1466",
+          "yc-purple-deep": "#2A0D4A"
         },
         borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px" },
         spacing: {
@@ -79,9 +82,9 @@
           "max-width-mobile": "390px", "margin-mobile": "1.25rem", "space-2": "0.125rem", "space-24": "1.5rem"
         },
         fontFamily: {
-          "display-lg": ["Inter"], "title-md": ["Inter"], "body-md": ["Inter"], "body-lg": ["Inter"],
-          "headline-lg": ["Inter"], "label-sm": ["Inter"], "body-sm": ["Inter"], "label-md": ["Inter"],
-          "headline-md": ["Inter"], "label-lg": ["Inter"], "headline-sm": ["Inter"]
+          "display-lg": ["Plus Jakarta Sans"], "title-md": ["Plus Jakarta Sans"], "body-md": ["Plus Jakarta Sans"], "body-lg": ["Plus Jakarta Sans"],
+          "headline-lg": ["Plus Jakarta Sans"], "label-sm": ["Plus Jakarta Sans"], "body-sm": ["Plus Jakarta Sans"], "label-md": ["Plus Jakarta Sans"],
+          "headline-md": ["Plus Jakarta Sans"], "label-lg": ["Plus Jakarta Sans"], "headline-sm": ["Plus Jakarta Sans"]
         },
         fontSize: {
           "display-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "700" }],
@@ -116,93 +119,111 @@
   .screen { display: none; }
   .screen.active { display: flex; }
   .toast { transition: all .25s ease; }
-  @keyframes pulseRing { 0%{box-shadow:0 0 0 0 rgba(18,100,245,.35)} 100%{box-shadow:0 0 0 14px rgba(18,100,245,0)} }
+  @keyframes pulseRing { 0%{box-shadow:0 0 0 0 rgba(91,42,143,.4)} 100%{box-shadow:0 0 0 14px rgba(91,42,143,0)} }
   .pulse-ring { animation: pulseRing 1.6s ease-out infinite; }
-  body { -webkit-tap-highlight-color: transparent; }
+  body { -webkit-tap-highlight-color: transparent; font-family: "Plus Jakarta Sans", system-ui, sans-serif; }
 
-  /* —— Landing marque YOUSS CONNECT —— */
-  @keyframes acFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-  @keyframes acSlideUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
-  .ac-anim-fade { animation: acFadeIn .55s ease-out both; }
-  .ac-anim-delay { animation-delay: .12s; }
-  .ac-anim-slide { animation: acSlideUp .5s ease-out .2s both; }
-  .ac-brand-accent {
-    position: absolute; top: -2px; left: 50%; transform: translateX(-50%);
-    width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent;
-    border-bottom: 7px solid #F9AB00;
+  /* —— Splash blanc (panneau marque) + Onboarding violet —— */
+  @keyframes ycFadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  @keyframes ycLogoIn { from { opacity: 0; transform: scale(.92); } to { opacity: 1; transform: none; } }
+  @keyframes ycSplashOut { to { opacity: 0; } }
+
+  .yc-splash-white {
+    background: #ffffff;
   }
-  .ac-brand-needle {
-    position: absolute;
-    top: 3px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 5.5px solid transparent;
-    border-right: 5.5px solid transparent;
-    border-bottom: 9px solid #F5A623;
-    z-index: 2;
+  .yc-splash-white.yc-splash--exit { animation: ycSplashOut .25s ease-in forwards; }
+  .yc-splash-brand-logo {
+    width: 220px; height: auto; max-height: 240px; object-fit: contain;
+    animation: ycLogoIn .5s ease-out both;
   }
-  .ac-logo-wrap .ac-ring-icon {
-    position: absolute; color: #fff; font-size: 15px; line-height: 1; pointer-events: none;
-    text-shadow: 0 1px 2px rgba(0,0,0,.15);
+  .yc-splash-waves {
+    position: absolute; left: 0; bottom: 0; width: 160px; height: 120px;
+    pointer-events: none; overflow: hidden;
   }
-  .ac-ring-icon--1 { top: 7%; right: 26%; }
-  .ac-ring-icon--2 { top: 22%; right: 8%; }
-  .ac-ring-icon--3 { top: 44%; right: 2%; }
-  .ac-ring-icon--4 { top: 66%; right: 8%; }
-  .ac-ring-icon--5 { top: 82%; right: 22%; }
-  .ac-ring-ico {
-    position: absolute;
-    color: #fff;
-    font-size: 16px !important;
-    line-height: 1;
-    pointer-events: none;
-    z-index: 2;
+  .yc-splash-waves span {
+    position: absolute; border-radius: 50%;
   }
-  .ac-ring-ico-1 { top: 5.5%; right: 27%; }
-  .ac-ring-ico-2 { top: 20%; right: 7%; }
-  .ac-ring-ico-3 { top: 43%; right: 1.5%; }
-  .ac-ring-ico-4 { top: 67%; right: 8%; }
-  .ac-ring-ico-5 { top: 82%; right: 23%; }
-  .ac-landing { background: #fff; }
-  .ac-landing-main { width: 100%; max-width: 1536px; }
-  .ac-landing-photo { display: block; width: 100%; height: auto; }
-  .ac-service-btn {
-    -webkit-tap-highlight-color: transparent;
-    background: transparent;
-    border: 0;
-    padding: 0;
-    cursor: pointer;
+  .yc-splash-waves .w1 {
+    width: 200px; height: 200px; left: -90px; bottom: -110px;
+    background: rgba(59, 20, 102, .12);
   }
-  .ac-service-disc {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
+  .yc-splash-waves .w2 {
+    width: 160px; height: 160px; left: -70px; bottom: -95px;
+    background: rgba(245, 166, 35, .18);
+  }
+  .yc-splash-waves .w3 {
+    width: 120px; height: 120px; left: -55px; bottom: -75px;
+    background: rgba(34, 197, 94, .16);
+  }
+
+  .yc-onboard {
+    background:
+      radial-gradient(ellipse 120% 70% at 50% 100%, rgba(34,197,94,.14) 0%, transparent 50%),
+      linear-gradient(165deg, #2A0D4A 0%, #3B1466 45%, #4A1A7A 100%);
+  }
+  .yc-splash-skyline {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 42%;
+    background: linear-gradient(to top, rgba(18,6,36,.9), transparent),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 390 170' fill='%23180a2e'%3E%3Cpath d='M0 170V100h16V72h14v28h18V58h16v42h20V85h14v15h16V52h22v48h20V95h14v15h26V68h18v32h20V82h14v18h28V55h22v45h20V92h14v18h36V75h18v95H0z'/%3E%3Cpath d='M168 52l22-38 22 38h-10v28h-24V52h-10z' opacity='.9'/%3E%3C/svg%3E") bottom center / 100% auto no-repeat;
+    opacity: .65; pointer-events: none;
+  }
+  .yc-splash-logo-wrap {
+    width: 120px; height: 120px; border-radius: 50%;
+    background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 12px 40px rgba(0,0,0,.35);
+    animation: ycLogoIn .55s ease-out both;
+    margin-bottom: 1rem;
+  }
+  .yc-splash-logo {
+    width: 96px; height: 96px; object-fit: contain;
+  }
+  /* Logo onboarding : carré lilas, angles à 90° */
+  .yc-onboard-logo-plate {
+    background: #F4EEF9;
+    width: 168px;
+    height: 168px;
+    border-radius: 0;
+    padding: 14px;
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
-    overflow: hidden;
-    box-shadow: inset 0 -2px 4px rgba(0,0,0,.18), inset 0 2px 3px rgba(255,255,255,.22);
-    transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+    animation: ycLogoIn .55s ease-out both;
   }
-  .ac-service-label {
-    font-size: 7.5px;
-    font-weight: 800;
-    letter-spacing: .04em;
-    text-align: center;
-    line-height: 1.15;
-    color: #0B1F33;
-    text-transform: uppercase;
-    white-space: pre-line;
-    max-width: 70px;
+  .yc-onboard-logo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    margin: 0 auto;
   }
-  .ac-service-btn:active .ac-service-disc,
-  .ac-service-btn--pressed .ac-service-disc {
-    transform: scale(.92);
-    filter: brightness(.92);
-    box-shadow: inset 0 3px 8px rgba(0,0,0,.35), inset 0 -1px 1px rgba(255,255,255,.12);
+  .yc-anim { animation: ycFadeUp .5s ease-out both; }
+  .yc-anim-d1 { animation-delay: .08s; }
+  .yc-anim-d2 { animation-delay: .16s; }
+  .yc-anim-d3 { animation-delay: .24s; }
+  .yc-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 12px; border-radius: 999px;
+    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.14);
+    color: rgba(255,255,255,.92); font-size: 11px; font-weight: 600;
+  }
+  .yc-btn-green {
+    background: #22C55E; color: #fff; font-weight: 700;
+    box-shadow: 0 8px 24px rgba(34,197,94,.35);
+  }
+  .yc-btn-green:active { filter: brightness(.95); }
+  .yc-btn-ghost {
+    background: transparent; color: #fff; font-weight: 600;
+    border: 1.5px solid rgba(212, 175, 55, .75);
+  }
+  .yc-nav-fab {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: #22C55E; color: #fff;
+    box-shadow: 0 6px 20px rgba(34,197,94,.45);
+    display: flex; align-items: center; justify-content: center;
+    margin-top: -22px; border: 4px solid #fff;
   }
 </style>
 </head>

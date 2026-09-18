@@ -48,7 +48,9 @@
   // Any cross-cutting state change (wallet, rewards, notifications, activities)
   // re-renders whatever screen is currently visible so numbers stay live.
   ACStore.subscribe(function () {
-    if (current) show(current.id, current.params);
+    /* Ne pas re-render le splash (timer 2s) ni les écrans auth de transition. */
+    if (!current || current.id === "splash") return;
+    show(current.id, current.params);
   });
 
   document.addEventListener("DOMContentLoaded", function () {
