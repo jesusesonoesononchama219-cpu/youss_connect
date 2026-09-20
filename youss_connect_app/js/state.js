@@ -44,8 +44,8 @@
       currency: "FCFA",
       transactions: [
         { id: uid("txn"), label: "Rechargement Mobile Money", amount: 25000, type: "credit", date: "Hier à 09:12" },
-        { id: uid("txn"), label: "Course vers Cadjèhoun", amount: -2500, type: "debit", date: "Hier à 14:20" },
-        { id: uid("txn"), label: "Commande La Pirogue Cotonou", amount: -8400, type: "debit", date: "Hier à 20:15" }
+        { id: uid("txn"), label: "Course vers Haie Vive", amount: -2500, type: "debit", date: "Hier à 14:20" },
+        { id: uid("txn"), label: "Commande Maquis du Port", amount: -8400, type: "debit", date: "Hier à 20:15" }
       ]
     },
     rewards: {
@@ -63,14 +63,14 @@
       { id: uid("addr"), label: "Travail", detail: "Ganhi, Cotonou", icon: "work" }
     ],
     activities: [
-      { id: uid("act"), service: "transport", title: "Course vers Cadjèhoun", subtitle: "Aujourd'hui à 14:20", amount: 2500, status: "Terminé", icon: "directions_car" },
-      { id: uid("act"), service: "restaurant", title: "Commande La Pirogue Cotonou", subtitle: "Hier à 20:15", amount: 8400, status: "Livré", icon: "restaurant" },
-      { id: uid("act"), service: "livraison", title: "Livraison de colis Ganhi", subtitle: "Arrivée estimée 16:45", amount: null, status: "En cours", icon: "local_shipping" }
+      { id: uid("act"), service: "transport", title: "Course vers Haie Vive", subtitle: "Aujourd'hui à 14:20", amount: 2500, status: "Terminé", icon: "directions_car" },
+      { id: uid("act"), service: "restaurant", title: "Commande Maquis du Port", subtitle: "Hier à 20:15", amount: 8400, status: "Livré", icon: "restaurant" },
+      { id: uid("act"), service: "livraison", title: "Livraison Dantokpa → Ganhi", subtitle: "Arrivée estimée 16:45", amount: null, status: "En cours", icon: "local_shipping" }
     ],
     notifications: [
-      { id: uid("ntf"), title: "Paiement confirmé", body: "Votre course vers Cadjèhoun a été réglée via Africa Wallet.", read: false, service: "wallet", date: "Aujourd'hui, 14:21" },
-      { id: uid("ntf"), title: "Points Rewards gagnés", body: "+25 points ajoutés à votre solde Africa Rewards.", read: false, service: "rewards", date: "Aujourd'hui, 14:21" },
-      { id: uid("ntf"), title: "Livraison en cours", body: "Votre coursier est en route vers Ganhi.", read: true, service: "livraison", date: "Aujourd'hui, 12:05" }
+      { id: uid("ntf"), title: "Paiement confirmé", body: "Votre course vers Haie Vive a été réglée via Youss Wallet.", read: false, service: "wallet", date: "Aujourd'hui, 14:21" },
+      { id: uid("ntf"), title: "Points Rewards gagnés", body: "+25 points ajoutés à votre solde Youss Bonus.", read: false, service: "rewards", date: "Aujourd'hui, 14:21" },
+      { id: uid("ntf"), title: "Livraison en cours", body: "Votre coursier est en route vers Ganhi, Cotonou.", read: true, service: "livraison", date: "Aujourd'hui, 12:05" }
     ],
     cart: { restaurant: null, items: [], market: [] },
     trip: null // active transport booking

@@ -1,10 +1,10 @@
 (function () {
   "use strict";
   window.Screens = window.Screens || {};
-  const parcel = { from: "Cadjèhoun", to: "Ganhi", size: "moto", recipient: "Ami · 97 00 00 00", mode: "colis" };
+  const parcel = { from: "Marché Dantokpa", to: "Ganhi", size: "moto", recipient: "Ami · 97 00 00 00", mode: "colis" };
   const SIZES = [
-    { id: "velo", label: "Vélo", icon: "pedal_bike", price: 1000 },
     { id: "moto", label: "Moto", icon: "two_wheeler", price: 1500 },
+    { id: "velo", label: "Vélo", icon: "pedal_bike", price: 1000 },
     { id: "voiture", label: "Voiture", icon: "directions_car", price: 2500 }
   ];
 

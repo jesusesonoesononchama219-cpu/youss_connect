@@ -3,8 +3,8 @@
   window.Screens = window.Screens || {};
 
   const EVENTS = {
-    ev1: { id: "ev1", name: "Festival Vaudou & Arts Urbains", place: "Ouidah & Cotonou", date: "14 Sept 2026", tickets: [{ id: "t1", label: "Standard", price: 5000 }, { id: "t2", label: "VIP", price: 15000 }] },
-    ev2: { id: "ev2", name: "Nuit Afro Soul & Jazz", place: "Cotonou", date: "21 Sept 2026", tickets: [{ id: "t3", label: "Standard", price: 8000 }, { id: "t4", label: "VIP", price: 20000 }] }
+    ev1: { id: "ev1", name: "Festival international des Arts Vodoun", place: "Ouidah", date: "10 Jan 2027", tickets: [{ id: "t1", label: "Standard", price: 5000 }, { id: "t2", label: "VIP", price: 15000 }] },
+    ev2: { id: "ev2", name: "Concert au Stade de l'Amitié", place: "Cotonou", date: "21 Sept 2026", tickets: [{ id: "t3", label: "Standard", price: 8000 }, { id: "t4", label: "VIP", price: 20000 }] }
   };
   let selectedTicket = null, ticketQty = 1;
 

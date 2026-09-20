@@ -143,6 +143,23 @@
     return defaultCountry;
   }
 
+  function bindPhoneLimit(inputId) {
+    var el = document.getElementById(inputId);
+    if (!el) return;
+    el.setAttribute("maxlength", "10");
+    el.setAttribute("inputmode", "numeric");
+    el.setAttribute("pattern", "[0-9]{10}");
+    el.addEventListener("input", function () {
+      var digits = el.value.replace(/\D/g, "").slice(0, 10);
+      if (el.value !== digits) el.value = digits;
+    });
+    el.addEventListener("paste", function (e) {
+      e.preventDefault();
+      var text = (e.clipboardData || window.clipboardData).getData("text") || "";
+      el.value = text.replace(/\D/g, "").slice(0, 10);
+    });
+  }
+
   Screens.signup = function (container) {
     var dial = defaultCountry.dial;
     container.innerHTML = `
@@ -152,38 +169,32 @@
         <p class="font-body-sm text-body-sm text-on-surface-variant">Rejoignez YOUSS CONNECT — Dynasty KYA.</p>
         ${field("su-name", "Nom complet", "text", "Youss Adjovi")}
         <label class="flex flex-col space-y-1">
-          <span class="font-label-md text-label-md text-on-surface-variant">Pays</span>
-          <div class="h-12 rounded-xl border border-outline-variant/50 bg-surface-container-low px-space-16 flex items-center font-body-md text-body-md text-on-surface">
-            Bénin (+229)
-          </div>
-          <input type="hidden" id="su-country" value="+229"/>
-        </label>
-        <label class="flex flex-col space-y-1">
           <span class="font-label-md text-label-md text-on-surface-variant">Numéro de téléphone</span>
           <div class="flex items-center h-12 rounded-xl border border-outline-variant/50 bg-surface-container-lowest overflow-hidden focus-within:ring-2 focus-within:ring-primary-container/30 focus-within:border-primary-container">
             <span id="su-dial" class="px-space-12 font-label-lg text-label-lg font-bold text-primary border-r border-outline-variant/40 bg-surface-container-low h-full flex items-center">${dial}</span>
-            <input id="su-phone" type="tel" inputmode="tel" placeholder="97 00 00 00"
+            <input id="su-phone" type="tel" inputmode="numeric" maxlength="10" placeholder="9700000000"
               class="flex-1 h-full px-space-12 bg-transparent font-body-md text-body-md focus:outline-none"/>
           </div>
+          <span class="font-label-sm text-label-sm text-on-surface-variant">10 chiffres (Bénin)</span>
         </label>
         ${field("su-email", "Email (optionnel)", "email", "vous@example.com")}
         <div id="su-error" class="hidden font-body-sm text-body-sm text-error"></div>
         <div class="pt-space-8">${UI.primaryButton("Recevoir mon code", "Screens._doSignup()")}</div>
         <button onclick="App.nav('login')" class="font-label-md text-label-md text-primary text-center">J'ai déjà un compte</button>
       </main>`;
+    bindPhoneLimit("su-phone");
   };
 
   Screens._doSignup = function () {
     var name = document.getElementById("su-name").value.trim();
     var dial = defaultCountry.dial;
-    var local = document.getElementById("su-phone").value.trim();
+    var digits = document.getElementById("su-phone").value.replace(/\D/g, "");
     var err = document.getElementById("su-error");
-    var digits = local.replace(/\D/g, "");
     if (!name) return showErr(err, "Veuillez indiquer votre nom complet.");
-    if (digits.length < 7) return showErr(err, "Veuillez indiquer un numéro de téléphone valide.");
+    if (digits.length !== 10) return showErr(err, "Le numéro doit contenir exactement 10 chiffres.");
     err.classList.add("hidden");
     var country = defaultCountry;
-    var phone = dial + " " + local.replace(/^\+?\d{1,3}\s*/, "");
+    var phone = dial + " " + digits;
     ACState.user.fullName = name;
     ACState.user.name = name.split(" ")[0];
     ACState.user.phone = phone;
@@ -202,35 +213,29 @@
       ${UI.topBar({ title: "Connexion", back: "App.back()" })}
       <main class="flex-1 flex flex-col px-space-20 space-y-space-16">
         <label class="flex flex-col space-y-1">
-          <span class="font-label-md text-label-md text-on-surface-variant">Pays</span>
-          <div class="h-12 rounded-xl border border-outline-variant/50 bg-surface-container-low px-space-16 flex items-center font-body-md text-body-md text-on-surface">
-            Bénin (+229)
-          </div>
-          <input type="hidden" id="li-country" value="+229"/>
-        </label>
-        <label class="flex flex-col space-y-1">
           <span class="font-label-md text-label-md text-on-surface-variant">Numéro de téléphone</span>
           <div class="flex items-center h-12 rounded-xl border border-outline-variant/50 bg-surface-container-lowest overflow-hidden focus-within:ring-2 focus-within:ring-primary-container/30 focus-within:border-primary-container">
             <span id="li-dial" class="px-space-12 font-label-lg text-label-lg font-bold text-primary border-r border-outline-variant/40 bg-surface-container-low h-full flex items-center">${dial}</span>
-            <input id="li-phone" type="tel" inputmode="tel" placeholder="97 00 00 00"
+            <input id="li-phone" type="tel" inputmode="numeric" maxlength="10" placeholder="9700000000"
               class="flex-1 h-full px-space-12 bg-transparent font-body-md text-body-md focus:outline-none"/>
           </div>
+          <span class="font-label-sm text-label-sm text-on-surface-variant">10 chiffres (Bénin)</span>
         </label>
         <div id="li-error" class="hidden font-body-sm text-body-sm text-error"></div>
         <div class="pt-space-8">${UI.primaryButton("Recevoir mon code", "Screens._doLogin()")}</div>
         <button onclick="App.nav('signup')" class="font-label-md text-label-md text-primary text-center pt-space-8">Créer un compte</button>
       </main>`;
+    bindPhoneLimit("li-phone");
   };
 
   Screens._doLogin = function () {
     var dial = defaultCountry.dial;
-    var local = document.getElementById("li-phone").value.trim();
+    var digits = document.getElementById("li-phone").value.replace(/\D/g, "");
     var err = document.getElementById("li-error");
-    var digits = local.replace(/\D/g, "");
-    if (digits.length < 7) return showErr(err, "Numéro de téléphone invalide.");
+    if (digits.length !== 10) return showErr(err, "Le numéro doit contenir exactement 10 chiffres.");
     err.classList.add("hidden");
     var country = defaultCountry;
-    ACState.user.phone = dial + " " + local;
+    ACState.user.phone = dial + " " + digits;
     ACState.user.dial = dial;
     ACState.user.country = country.name;
     ACState.user.city = country.city;

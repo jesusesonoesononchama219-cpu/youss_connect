@@ -17,6 +17,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script id="tailwind-config">
   tailwind.config = {
@@ -225,12 +226,56 @@
     display: flex; align-items: center; justify-content: center;
     margin-top: -22px; border: 4px solid #fff;
   }
+  /* Google Maps–like map chrome */
+  .yc-gmap-wrap { position: relative; flex: 1; min-height: 0; width: 100%; }
+  .yc-gmap-wrap .leaflet-container {
+    width: 100%; height: 100%;
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+    background: #e5e3df;
+  }
+  .yc-gmap-wrap .leaflet-control-zoom {
+    border: none !important;
+    box-shadow: 0 1px 4px rgba(0,0,0,.3);
+    margin-right: 12px !important;
+    margin-bottom: 12px !important;
+  }
+  .yc-gmap-wrap .leaflet-control-zoom a {
+    width: 40px !important; height: 40px !important;
+    line-height: 40px !important;
+    color: #5f6368 !important;
+    border: none !important;
+    background: #fff !important;
+  }
+  .yc-gmap-wrap .leaflet-control-attribution {
+    font-size: 10px; background: rgba(255,255,255,.75) !important;
+  }
+  .yc-gmap-pin {
+    width: 28px; height: 40px;
+    display: flex; align-items: flex-start; justify-content: center;
+  }
+  .yc-gmap-pin span {
+    width: 22px; height: 22px; border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    border: 2.5px solid #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,.35);
+  }
+  .yc-gmap-sheet {
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -4px 24px rgba(0,0,0,.18);
+    background: #fff;
+  }
+  .yc-gmap-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.28);
+  }
 </style>
 </head>
 <body class="bg-white text-on-surface antialiased">
 <div id="app" class="relative w-full max-w-max-width-mobile mx-auto min-h-screen bg-white flex flex-col shadow-2xl overflow-hidden"></div>
 
 <!-- App scripts loaded in order -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script src="./js/state.js"></script>
 <script src="./js/ui.js"></script>
 <script src="./js/screens/shell.js"></script>

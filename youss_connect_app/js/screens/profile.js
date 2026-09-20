@@ -42,8 +42,6 @@
       ${menuRow("local_shipping", "Mes livraisons", "App.nav('activities')")}
       ${menuRow("favorite", "Mes favoris", "App.nav('addresses')")}
       ${menuRow("home_pin", "Mes adresses", "App.nav('addresses')")}
-      ${menuRow("account_balance_wallet", "Youss Wallet", "App.nav('wallet')")}
-      ${menuRow("shield", "Sécurité", "App.nav('security')")}
       ${menuRow("logout", "Déconnexion", "Screens._logout()", true)}
     </section>`;
     Shell.render(container, { topbar, body, nav: "profile" });

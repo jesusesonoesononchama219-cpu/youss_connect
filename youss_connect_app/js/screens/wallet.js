@@ -184,7 +184,7 @@
   };
   Screens._simulateQrScan = function () {
     const amount = 1500 + Math.round(Math.random() * 3000);
-    const res = ACStore.payFromWallet({ amount, label: "Paiement marchand QR · Boutique Ganhi", service: "wallet" });
+    const res = ACStore.payFromWallet({ amount, label: "Paiement marchand QR · Marché Dantokpa", service: "wallet" });
     if (!res.ok) { App.nav("paymentFailed", { retry: "walletQrPay", amount, reason: res.reason }); return; }
     UI.toast("Paiement marchand de " + ACStore.fmtFCFA(amount) + " effectué.", "success");
     App.resetTo("wallet");
