@@ -11,10 +11,28 @@
         <span class="px-space-16 h-8 flex items-center rounded-full font-label-md text-label-md flex-shrink-0 ${i === 0 ? "bg-primary-container text-on-primary" : "bg-surface-container-lowest border border-outline-variant/30 text-on-surface-variant"}">${f}</span>`).join("")}
     </section>
     <section class="w-full flex flex-col space-y-3">
-      ${ACState.activities.length ? ACState.activities.map(a => window._activityRow(a)).join("") : UI.emptyState({ icon: "schedule", title: "Aucune activité pour le moment", body: "Toutes vos courses, commandes et paiements apparaîtront ici automatiquement.", actionLabel: "Explorer les services", actionOnclick: "App.nav('explorer')" })}
+      ${ACState.activities.length ? ACState.activities.map(activityRow).join("") : UI.emptyState({ icon: "schedule", title: "Aucune activité pour le moment", body: "Toutes vos courses, commandes et paiements apparaîtront ici automatiquement.", actionLabel: "Explorer les services", actionOnclick: "App.nav('explorer')" })}
     </section>`;
     Shell.render(container, { topbar, body, nav: "activities" });
   };
+
+  function activityRow(a) {
+    const done = a.status !== "En cours";
+    return `
+    <div onclick="App.nav('activityDetail', {id:'${a.id}'})" class="yc-card yc-card-press p-space-16 flex items-center justify-between cursor-pointer">
+      <div class="flex items-center space-x-3 min-w-0">
+        <div class="w-10 h-10 rounded-full bg-surface-container-low text-primary flex items-center justify-center flex-shrink-0">${UI.icon(a.icon || "receipt_long", "text-[20px]")}</div>
+        <div class="flex flex-col min-w-0">
+          <span class="font-title-md text-title-md font-semibold truncate">${a.title}</span>
+          <span class="font-body-sm text-body-sm text-on-surface-variant truncate">${a.subtitle || ""}</span>
+        </div>
+      </div>
+      <div class="flex flex-col items-end flex-shrink-0 pl-3">
+        ${a.amount != null ? `<span class="font-label-lg text-label-lg font-bold text-on-surface">${ACStore.fmtFCFA(a.amount)}</span>` : ""}
+        ${UI.badge(a.status || "—", done ? "success" : "primary")}
+      </div>
+    </div>`;
+  }
 
   function groupByService(list) {
     return list.reduce((acc, a) => { (acc[a.service] = acc[a.service] || []).push(a); return acc; }, {});

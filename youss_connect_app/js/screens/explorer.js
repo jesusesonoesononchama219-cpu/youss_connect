@@ -5,7 +5,7 @@
   const DISCOVER = [
     { title: "Festival des Arts Vodoun", tag: "Événement", place: "Ouidah", route: "events" },
     { title: "Hôtels de Cotonou", tag: "Hébergement", place: "Cotonou · Bénin", route: "restaurants" },
-    { title: "Artisans de Dantokpa", tag: "Africa Market", place: "Cotonou", route: "market" },
+    { title: "Artisans de Dantokpa", tag: "Youss Market", place: "Cotonou", route: "market" },
     { title: "Palais royaux d'Abomey", tag: "Culture & Tourisme", place: "Abomey", route: "culture" }
   ];
 
@@ -62,8 +62,8 @@
         { title: "Azalaï Hotel Cotonou", subtitle: "Hôtel · Marina", icon: "hotel", route: "restaurantDetail", keys: "hotel hotel azalai cotonou marina", params: { id: "rest1" } },
         { title: "Sun Beach Hotel", subtitle: "Hôtel · Fidjrossè", icon: "hotel", route: "restaurantDetail", keys: "hotel sun beach fidjrosse plage", params: { id: "rest2" } },
         { title: "Hôtel Marie Stella", subtitle: "Hôtel · Cotonou", icon: "hotel", route: "restaurantDetail", keys: "hotel marie stella cotonou", params: { id: "rest3" } },
-        { title: "Robe Wax contemporaine", subtitle: "Africa Market · Mode", icon: "storefront", route: "productDetail", keys: "market produit wax mode", params: { id: "p1" } },
-        { title: "Beurre de karité pur", subtitle: "Africa Market · Beauté", icon: "storefront", route: "productDetail", keys: "market karite beaute", params: { id: "p2" } },
+        { title: "Robe Wax contemporaine", subtitle: "Youss Market · Mode", icon: "storefront", route: "productDetail", keys: "market produit wax mode", params: { id: "p1" } },
+        { title: "Beurre de karité pur", subtitle: "Youss Market · Beauté", icon: "storefront", route: "productDetail", keys: "market karite beaute", params: { id: "p2" } },
         { title: "Festival des Arts Vodoun", subtitle: "Événement · Ouidah", icon: "confirmation_number", route: "eventDetail", keys: "evenement festival vodoun ouidah", params: { id: "ev1" } },
         { title: "Palais royaux d'Abomey", subtitle: "Culture · Abomey", icon: "explore", route: "cultureDetail", keys: "culture musee palais abomey dahomey", params: { id: "c1" } },
         { title: "Place de l'Amazone", subtitle: "Culture · Cotonou", icon: "museum", route: "cultureDetail", keys: "culture amazone cotonou place", params: { id: "c3" } },

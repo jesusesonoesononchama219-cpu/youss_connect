@@ -57,7 +57,7 @@
     var root = document.getElementById("yc-splash-root");
     if (root) root.classList.add("yc-splash--exit");
     setTimeout(function () {
-      App.replace("onboarding");
+      App.replace(ACState.session.authenticated ? "home" : "onboarding");
     }, 240);
   };
 
@@ -179,6 +179,7 @@
         </label>
         ${field("su-email", "Email (optionnel)", "email", "vous@example.com")}
         <div id="su-error" class="hidden font-body-sm text-body-sm text-error"></div>
+        <p class="font-label-sm text-label-sm text-on-surface-variant">${window.YCBackend && YCBackend.configured() ? "Un code SMS réel sera envoyé sur ce numéro." : "Mode démo : aucun SMS. Le code est 1234."}</p>
         <div class="pt-space-8">${UI.primaryButton("Recevoir mon code", "Screens._doSignup()")}</div>
         <button onclick="App.nav('login')" class="font-label-md text-label-md text-primary text-center">J'ai déjà un compte</button>
       </main>`;
@@ -203,6 +204,15 @@
     ACState.user.city = country.city;
     var emailEl = document.getElementById("su-email");
     if (emailEl && emailEl.value.trim()) ACState.user.email = emailEl.value.trim();
+    if (window.YCBackend && YCBackend.configured()) {
+      sessionStorage.setItem("yc-pending-name", name);
+      YCBackend.sendOtp(phone, name).then(function (res) {
+        if (res.error) return showErr(err, YCBackend.explain(res.error));
+        UI.toast("Code envoyé par SMS.", "success");
+        App.nav("otp", { next: "home", remote: true });
+      });
+      return;
+    }
     App.nav("otp", { next: "home" });
   };
 
@@ -222,6 +232,7 @@
           <span class="font-label-sm text-label-sm text-on-surface-variant">10 chiffres (Bénin)</span>
         </label>
         <div id="li-error" class="hidden font-body-sm text-body-sm text-error"></div>
+        <p class="font-label-sm text-label-sm text-on-surface-variant">${window.YCBackend && YCBackend.configured() ? "Connexion par code SMS (compte Supabase)." : "Mode démo : le code est 1234."}</p>
         <div class="pt-space-8">${UI.primaryButton("Recevoir mon code", "Screens._doLogin()")}</div>
         <button onclick="App.nav('signup')" class="font-label-md text-label-md text-primary text-center pt-space-8">Créer un compte</button>
       </main>`;
@@ -239,16 +250,29 @@
     ACState.user.dial = dial;
     ACState.user.country = country.name;
     ACState.user.city = country.city;
+    if (window.YCBackend && YCBackend.configured()) {
+      YCBackend.sendOtp(ACState.user.phone, ACState.user.fullName).then(function (res) {
+        if (res.error) return showErr(err, YCBackend.explain(res.error));
+        UI.toast("Code envoyé par SMS.", "success");
+        App.nav("otp", { next: "home", remote: true });
+      });
+      return;
+    }
     App.nav("otp", { next: "home" });
   };
 
+  var otpRemote = false;
   Screens.otp = function (container, params) {
+    otpRemote = !!(params && params.remote);
+    var len = otpRemote ? 6 : 4;
     container.innerHTML = `
       ${UI.statusBar()}
       ${UI.topBar({ title: "Vérification", back: "App.back()" })}
       <main class="flex-1 flex flex-col px-space-20 space-y-space-20">
-        <p class="font-body-md text-body-md text-on-surface-variant">Entrez le code à 4 chiffres envoyé au ${ACState.user.phone}. (Démo : <b>1234</b>)</p>
-        <input id="otp-code" inputmode="numeric" maxlength="4" placeholder="••••" class="h-14 rounded-xl border border-outline-variant/50 bg-surface-container-lowest px-space-16 text-center tracking-[0.5em] font-headline-md text-headline-md focus:outline-none focus:ring-2 focus:ring-primary-container/30 focus:border-primary-container"/>
+        <p class="font-body-md text-body-md text-on-surface-variant">${otpRemote
+          ? "Entrez le code reçu par SMS au " + ACState.user.phone + "."
+          : "Entrez le code à 4 chiffres envoyé au " + ACState.user.phone + ". (Démo : <b>1234</b>)"}</p>
+        <input id="otp-code" inputmode="numeric" maxlength="${len}" placeholder="${otpRemote ? "••••••" : "••••"}" class="h-14 rounded-xl border border-outline-variant/50 bg-surface-container-lowest px-space-16 text-center tracking-[0.5em] font-headline-md text-headline-md focus:outline-none focus:ring-2 focus:ring-primary-container/30 focus:border-primary-container"/>
         <div id="otp-error" class="hidden font-body-sm text-body-sm text-error text-center"></div>
         ${UI.primaryButton("Valider", "Screens._doOtp('" + (params.next || "home") + "')")}
       </main>`;
@@ -257,6 +281,15 @@
   Screens._doOtp = function (next) {
     var code = document.getElementById("otp-code").value.trim();
     var err = document.getElementById("otp-error");
+    if (otpRemote && window.YCBackend) {
+      if (code.length < 6) return showErr(err, "Entrez le code à 6 chiffres reçu par SMS.");
+      YCBackend.verifyOtp(ACState.user.phone, code).then(function (res) {
+        if (res.error) return showErr(err, YCBackend.explain(res.error));
+        UI.toast("Bienvenue " + ACState.user.name + " !", "success");
+        App.resetTo(next);
+      });
+      return;
+    }
     if (code !== "1234") return showErr(err, "Code incorrect. Réessayez (indice : 1234).");
     ACState.session.authenticated = true;
     ACState.session.onboardingSeen = true;

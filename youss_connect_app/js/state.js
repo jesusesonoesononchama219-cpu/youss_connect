@@ -40,7 +40,7 @@
       verified: true
     },
     wallet: {
-      balance: 12450,
+      balance: 248500,
       currency: "FCFA",
       transactions: [
         { id: uid("txn"), label: "Rechargement Mobile Money", amount: 25000, type: "credit", date: "Hier à 09:12" },
@@ -115,7 +115,23 @@
    * Unified payment used by every service (Transport, Restaurants,
    * Market, Events...). Returns {ok, reason}.
    */
-  function payFromWallet({ amount, label, service, pointsEarned = 0 }) {
+  /* Résout un paiement local (objet) ou distant (Promise). */
+  function whenPaid(result, onOk, onFail) {
+    Promise.resolve(result).then(function (res) {
+      if (res && res.ok) { if (onOk) onOk(res); }
+      else if (onFail) onFail(res || { ok: false, reason: "error" });
+    }).catch(function () {
+      if (onFail) onFail({ ok: false, reason: "error" });
+    });
+  }
+
+  function payFromWallet(opts) {
+    opts = opts || {};
+    var amount = opts.amount;
+    var label = opts.label;
+    var service = opts.service;
+    var pointsEarned = opts.pointsEarned || 0;
+    if (window.YCBackend && YCBackend.isLive()) return YCBackend.pay(opts);
     if (typeof navigator !== "undefined" && navigator.onLine === false) {
       return { ok: false, reason: "offline" };
     }
@@ -127,20 +143,22 @@
       id: uid("txn"), label, amount: -amount, type: "debit", date: "À l'instant"
     });
     addActivity({ service, title: label, amount, status: "Terminé", icon: iconForService(service) });
-    addNotification("Paiement confirmé", label + " a été réglé via Africa Wallet (" + fmtFCFA(amount) + ").", "wallet");
+    addNotification("Paiement confirmé", label + " a été réglé via Youss Wallet (" + fmtFCFA(amount) + ").", "wallet");
     if (pointsEarned > 0) {
       addRewardPoints(pointsEarned, label);
-      addNotification("Points Rewards gagnés", "+" + pointsEarned + " points ajoutés à votre solde Africa Rewards.", "rewards");
+      addNotification("Points Rewards gagnés", "+" + pointsEarned + " points ajoutés à votre solde Youss Bonus.", "rewards");
     }
     emit();
     return { ok: true };
   }
 
   function creditWallet(amount, label) {
+    if (window.YCBackend && YCBackend.isLive()) return YCBackend.topup(amount, label);
     State.wallet.balance += amount;
     State.wallet.transactions.unshift({ id: uid("txn"), label, amount, type: "credit", date: "À l'instant" });
     addNotification("Rechargement réussi", label + " (" + fmtFCFA(amount) + ") a été ajouté à votre solde.", "wallet");
     emit();
+    return { ok: true };
   }
 
   function iconForService(service) {
@@ -168,6 +186,7 @@
     addRewardPoints,
     payFromWallet,
     creditWallet,
+    whenPaid,
     iconForService
   };
 })();

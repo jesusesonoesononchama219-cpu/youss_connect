@@ -62,9 +62,11 @@
   function row(l, v) { return `<div class="flex items-center justify-between"><span class="font-body-sm text-body-sm text-on-surface-variant">${l}</span><span class="font-body-md text-body-md">${v}</span></div>`; }
 
   Screens._payDelivery = function (price) {
-    const res = ACStore.payFromWallet({ amount: price, label: "Livraison de colis vers " + parcel.to, service: "livraison", pointsEarned: 15 });
-    if (!res.ok) { App.nav("paymentFailed", { retry: "deliverySummary", amount: price, reason: res.reason }); return; }
-    App.resetTo("deliverySearching");
+    ACStore.whenPaid(
+      ACStore.payFromWallet({ amount: price, label: "Livraison de colis vers " + parcel.to, service: "livraison", pointsEarned: 15 }),
+      function () { App.resetTo("deliverySearching"); },
+      function (res) { App.nav("paymentFailed", { retry: "deliverySummary", amount: price, reason: res.reason }); }
+    );
   };
   Screens.deliverySearching = function (container) {
     const topbar = UI.topBar({ title: "Recherche d'un coursier" });
@@ -84,7 +86,7 @@
       <div class="w-12 h-12 rounded-full bg-surface-container-low flex items-center justify-center text-primary">${UI.icon("person")}</div>
       <div class="flex flex-col"><span class="font-title-md text-title-md">Coursier : Espoir D.</span><span class="font-body-sm text-body-sm text-on-surface-variant">Moto · En route vers ${parcel.to}</span></div>
     </section>
-    <div class="pt-space-8">${UI.primaryButton("Confirmer la réception (démo)", "App.nav('deliveryProof')", { icon: "task_alt" })}</div>`;
+    <div class="pt-space-8">${UI.primaryButton("Confirmer la réception", "App.nav('deliveryProof')", { icon: "task_alt" })}</div>`;
     Shell.render(container, { topbar, body, nav: false });
   };
   Screens.deliveryProof = function (container) {

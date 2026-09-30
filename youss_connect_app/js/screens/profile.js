@@ -72,8 +72,12 @@
   };
   Screens._confirmLogout = function () {
     UI.closeSheet();
-    ACState.session.authenticated = false;
-    App.resetTo("splash");
+    var done = function () { App.resetTo("splash"); };
+    if (window.YCBackend) YCBackend.signOut().then(done, done);
+    else {
+      ACState.session.authenticated = false;
+      done();
+    }
   };
 
   Screens.editProfile = function (container) {
@@ -96,9 +100,19 @@
     ACState.user.name = ACState.user.fullName.split(" ")[0];
     ACState.user.email = document.getElementById("ep-email").value.trim();
     ACState.user.city = document.getElementById("ep-city").value.trim() || ACState.user.city;
-    UI.toast("Profil mis à jour.", "success");
-    ACStore.emit();
-    App.nav("profile");
+    var finish = function () {
+      UI.toast("Profil mis à jour.", "success");
+      ACStore.emit();
+      App.nav("profile");
+    };
+    if (window.YCBackend && YCBackend.isLive()) {
+      YCBackend.saveProfile(ACState.user).then(function (res) {
+        if (res && res.ok === false) UI.toast(res.message || "Enregistrement impossible.", "error");
+        else finish();
+      });
+      return;
+    }
+    finish();
   };
 
   Screens.addresses = function (container) {
@@ -142,7 +156,7 @@
     const body = `
     <section class="w-full flex flex-col space-y-2">
       <div class="flex items-center justify-between bg-surface-container-lowest border border-primary-container rounded-xl p-space-16">
-        <div class="flex items-center space-x-3">${UI.icon("account_balance_wallet", "text-primary")}<span class="font-title-md text-title-md">Africa Wallet</span></div>
+        <div class="flex items-center space-x-3">${UI.icon("account_balance_wallet", "text-primary")}<span class="font-title-md text-title-md">Youss Wallet</span></div>
         ${UI.badge("Par défaut", "primary")}
       </div>
       <div class="flex items-center justify-between bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-space-16">

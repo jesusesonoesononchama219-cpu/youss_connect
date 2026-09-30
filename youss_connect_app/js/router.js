@@ -17,6 +17,8 @@
       return;
     }
     current = { id, params: params || {} };
+    /* Permet aux modules (caméra, carte…) de libérer leurs ressources. */
+    document.dispatchEvent(new CustomEvent("yc:navigate", { detail: { id } }));
     fn(container, current.params);
     container.scrollTop = 0;
   }
@@ -55,7 +57,11 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     UI.initOfflineBanner();
-    /* Ouverture directe sur la landing (pas de skeleton / flash bleu). */
-    show("splash", {});
+    /* Restaure la session Supabase avant le splash (max 2,5 s). */
+    var boot = (window.YCBackend && YCBackend.init) ? YCBackend.init() : Promise.resolve();
+    var timeout = new Promise(function (resolve) { setTimeout(resolve, 2500); });
+    Promise.race([boot, timeout]).then(function () {
+      show("splash", {});
+    });
   });
 })();
