@@ -53,7 +53,51 @@
       img: WM("Dantokpa.jpg")
     }
   };
-  let lang = "fr";
+  const COPY = {
+    en: {
+      c1: { body: "UNESCO World Heritage Site since 1985. The palaces of the kings of Dahomey (18th–19th centuries) now house the Historical Museum of Abomey, a witness to the kingdom and its traditions." },
+      c2: { body: "Monument at the end of the Slave Route in Ouidah. It marks the point where captives were shipped to the Americas and is a major memorial of the Atlantic slave trade in Benin." },
+      c3: { body: "Public square in Cotonou, opened in 2022 and dominated by the Amazon statue. It honours the Agojie, the women warriors of the kingdom of Dahomey." },
+      c4: { body: "Called the “Venice of Africa”, Ganvié is a stilt village on Lake Nokoué, near Cotonou. The Tofinu people have lived there from fishing and trade for centuries." },
+      c5: { body: "The largest open-air market in West Africa, Dantokpa stretches along the Cotonou lagoon. You will find wax fabrics, food, crafts and regional trade." }
+    },
+    fon: {
+      c1: { body: "UNESCO sɔ tɛn enɛ ɖo xwé 1985. Dahomey sin ahɔsu lɛɛ sin xwé lɛɛ wɛ nyí Musée historique d'Abomey din, nǔxɔ́ ɖo ahɔsu lɛɛ sin tan kpó sɛn lɛɛ kpó wu." },
+      c2: { body: "Nǔtɔn ɖo Xwéda, ɖo Slave Route sin fí. É nyí fí e wɛ yɛhwe lɛɛ nɔ tɔn sín ɖo tɔ ɔ mɛ yi Amérique, nǔxɔ́ ɖo kanlinmɛ sin tan wu ɖo Benɛ." },
+      c3: { body: "Tɛn ɖo Kutɔnu, e wɛ ʋɔ ɖo 2022, bɔ Amazone sin nǔtɔn ɖo tɛntin. É ɖɔ xó ɖo Agojie lɛɛ wu, Dahomey sin nyɔnu ahwanfun lɛɛ." },
+      c4: { body: "Yɛ nɔ ylɔ ɛ ɖɔ “Venise Afrique tɔn”. Ganvié nyí toxo ɖo tɔ Nokoué jí, ɖo Kutɔnu gɔ. Tofinu lɛɛ nɔ nɔ fí, yɛ nɔ hɛn hwe kpó adɔ kpó." },
+      c5: { body: "Axi ɖaxo ɖo Afrique ɔ sin yɔyɔ. Dantokpa ɖo Kutɔnu sin tɔ gɔ. É ɖo avɔ wax, nuɖuɖu, nǔwiwa kpó axi kpó." }
+    },
+    yo: {
+      c1: { body: "Ilé-ìṣọ̀kan UNESCO láti ọdún 1985. Àwọn ààfin ọba Dahomey (ọ̀rúndún 18–19) ni Músíọ̀mù ìtàn Abomey lónìí, ẹlẹ́rìí ìtàn ìjọba àti àṣà rẹ̀." },
+      c2: { body: "Ère ní òpin Ọ̀nà Ẹrú ní Ouidah. Ibẹ̀ ni a ti ń gbé àwọn ẹlẹ́wọ̀n lọ sí Amẹ́ríkà, ibi ìrántí òwò ẹrú ní Benin." },
+      c3: { body: "Àárín ìlú Cotonou, tí wọ́n ṣí ní ọdún 2022, pẹ̀lú ère Amazon. Ó ń bọ̀wọ̀ fún àwọn Agojie, obìnrin jagunjagun ìjọba Dahomey." },
+      c4: { body: "Wọ́n ń pè é ní “Venice Áfíríkà”. Ganvié jẹ́ abúlé lórí omi Lake Nokoué, nítòsí Cotonou. Àwọn Tofinu ti ń gbé ibẹ̀ pẹ̀lú iṣẹ́ ẹja àti òwò fún ọ̀pọ̀ ọdún." },
+      c5: { body: "Ọjà òde tó tóbi jù lọ ní Ìwọ̀-oòrùn Áfíríkà. Dantokpa wà lẹ́bàá adágún Cotonou. Aṣọ wax, oúnjẹ, iṣẹ́ ọnà àti òwò agbègbè wà níbẹ̀." }
+    }
+  };
+
+  const UI_COPY = {
+    fr: { overview: "Aperçu", history: "Histoire", visit: "Visite", info: "Infos", lang: "Langue", national: "Langues nationales du Bénin", saved: "Sauvegardé ✓", save: "Sauvegarder", explore: "Explorer autour", qr: "Afficher le QR Code du site", discover: "Découverte" },
+    en: { overview: "Overview", history: "History", visit: "Visit", info: "Info", lang: "Language", national: "National languages of Benin", saved: "Saved ✓", save: "Save", explore: "Explore nearby", qr: "Show the site QR code", discover: "Discover" },
+    fon: { overview: "Kpɔ́", history: "Tan", visit: "Yɛyi", info: "Xó", lang: "Gbè", national: "Benɛ sin gbè lɛɛ", saved: "Hɛn ✓", save: "Hɛn", explore: "Kpɔ́ tɛn ɔ", qr: "Xlɛ́ QR Code tɛn ɔ tɔn", discover: "Nǔxɔ́" },
+    yo: { overview: "Àkótán", history: "Ìtàn", visit: "Ìbẹ̀wò", info: "Ìwífún", lang: "Èdè", national: "Àwọn èdè orílẹ̀-èdè Benin", saved: "Ti fipamọ́ ✓", save: "Fipamọ́", explore: "Ṣàwárí yíká", qr: "Fi QR Code ibi yìí hàn", discover: "Ṣàwárí" }
+  };
+
+  function uiCopy() {
+    return UI_COPY[UI.lang()] || UI_COPY.fr;
+  }
+
+  function siteCopy(s) {
+    const pack = COPY[UI.lang()];
+    const extra = pack && pack[s.id];
+    return {
+      name: s.name,
+      place: s.place,
+      body: extra ? extra.body : s.body
+    };
+  }
+
   const saved = new Set();
 
   function siteThumb(s, iconSize) {
@@ -88,7 +132,7 @@
         <p class="font-label-sm text-label-sm text-white/70 mb-1">Scanner un monument</p>
         <h3 class="font-title-md text-title-md font-bold">Histoire du patrimoine béninois</h3>
       </div>
-      <span class="w-12 h-12 rounded-full bg-yc-green flex items-center justify-center">${UI.icon("qr_code_scanner", "text-[24px]", true)}</span>
+      <span class="w-12 h-12 rounded-full bg-primary flex items-center justify-center">${UI.icon("qr_code_scanner", "text-[24px]", true)}</span>
     </section>
 
     <section class="flex flex-col space-y-space-12">
@@ -110,30 +154,39 @@
     Screens._showPlace(container, s, true);
   };
 
-  function placeTabs(active) {
-    return ["Aperçu", "Histoire", "Visite", "Infos"].map((t) => `
-      <button type="button" class="px-3 py-1.5 rounded-full font-label-sm text-label-sm font-semibold ${t === active ? "bg-primary text-white" : "bg-surface-container-low text-on-surface-variant"}">${t}</button>
+  function placeTabs(activeId) {
+    const c = uiCopy();
+    return [
+      { id: "overview", label: c.overview },
+      { id: "history", label: c.history },
+      { id: "visit", label: c.visit },
+      { id: "info", label: c.info }
+    ].map((t) => `
+      <button type="button" class="px-3 py-1.5 rounded-full font-label-sm text-label-sm font-semibold ${t.id === activeId ? "bg-primary text-white" : "bg-surface-container-low text-on-surface-variant"}">${t.label}</button>
     `).join("");
   }
 
   Screens._showPlace = function (container, s, withBack) {
-    const topbar = UI.topBar({ title: "Découverte", back: withBack ? "App.back()" : "App.nav('culture')" });
+    const c = uiCopy();
+    const text = siteCopy(s);
+    const current = UI.lang();
+    const topbar = UI.topBar({ title: c.discover, back: withBack ? "App.back()" : "App.nav('culture')" });
     const body = `
     <section class="h-44 rounded-2xl relative overflow-hidden flex items-end bg-surface-container-low">
       ${siteThumb(s, "text-[88px]")}
       <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent"></div>
       <div class="relative z-10 p-space-16 text-white w-full">
-        <h2 class="font-headline-sm text-headline-sm font-bold">${s.name}</h2>
-        <p class="font-body-sm text-body-sm text-white/85">${s.place}</p>
+        <h2 class="font-headline-sm text-headline-sm font-bold">${text.name}</h2>
+        <p class="font-body-sm text-body-sm text-white/85">${text.place}</p>
       </div>
     </section>
 
-    <div class="flex gap-2 overflow-x-auto no-scrollbar">${placeTabs("Aperçu")}</div>
+    <div class="flex gap-2 overflow-x-auto no-scrollbar">${placeTabs("overview")}</div>
 
-    <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">${s.body}</p>
+    <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">${text.body}</p>
 
     <section class="w-full">
-      <p class="font-label-md text-label-md font-semibold text-on-surface mb-2">Langue</p>
+      <p class="font-label-md text-label-md font-semibold text-on-surface mb-2">${c.lang}</p>
       <div class="flex gap-2">
         ${[
           { id: "fr", label: "FR" },
@@ -142,29 +195,27 @@
           { id: "yo", label: "Yoruba" }
         ].map((l) => `
           <button type="button" onclick="Screens._setLang('${l.id}')"
-            class="flex-1 h-10 rounded-xl border font-label-sm text-label-sm font-semibold ${lang === l.id ? "border-primary bg-primary/10 text-primary" : "border-outline-variant/40 text-on-surface-variant"}">
+            class="flex-1 h-10 rounded-xl border font-label-sm text-label-sm font-semibold ${current === l.id ? "border-primary bg-primary/10 text-primary" : "border-outline-variant/40 text-on-surface-variant"}">
             ${l.label}
           </button>
         `).join("")}
       </div>
-      <p class="font-label-sm text-label-sm text-on-surface-variant mt-2">Langues nationales du Bénin</p>
+      <p class="font-label-sm text-label-sm text-on-surface-variant mt-2">${c.national}</p>
     </section>
 
     <div class="flex gap-3">
-      ${UI.secondaryButton(saved.has(s.id) ? "Sauvegardé ✓" : "Sauvegarder", `Screens._toggleSaveSite('${s.id}')`)}
-      ${UI.primaryButton("Explorer autour", "App.nav('restaurants')", { green: true })}
+      ${UI.secondaryButton(saved.has(s.id) ? c.saved : c.save, `Screens._toggleSaveSite('${s.id}')`)}
+      ${UI.primaryButton(c.explore, "App.nav('restaurants')")}
     </div>
     <button type="button" onclick="Screens._showSiteQr('${s.id}')"
       class="w-full flex items-center justify-center gap-2 py-2 font-label-md text-label-md font-semibold text-primary active:opacity-70">
-      ${UI.icon("qr_code_2", "text-[20px]")} Afficher le QR Code du site
+      ${UI.icon("qr_code_2", "text-[20px]")} ${c.qr}
     </button>`;
     Shell.render(container, { topbar, body, nav: false });
   };
 
   Screens._setLang = function (id) {
-    lang = id;
-    UI.toast("Langue : " + id.toUpperCase(), "info");
-    App.replace(App.current.id, App.current.params);
+    UI.setLang(id);
   };
 
   Screens._toggleSaveSite = function (id) {
@@ -220,7 +271,7 @@
         </main>
         <footer class="relative z-10 p-space-20 pb-space-32 space-y-3">
           <button type="button" id="yc-scan-retry" onclick="Screens._startCameraScan()"
-            class="w-full h-14 rounded-2xl bg-yc-green text-white font-label-lg text-label-lg font-bold flex items-center justify-center gap-2 shadow-lg shadow-yc-green/30">
+            class="w-full h-14 rounded-2xl bg-primary text-white font-label-lg text-label-lg font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary/30">
             ${UI.icon("photo_camera", "text-[22px]")} Ouvrir la caméra
           </button>
           <div class="flex gap-3">

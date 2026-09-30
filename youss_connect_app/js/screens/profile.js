@@ -25,14 +25,14 @@
           <p class="font-label-sm text-label-sm text-white/70 uppercase tracking-wider">Youss Bonus</p>
           <p class="font-headline-md text-headline-md font-extrabold">${pts.toLocaleString("fr-FR")} pts</p>
         </div>
-        <button type="button" onclick="App.nav('rewards')" class="h-9 px-3 rounded-xl bg-yc-green font-label-md text-label-md font-bold">Récompenses</button>
+        <button type="button" onclick="App.nav('rewards')" class="h-9 px-3 rounded-xl bg-primary text-white font-label-md text-label-md font-bold">Récompenses</button>
       </div>
       <div class="flex justify-between font-label-sm text-label-sm text-white/80 mb-1">
         <span>${ACState.rewards.tier}</span>
         <span>${ACState.rewards.nextTier}</span>
       </div>
       <div class="h-2 rounded-full bg-white/20 overflow-hidden">
-        <div class="h-full rounded-full bg-yc-green" style="width:${pct}%"></div>
+        <div class="h-full rounded-full bg-primary" style="width:${pct}%"></div>
       </div>
       <p class="font-label-sm text-label-sm text-white/60 mt-2">${next - pts} pts pour passer ${ACState.rewards.nextTier}</p>
     </section>
@@ -186,13 +186,23 @@
     const topbar = UI.topBar({ title: "Paramètres", back: "App.back()" });
     const body = `
     <section class="w-full flex flex-col space-y-2">
-      ${menuRow("language", "Langue · Français", "Screens._toggleLang()")}
+      ${menuRow("language", UI.t("settings_lang") + " · " + (UI.langNames().find(function (l) { return l.id === UI.lang(); }) || {}).label, "Screens._toggleLang()")}
       ${menuRow("notifications", "Préférences de notifications", "App.nav('notifications')")}
       ${menuRow("info", "À propos de KYA CORPORATION", "Screens._aboutSheet()")}
     </section>`;
     Shell.render(container, { topbar, body, nav: false });
   };
-  Screens._toggleLang = function () { UI.toast("Langue : Français (par défaut).", "info"); };
+  Screens._toggleLang = function () {
+    const items = UI.langNames().map(function (l) {
+      const on = l.id === UI.lang();
+      return `<button type="button" onclick="UI.setLang('${l.id}'); UI.closeSheet()"
+        class="w-full h-12 rounded-xl border font-label-md text-label-md font-semibold flex items-center justify-between px-4 ${on ? "border-primary bg-primary/10 text-primary" : "border-outline-variant/40 text-on-surface"}">
+        <span>${l.label}</span>${on ? "✓" : ""}
+      </button>`;
+    }).join("");
+    UI.openSheet(`<h3 class="font-headline-sm text-headline-sm font-bold mb-3">${UI.t("lang_title")}</h3>
+      <div class="flex flex-col gap-2">${items}</div>`);
+  };
   Screens._aboutSheet = function () {
     UI.openSheet(`<h3 class="font-headline-sm text-headline-sm font-bold mb-2">YOUSS CONNECT</h3>
       <p class="font-body-sm text-body-sm text-on-surface-variant mb-space-16">Une seule application pour vivre l'Afrique au quotidien. Développée par KYA CORPORATION.</p>

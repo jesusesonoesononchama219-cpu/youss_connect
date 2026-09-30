@@ -9,19 +9,81 @@
     return `<span class="material-symbols-outlined ${cls || ""} ${fill ? "fill-icon" : ""}">${name}</span>`;
   }
 
-  function statusBar(opts) {
-    opts = opts || {};
-    const light = opts.light;
-    const color = light ? "text-white/85" : "text-on-surface";
-    return `
-    <header class="relative z-10 w-full h-11 px-space-20 flex items-center justify-between ${color} select-none pt-space-2 flex-shrink-0">
-      <span class="font-label-md text-label-md font-semibold tracking-tight">9:41</span>
-      <div class="flex items-center space-x-1.5">
-        ${icon("signal_cellular_alt", "text-[16px]")}
-        ${icon("wifi", "text-[16px]")}
-        ${icon("battery_full", "text-[20px]")}
-      </div>
-    </header>`;
+  /* La hora, la señal y la batería las muestra el teléfono.
+     No se dibuja una barra de estado falsa (aspecto de captura). */
+  function statusBar() {
+    return "";
+  }
+
+  const I18N = {
+    fr: {
+      nav_home: "Accueil", nav_activities: "Activités", nav_scan: "Scan", nav_messages: "Messages", nav_profile: "Profil",
+      hello: "Bonjour", wallet: "Solde Youss Wallet", wallet_btn: "Portefeuille",
+      tile_transport: "Transport", tile_delivery: "Livraison", tile_hotels: "Hôtels", tile_tourism: "Tourisme",
+      more_rides: "Courses planifiées", more_addr: "Adresses favorites", more_bonus: "Youss Bonus", more_plus: "Plus",
+      banner_kicker: "Culture & Tourisme · Bénin", banner_title: "Abomey, Ouidah, Ganvié, Place de l'Amazone…", banner_scan: "Scanner",
+      lang_title: "Langue", lang_fr: "Français", lang_en: "English", lang_fon: "Fon", lang_yo: "Yorùbá",
+      lang_done: "Langue : Français", settings_lang: "Langue"
+    },
+    en: {
+      nav_home: "Home", nav_activities: "Activity", nav_scan: "Scan", nav_messages: "Messages", nav_profile: "Profile",
+      hello: "Hello", wallet: "Youss Wallet balance", wallet_btn: "Wallet",
+      tile_transport: "Transport", tile_delivery: "Delivery", tile_hotels: "Hotels", tile_tourism: "Tourism",
+      more_rides: "Scheduled rides", more_addr: "Saved addresses", more_bonus: "Youss Bonus", more_plus: "More",
+      banner_kicker: "Culture & Tourism · Benin", banner_title: "Abomey, Ouidah, Ganvié, Place de l'Amazone…", banner_scan: "Scan",
+      lang_title: "Language", lang_fr: "Français", lang_en: "English", lang_fon: "Fon", lang_yo: "Yorùbá",
+      lang_done: "Language: English", settings_lang: "Language"
+    },
+    fon: {
+      nav_home: "Aigba", nav_activities: "Azɔ lɛɛ", nav_scan: "Scan", nav_messages: "Wɛn lɛɛ", nav_profile: "Nyɛ",
+      hello: "Nú mi", wallet: "Youss Wallet sin akwɛ́", wallet_btn: "Akwɛ́",
+      tile_transport: "Zɔnlin", tile_delivery: "Nusɔ́", tile_hotels: "Xɔ lɛɛ", tile_tourism: "Yɛyi",
+      more_rides: "Zɔnlin ɖó", more_addr: "Tɛn sín", more_bonus: "Youss Bonus", more_plus: "Dɛvo",
+      banner_kicker: "Kultu & Yɛyi · Benɛ", banner_title: "Abomey, Xwéda, Ganvié, Amazone sin tɛn…", banner_scan: "Scan",
+      lang_title: "Gbè", lang_fr: "Français", lang_en: "English", lang_fon: "Fon", lang_yo: "Yorùbá",
+      lang_done: "Gbè : Fon", settings_lang: "Gbè"
+    },
+    yo: {
+      nav_home: "Ilé", nav_activities: "Àwọn iṣẹ́", nav_scan: "Scan", nav_messages: "Ìránṣẹ́", nav_profile: "Prófaìlì",
+      hello: "Pẹ̀lẹ́", wallet: "Owó Youss Wallet", wallet_btn: "Àpò",
+      tile_transport: "Ìrìnàjò", tile_delivery: "Ìfijíṣẹ́", tile_hotels: "Ilé ìtura", tile_tourism: "Ìrìnàjò",
+      more_rides: "Ìrìnàjò tí a ṣètò", more_addr: "Àwọn àdírẹ́sì", more_bonus: "Youss Bonus", more_plus: "Siwaju",
+      banner_kicker: "Àṣà & Ìrìnàjò · Benin", banner_title: "Abomey, Ouidah, Ganvié, Place de l'Amazone…", banner_scan: "Scan",
+      lang_title: "Èdè", lang_fr: "Français", lang_en: "English", lang_fon: "Fon", lang_yo: "Yorùbá",
+      lang_done: "Èdè : Yorùbá", settings_lang: "Èdè"
+    }
+  };
+
+  let appLang = "fr";
+  try { appLang = localStorage.getItem("yc-lang") || "fr"; } catch (e) { /* navigation privée */ }
+  if (!I18N[appLang]) appLang = "fr";
+
+  function t(key) {
+    const pack = I18N[appLang] || I18N.fr;
+    return pack[key] || I18N.fr[key] || key;
+  }
+
+  function lang() { return appLang; }
+
+  function setLang(id) {
+    if (!I18N[id] || id === appLang) {
+      if (I18N[id]) toast(t("lang_done"), "info");
+      return;
+    }
+    appLang = id;
+    try { localStorage.setItem("yc-lang", id); } catch (e) { /* no-op */ }
+    document.documentElement.lang = id === "en" ? "en" : "fr";
+    toast(t("lang_done"), "success");
+    if (window.ACStore) ACStore.emit();
+  }
+
+  function langNames() {
+    return [
+      { id: "fr", label: "Français" },
+      { id: "en", label: "English" },
+      { id: "fon", label: "Fon" },
+      { id: "yo", label: "Yorùbá" }
+    ];
   }
 
   function topBar({ title, subtitle, back, right }) {
@@ -48,15 +110,15 @@
     return `
     <nav class="w-full bg-surface-container-lowest/95 backdrop-blur-md border-t border-outline-variant/25 px-space-4 pt-space-4 pb-space-8 shadow-[0_-8px_28px_rgba(59,20,102,.08)] flex-shrink-0">
       <div class="flex items-end justify-between w-full px-space-8">
-        ${side("home", "Accueil", "home")}
-        ${side("activities", "Activités", "receipt_long")}
+        ${side("home", t("nav_home"), "home")}
+        ${side("activities", t("nav_activities"), "receipt_long")}
         <a href="javascript:void(0)" onclick="App.nav('culturalScanner')"
           class="flex flex-col items-center justify-center active:scale-95 transition-transform" aria-label="Scanner">
           <span class="yc-nav-fab">${icon("qr_code_scanner", "text-[28px]", true)}</span>
-          <span class="font-label-sm text-label-sm mt-1 tracking-wide ${active === "culturalScanner" || active === "culture" ? "text-yc-green font-semibold" : "text-on-surface-variant"}">Scan</span>
+          <span class="font-label-sm text-label-sm mt-1 tracking-wide ${active === "culturalScanner" || active === "culture" ? "text-primary font-semibold" : "text-on-surface-variant"}">${t("nav_scan")}</span>
         </a>
-        ${side("notifications", "Messages", "chat_bubble")}
-        ${side("profile", "Profil", "person")}
+        ${side("notifications", t("nav_messages"), "chat_bubble")}
+        ${side("profile", t("nav_profile"), "person")}
       </div>
       <div class="w-28 h-1 bg-outline-variant/40 rounded-full mx-auto mt-2"></div>
     </nav>`;
@@ -65,9 +127,7 @@
   function primaryButton(label, onclick, opts) {
     opts = opts || {};
     const disabled = opts.disabled ? "opacity-40 pointer-events-none" : "";
-    const green = opts.green
-      ? "bg-yc-green text-white shadow-[0_8px_20px_rgba(34,197,94,.28)] active:brightness-95"
-      : "bg-primary-container text-on-primary shadow-[0_8px_20px_rgba(59,20,102,.22)] active:bg-primary";
+    const green = "bg-primary-container text-on-primary shadow-[0_8px_20px_rgba(59,20,102,.22)] active:bg-primary";
     return `<button onclick="${onclick}" class="w-full h-12 rounded-2xl ${green} font-label-lg text-label-lg font-bold transition-all duration-150 flex items-center justify-center gap-2 active:scale-[0.98] ${disabled}">
       <span>${label}</span>${opts.icon ? icon(opts.icon, "text-[18px]") : ""}
     </button>`;
@@ -178,5 +238,5 @@
     render();
   }
 
-  window.UI = { icon, statusBar, topBar, bottomNav, primaryButton, secondaryButton, badge, toast, openSheet, closeSheet, emptyState, skeletonBoot, initOfflineBanner };
+  window.UI = { icon, statusBar, topBar, bottomNav, primaryButton, secondaryButton, badge, toast, openSheet, closeSheet, emptyState, skeletonBoot, initOfflineBanner, t, lang, setLang, langNames };
 })();

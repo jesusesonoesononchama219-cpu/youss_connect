@@ -4,17 +4,17 @@
 
   /* Écran 2 — Accueil (aligné maquette) */
   const MAIN = [
-    { id: "transport", label: "Transport", icon: "directions_car", bg: "bg-[#EDE4F7]", fg: "text-primary" },
-    { id: "delivery", label: "Livraison", icon: "local_shipping", bg: "bg-[#DCFCE7]", fg: "text-yc-green" },
-    { id: "restaurants", label: "Hôtels", icon: "hotel", bg: "bg-[#FFEDD5]", fg: "text-orange-600" },
-    { id: "culture", label: "Tourisme", icon: "account_balance", bg: "bg-[#CCFBF1]", fg: "text-teal-700" }
+    { id: "transport", key: "tile_transport", icon: "directions_car", bg: "bg-[#EDE4F7]", fg: "text-primary" },
+    { id: "delivery", key: "tile_delivery", icon: "local_shipping", bg: "bg-[#EDE4F7]", fg: "text-primary" },
+    { id: "restaurants", key: "tile_hotels", icon: "hotel", bg: "bg-[#FFEDD5]", fg: "text-orange-600" },
+    { id: "culture", key: "tile_tourism", icon: "account_balance", bg: "bg-[#EDE4F7]", fg: "text-primary" }
   ];
 
   const MORE = [
-    { id: "activities", label: "Courses planifiées", icon: "event" },
-    { id: "addresses", label: "Adresses favorites", icon: "favorite" },
-    { id: "rewards", label: "Youss Bonus", icon: "workspace_premium" },
-    { id: "explorer", label: "Plus", icon: "apps" }
+    { id: "activities", key: "more_rides", icon: "event" },
+    { id: "addresses", key: "more_addr", icon: "favorite" },
+    { id: "rewards", key: "more_bonus", icon: "workspace_premium" },
+    { id: "explorer", key: "more_plus", icon: "apps" }
   ];
 
   Screens.home = function (container) {
@@ -29,14 +29,14 @@
         </button>
         <div class="min-w-0">
           <p class="font-label-sm text-label-sm text-on-surface-variant tracking-wide">YOUSS CONNECT</p>
-          <h1 class="font-headline-sm text-headline-sm font-bold text-on-surface truncate">Bonjour, ${ACState.user.name}</h1>
+          <h1 class="font-headline-sm text-headline-sm font-bold text-on-surface truncate">${UI.t("hello")}, ${ACState.user.name}</h1>
           <p class="font-body-sm text-body-sm text-on-surface-variant truncate flex items-center gap-1">${UI.icon("location_on", "text-[14px]")}${ACState.user.city}, ${ACState.user.country}</p>
         </div>
       </div>
       <button type="button" aria-label="Notifications" onclick="App.nav('notifications')"
         class="relative w-10 h-10 rounded-full bg-surface-container-lowest border border-outline-variant/30 shadow-sm flex items-center justify-center text-on-surface active:scale-95">
         ${UI.icon("notifications", "text-primary")}
-        ${unread > 0 ? `<span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-yc-green ring-2 ring-white"></span>` : ""}
+        ${unread > 0 ? `<span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-primary ring-2 ring-white"></span>` : ""}
       </button>
     </div>`;
 
@@ -45,12 +45,12 @@
       <div class="rounded-2xl bg-gradient-to-br from-primary via-primary-container to-[#5B2A8F] p-space-16 text-white shadow-[0_12px_28px_rgba(59,20,102,.28)]">
         <div class="flex items-center justify-between gap-3">
           <div>
-            <p class="font-label-sm text-label-sm text-white/70 tracking-wide">Solde Youss Wallet</p>
+            <p class="font-label-sm text-label-sm text-white/70 tracking-wide">${UI.t("wallet")}</p>
             <p class="font-headline-md text-headline-md font-extrabold mt-1 tracking-tight">${bal}</p>
           </div>
           <button type="button" onclick="App.nav('wallet')"
             class="h-10 px-space-14 rounded-xl bg-white text-primary font-label-md text-label-md font-bold shadow-sm active:scale-95">
-            Portefeuille
+            ${UI.t("wallet_btn")}
           </button>
         </div>
       </div>
@@ -64,7 +64,7 @@
             <span class="w-14 h-14 rounded-2xl ${s.bg} ${s.fg} flex items-center justify-center shadow-sm ring-1 ring-black/5">
               ${UI.icon(s.icon, "text-[26px]", true)}
             </span>
-            <span class="font-label-sm text-label-sm font-semibold text-on-surface text-center leading-tight">${s.label}</span>
+            <span class="font-label-sm text-label-sm font-semibold text-on-surface text-center leading-tight">${UI.t(s.key)}</span>
           </button>
         `).join("")}
       </div>
@@ -75,7 +75,7 @@
             <span class="w-11 h-11 rounded-xl bg-surface-container-low text-primary flex items-center justify-center ring-1 ring-outline-variant/30">
               ${UI.icon(s.icon, "text-[20px]")}
             </span>
-            <span class="font-label-sm text-label-sm font-medium text-on-surface-variant text-center leading-tight max-w-[76px]">${s.label}</span>
+            <span class="font-label-sm text-label-sm font-medium text-on-surface-variant text-center leading-tight max-w-[76px]">${UI.t(s.key)}</span>
           </button>
         `).join("")}
       </div>
@@ -89,11 +89,11 @@
           onerror="this.style.display='none';this.parentElement.classList.add('bg-gradient-to-br','from-primary','to-primary-container')"/>
         <div class="absolute inset-0" style="background:linear-gradient(90deg, rgba(42,13,74,.94) 0%, rgba(59,20,102,.72) 55%, rgba(59,20,102,.15) 100%)"></div>
         <div class="relative z-10 p-space-16 max-w-[82%]">
-          <p class="font-label-sm text-label-sm text-white/75 tracking-wide mb-1">Culture & Tourisme · Bénin</p>
-          <h2 class="font-headline-sm text-headline-sm font-bold leading-snug mb-space-12">Abomey, Ouidah, Ganvié, Place de l'Amazone…</h2>
+          <p class="font-label-sm text-label-sm text-white/75 tracking-wide mb-1">${UI.t("banner_kicker")}</p>
+          <h2 class="font-headline-sm text-headline-sm font-bold leading-snug mb-space-12">${UI.t("banner_title")}</h2>
           <button type="button" onclick="App.nav('culturalScanner')"
-            class="inline-flex items-center gap-2 h-9 px-space-14 rounded-xl bg-yc-green text-white font-label-md text-label-md font-bold shadow-[0_6px_16px_rgba(34,197,94,.35)] active:scale-95">
-            ${UI.icon("qr_code_scanner", "text-[16px]")} Scanner
+            class="inline-flex items-center gap-2 h-9 px-space-14 rounded-xl bg-white text-primary font-label-md text-label-md font-bold shadow-sm active:scale-95">
+            ${UI.icon("qr_code_scanner", "text-[16px]")} ${UI.t("banner_scan")}
           </button>
         </div>
       </div>
