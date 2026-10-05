@@ -1,0 +1,31 @@
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Packs d'envoi / archives locales (ne pas versionner)
+AFRICA_CONNECT_ENVOI/
+YOUSS_CONNECT_ENVOI/
+AFRICA_CONNECT_PACK.zip
+YOUSS_CONNECT_PACK.zip
+youss_connect_app.zip
+*.zip
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Node / build (si ajoutés plus tard)
+node_modules/
+dist/
+build/
+.capacitor/
+android/
+ios/
