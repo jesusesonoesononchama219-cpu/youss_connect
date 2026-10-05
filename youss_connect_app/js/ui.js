@@ -1,6 +1,6 @@
 /* =========================================================
-   YOUSS CONNECT — SHARED UI HELPERS
-   Visual language aligned to Dynasty KYA mockups.
+   AFRICA CONNECT — SHARED UI HELPERS
+   Identité : noir, blanc, or, gris. Portée par KYA CORPORATION.
    ========================================================= */
 (function () {
   "use strict";
@@ -9,48 +9,38 @@
     return `<span class="material-symbols-outlined ${cls || ""} ${fill ? "fill-icon" : ""}">${name}</span>`;
   }
 
-  /* La hora, la señal y la batería las muestra el teléfono.
-     No se dibuja una barra de estado falsa (aspecto de captura). */
   function statusBar() {
     return "";
   }
 
   const I18N = {
     fr: {
-      nav_home: "Accueil", nav_activities: "Activités", nav_scan: "Scan", nav_messages: "Messages", nav_profile: "Profil",
-      hello: "Bonjour", wallet: "Solde Youss Wallet", wallet_btn: "Portefeuille",
-      tile_transport: "Transport", tile_delivery: "Livraison", tile_hotels: "Hôtels", tile_tourism: "Tourisme",
-      more_rides: "Courses planifiées", more_addr: "Adresses favorites", more_bonus: "Youss Bonus", more_plus: "Plus",
-      banner_kicker: "Culture & Tourisme · Bénin", banner_title: "Abomey, Ouidah, Ganvié, Place de l'Amazone…", banner_scan: "Scanner",
-      lang_title: "Langue", lang_fr: "Français", lang_en: "English", lang_fon: "Fon", lang_yo: "Yorùbá",
-      lang_done: "Langue : Français", settings_lang: "Langue"
+      nav_home: "Accueil", nav_explorer: "Explorer", nav_activities: "Activités", nav_wallet: "Wallet", nav_profile: "Profil",
+      hello: "Bonjour", wallet: "Africa Wallet", wallet_btn: "Portefeuille",
+      search: "Que recherchez-vous ?", nearby: "À proximité", recos: "Recommandé pour vous",
+      upcoming: "Événements à venir", discover: "Découvrez l'Afrique",
+      lang_title: "Langue", lang_done: "Langue : Français", settings_lang: "Langue"
     },
     en: {
-      nav_home: "Home", nav_activities: "Activity", nav_scan: "Scan", nav_messages: "Messages", nav_profile: "Profile",
-      hello: "Hello", wallet: "Youss Wallet balance", wallet_btn: "Wallet",
-      tile_transport: "Transport", tile_delivery: "Delivery", tile_hotels: "Hotels", tile_tourism: "Tourism",
-      more_rides: "Scheduled rides", more_addr: "Saved addresses", more_bonus: "Youss Bonus", more_plus: "More",
-      banner_kicker: "Culture & Tourism · Benin", banner_title: "Abomey, Ouidah, Ganvié, Place de l'Amazone…", banner_scan: "Scan",
-      lang_title: "Language", lang_fr: "Français", lang_en: "English", lang_fon: "Fon", lang_yo: "Yorùbá",
-      lang_done: "Language: English", settings_lang: "Language"
+      nav_home: "Home", nav_explorer: "Explore", nav_activities: "Activity", nav_wallet: "Wallet", nav_profile: "Profile",
+      hello: "Hello", wallet: "Africa Wallet", wallet_btn: "Wallet",
+      search: "What are you looking for?", nearby: "Nearby", recos: "Recommended for you",
+      upcoming: "Upcoming events", discover: "Discover Africa",
+      lang_title: "Language", lang_done: "Language: English", settings_lang: "Language"
     },
     fon: {
-      nav_home: "Aigba", nav_activities: "Azɔ lɛɛ", nav_scan: "Scan", nav_messages: "Wɛn lɛɛ", nav_profile: "Nyɛ",
-      hello: "Nú mi", wallet: "Youss Wallet sin akwɛ́", wallet_btn: "Akwɛ́",
-      tile_transport: "Zɔnlin", tile_delivery: "Nusɔ́", tile_hotels: "Xɔ lɛɛ", tile_tourism: "Yɛyi",
-      more_rides: "Zɔnlin ɖó", more_addr: "Tɛn sín", more_bonus: "Youss Bonus", more_plus: "Dɛvo",
-      banner_kicker: "Kultu & Yɛyi · Benɛ", banner_title: "Abomey, Xwéda, Ganvié, Amazone sin tɛn…", banner_scan: "Scan",
-      lang_title: "Gbè", lang_fr: "Français", lang_en: "English", lang_fon: "Fon", lang_yo: "Yorùbá",
-      lang_done: "Gbè : Fon", settings_lang: "Gbè"
+      nav_home: "Aigba", nav_explorer: "Kpɔ́n", nav_activities: "Azɔ lɛɛ", nav_wallet: "Wallet", nav_profile: "Nyɛ",
+      hello: "Nú mi", wallet: "Africa Wallet", wallet_btn: "Akwɛ́",
+      search: "Étɛ wè nɔ ɖi ?", nearby: "Ɖo nɔwiwa", recos: "Nú ɖó wè",
+      upcoming: "Hunxwé lɛɛ", discover: "Kpɔ́n Africa",
+      lang_title: "Gbè", lang_done: "Gbè : Fon", settings_lang: "Gbè"
     },
-    yo: {
-      nav_home: "Ilé", nav_activities: "Àwọn iṣẹ́", nav_scan: "Scan", nav_messages: "Ìránṣẹ́", nav_profile: "Prófaìlì",
-      hello: "Pẹ̀lẹ́", wallet: "Owó Youss Wallet", wallet_btn: "Àpò",
-      tile_transport: "Ìrìnàjò", tile_delivery: "Ìfijíṣẹ́", tile_hotels: "Ilé ìtura", tile_tourism: "Ìrìnàjò",
-      more_rides: "Ìrìnàjò tí a ṣètò", more_addr: "Àwọn àdírẹ́sì", more_bonus: "Youss Bonus", more_plus: "Siwaju",
-      banner_kicker: "Àṣà & Ìrìnàjò · Benin", banner_title: "Abomey, Ouidah, Ganvié, Place de l'Amazone…", banner_scan: "Scan",
-      lang_title: "Èdè", lang_fr: "Français", lang_en: "English", lang_fon: "Fon", lang_yo: "Yorùbá",
-      lang_done: "Èdè : Yorùbá", settings_lang: "Èdè"
+    wo: {
+      nav_home: "Kër", nav_explorer: "Seet", nav_activities: "Jëf", nav_wallet: "Wallet", nav_profile: "Profil",
+      hello: "Salaam", wallet: "Africa Wallet", wallet_btn: "Wallet",
+      search: "Looy wut ?", nearby: "Ci wetu", recos: "Ngir yaw",
+      upcoming: "Ay eveneman", discover: "Xam Afrique",
+      lang_title: "Làkk", lang_done: "Làkk : Wolof", settings_lang: "Làkk"
     }
   };
 
@@ -66,8 +56,9 @@
   function lang() { return appLang; }
 
   function setLang(id) {
-    if (!I18N[id] || id === appLang) {
-      if (I18N[id]) toast(t("lang_done"), "info");
+    if (!I18N[id]) return;
+    if (id === appLang) {
+      toast(t("lang_done"), "info");
       return;
     }
     appLang = id;
@@ -81,8 +72,8 @@
     return [
       { id: "fr", label: "Français" },
       { id: "en", label: "English" },
-      { id: "fon", label: "Fon" },
-      { id: "yo", label: "Yorùbá" }
+      { id: "wo", label: "Wolof" },
+      { id: "fon", label: "Fon" }
     ];
   }
 
@@ -103,44 +94,40 @@
   function bottomNav(active) {
     const side = (id, label, ic) => `
       <a href="javascript:void(0)" onclick="App.nav('${id}')"
-        class="flex flex-col items-center justify-center w-14 ${active === id ? "text-primary font-semibold" : "text-on-surface-variant"} py-space-4 active:scale-95 transition-transform duration-150">
+        class="flex flex-col items-center justify-center flex-1 ${active === id ? "text-on-surface font-semibold" : "text-on-surface-variant"} py-space-4 active:scale-95 transition-transform duration-150">
         ${icon(ic, "text-[24px]", active === id)}
         <span class="font-label-sm text-label-sm mt-1 tracking-wide">${label}</span>
+        ${active === id ? '<span class="mt-1 w-5 h-0.5 rounded-full bg-secondary"></span>' : '<span class="mt-1 w-5 h-0.5"></span>'}
       </a>`;
     return `
-    <nav class="w-full bg-surface-container-lowest/95 backdrop-blur-md border-t border-outline-variant/25 px-space-4 pt-space-4 pb-space-8 shadow-[0_-8px_28px_rgba(59,20,102,.08)] flex-shrink-0">
-      <div class="flex items-end justify-between w-full px-space-8">
+    <nav class="w-full bg-white/95 backdrop-blur-md border-t border-outline-variant/30 px-space-4 pt-space-4 pb-space-8 flex-shrink-0">
+      <div class="flex items-end justify-between w-full">
         ${side("home", t("nav_home"), "home")}
+        ${side("explorer", t("nav_explorer"), "explore")}
         ${side("activities", t("nav_activities"), "receipt_long")}
-        <a href="javascript:void(0)" onclick="App.nav('culturalScanner')"
-          class="flex flex-col items-center justify-center active:scale-95 transition-transform" aria-label="Scanner">
-          <span class="yc-nav-fab">${icon("qr_code_scanner", "text-[28px]", true)}</span>
-          <span class="font-label-sm text-label-sm mt-1 tracking-wide ${active === "culturalScanner" || active === "culture" ? "text-primary font-semibold" : "text-on-surface-variant"}">${t("nav_scan")}</span>
-        </a>
-        ${side("notifications", t("nav_messages"), "chat_bubble")}
+        ${side("wallet", t("nav_wallet"), "account_balance_wallet")}
         ${side("profile", t("nav_profile"), "person")}
       </div>
-      <div class="w-28 h-1 bg-outline-variant/40 rounded-full mx-auto mt-2"></div>
     </nav>`;
   }
 
   function primaryButton(label, onclick, opts) {
     opts = opts || {};
     const disabled = opts.disabled ? "opacity-40 pointer-events-none" : "";
-    const green = "bg-primary-container text-on-primary shadow-[0_8px_20px_rgba(59,20,102,.22)] active:bg-primary";
-    return `<button onclick="${onclick}" class="w-full h-12 rounded-2xl ${green} font-label-lg text-label-lg font-bold transition-all duration-150 flex items-center justify-center gap-2 active:scale-[0.98] ${disabled}">
+    const cls = "bg-secondary text-on-secondary shadow-[0_8px_20px_rgba(201,162,39,.28)] active:brightness-95";
+    return `<button onclick="${onclick}" class="w-full h-12 rounded-2xl ${cls} font-label-lg text-label-lg font-bold transition-all duration-150 flex items-center justify-center gap-2 active:scale-[0.98] ${disabled}">
       <span>${label}</span>${opts.icon ? icon(opts.icon, "text-[18px]") : ""}
     </button>`;
   }
 
   function secondaryButton(label, onclick) {
-    return `<button onclick="${onclick}" class="w-full h-12 rounded-2xl bg-surface-container-lowest border border-outline-variant/40 text-on-surface font-label-lg text-label-lg font-semibold shadow-sm active:scale-[0.98] transition-transform duration-150 flex items-center justify-center gap-2">${label}</button>`;
+    return `<button onclick="${onclick}" class="w-full h-12 rounded-2xl bg-white border border-outline-variant/50 text-on-surface font-label-lg text-label-lg font-semibold shadow-sm active:scale-[0.98] transition-transform duration-150 flex items-center justify-center gap-2">${label}</button>`;
   }
 
   function badge(text, tone) {
     const tones = {
-      success: "bg-tertiary-container/15 text-tertiary",
-      primary: "bg-primary-container text-on-primary",
+      success: "bg-secondary/15 text-tertiary",
+      primary: "bg-black text-white",
       warn: "bg-error-container text-on-error-container",
       neutral: "bg-surface-container-high text-on-surface-variant"
     };
@@ -156,11 +143,11 @@
       document.body.appendChild(el);
     }
     const tones = {
-      success: "bg-tertiary text-on-tertiary",
+      success: "bg-on-surface text-white",
       error: "bg-error text-on-error",
       info: "bg-inverse-surface text-inverse-on-surface"
     };
-    el.className = "toast fixed left-1/2 -translate-x-1/2 bottom-28 z-[999] px-4 py-3 rounded-2xl shadow-[0_12px_32px_rgba(26,18,40,.25)] font-label-md text-label-md font-semibold text-center max-w-[320px] " + (tones[tone] || tones.info);
+    el.className = "toast fixed left-1/2 -translate-x-1/2 bottom-28 z-[999] px-4 py-3 rounded-2xl shadow-[0_12px_32px_rgba(0,0,0,.25)] font-label-md text-label-md font-semibold text-center max-w-[320px] " + (tones[tone] || tones.info);
     el.textContent = message;
     el.style.opacity = "1";
     clearTimeout(toastTimer);
@@ -175,7 +162,7 @@
     overlay.className = "fixed inset-0 z-[900] flex items-end justify-center";
     overlay.innerHTML = `
       <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px]" onclick="UI.closeSheet()"></div>
-      <div class="relative w-full max-w-max-width-mobile bg-surface-container-lowest rounded-t-3xl p-space-20 pb-8 shadow-2xl max-h-[85vh] overflow-y-auto">
+      <div class="relative w-full max-w-max-width-mobile bg-white rounded-t-3xl p-space-20 pb-8 shadow-2xl max-h-[85vh] overflow-y-auto">
         <div class="w-10 h-1.5 bg-outline-variant/60 rounded-full mx-auto mb-4"></div>
         ${innerHtml}
       </div>`;
@@ -190,18 +177,17 @@
   function emptyState({ icon: ic, title, body, actionLabel, actionOnclick }) {
     return `
     <div class="flex-1 flex flex-col items-center justify-center text-center px-space-32 py-space-40">
-      <div class="w-20 h-20 rounded-full bg-gradient-to-br from-surface-container-low to-surface-container flex items-center justify-center text-primary mb-space-16 shadow-sm">
+      <div class="w-20 h-20 rounded-full bg-surface-container-low flex items-center justify-center text-secondary mb-space-16">
         ${icon(ic, "text-[40px]")}
       </div>
       <h3 class="font-headline-sm text-headline-sm font-bold text-on-surface mb-space-8">${title}</h3>
       <p class="font-body-sm text-body-sm text-on-surface-variant mb-space-20 max-w-[260px] leading-relaxed">${body}</p>
-      ${actionLabel ? primaryButton(actionLabel, actionOnclick, { icon: "arrow_forward", green: true }) : ""}
+      ${actionLabel ? primaryButton(actionLabel, actionOnclick, { icon: "arrow_forward" }) : ""}
     </div>`;
   }
 
   function skeletonBoot() {
     return `
-    ${statusBar()}
     <div class="w-full px-space-20 py-space-12 flex items-center justify-between">
       <div class="flex flex-col space-y-2">
         <div class="h-4 w-32 bg-surface-container-high rounded animate-pulse"></div>
@@ -212,9 +198,6 @@
     <main class="flex-1 flex flex-col space-y-space-20 px-space-20">
       <div class="h-12 w-full bg-surface-container-high rounded-xl animate-pulse"></div>
       <div class="h-28 w-full bg-surface-container-high rounded-xl animate-pulse"></div>
-      <div class="grid grid-cols-3 gap-3">
-        ${Array.from({ length: 6 }).map(() => `<div class="h-20 bg-surface-container-high rounded-xl animate-pulse"></div>`).join("")}
-      </div>
     </main>`;
   }
 

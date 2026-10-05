@@ -29,14 +29,14 @@
       mode: "particulier" // or "business"
     },
     user: {
-      name: "Youss",
-      fullName: "Youss Adjovi",
+      name: "Alassane",
+      fullName: "Alassane Koffi",
       phone: "+229 97 00 00 00",
-      email: "youss@example.com",
+      email: "alassane@example.com",
       city: "Cotonou",
       country: "Bénin",
       dial: "+229",
-      avatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuBiNsNoL3bFz6CndYM6dyvtP5xsVzyyBs-5Ikb8DpzmFLN5qwh-O2mnTHCJkhp5uYKoO6DmrTi7VOJ9HgEBibYplwh9q735sMKe-pqk8H4rrcAARSM1MhYmF3mM6E-efCCWt8bwKDDCokR9Q6BiPs2EaVMErhJdSKyNrIXpT-ZP9C8XCRemBWWPgnmRYpR2QfEDtrcvgd_vcJfw4f9w8thWKKzBa-tRD5Mv6m4iQb94wjNZagPx-TQ",
+      avatar: "https://i.pravatar.cc/200?u=alassane-koffi",
       verified: true
     },
     wallet: {
@@ -68,8 +68,8 @@
       { id: uid("act"), service: "livraison", title: "Livraison Dantokpa → Ganhi", subtitle: "Arrivée estimée 16:45", amount: null, status: "En cours", icon: "local_shipping" }
     ],
     notifications: [
-      { id: uid("ntf"), title: "Paiement confirmé", body: "Votre course vers Haie Vive a été réglée via Youss Wallet.", read: false, service: "wallet", date: "Aujourd'hui, 14:21" },
-      { id: uid("ntf"), title: "Points Rewards gagnés", body: "+25 points ajoutés à votre solde Youss Bonus.", read: false, service: "rewards", date: "Aujourd'hui, 14:21" },
+      { id: uid("ntf"), title: "Paiement confirmé", body: "Votre course vers Haie Vive a été réglée via Africa Wallet.", read: false, service: "wallet", date: "Aujourd'hui, 14:21" },
+      { id: uid("ntf"), title: "Points Africa Rewards", body: "+25 points ajoutés à votre solde Africa Rewards.", read: false, service: "rewards", date: "Aujourd'hui, 14:21" },
       { id: uid("ntf"), title: "Livraison en cours", body: "Votre coursier est en route vers Ganhi, Cotonou.", read: true, service: "livraison", date: "Aujourd'hui, 12:05" }
     ],
     cart: { restaurant: null, items: [], market: [] },
@@ -107,7 +107,7 @@
     State.rewards.history.unshift({ id: uid("rwd"), label, points, date: "Aujourd'hui" });
     if (State.rewards.points >= State.rewards.nextTierAt && State.rewards.tier === "Silver") {
       State.rewards.tier = "Gold";
-      addNotification("Nouveau statut débloqué", "Félicitations, vous êtes passé Gold Youss Bonus.", "rewards");
+      addNotification("Nouveau statut débloqué", "Félicitations, vous êtes passé Gold Africa Rewards.", "rewards");
     }
   }
 
@@ -143,10 +143,10 @@
       id: uid("txn"), label, amount: -amount, type: "debit", date: "À l'instant"
     });
     addActivity({ service, title: label, amount, status: "Terminé", icon: iconForService(service) });
-    addNotification("Paiement confirmé", label + " a été réglé via Youss Wallet (" + fmtFCFA(amount) + ").", "wallet");
+    addNotification("Paiement confirmé", label + " a été réglé via Africa Wallet (" + fmtFCFA(amount) + ").", "wallet");
     if (pointsEarned > 0) {
       addRewardPoints(pointsEarned, label);
-      addNotification("Points Rewards gagnés", "+" + pointsEarned + " points ajoutés à votre solde Youss Bonus.", "rewards");
+      addNotification("Points Africa Rewards", "+" + pointsEarned + " points ajoutés à votre solde Africa Rewards.", "rewards");
     }
     emit();
     return { ok: true };

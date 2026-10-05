@@ -39,6 +39,11 @@
 
   /* Tarification (démo) : base + prix au km routier */
   const FARE = { base: 1500, perKm: 350, min: 2000 };
+  const VEHICLES = [
+    { id: "moto", label: "Moto", icon: "two_wheeler", mult: 0.65, etaMult: 0.7, avail: "2 min" },
+    { id: "car", label: "Voiture", icon: "directions_car", mult: 1, etaMult: 1, avail: "5 min" },
+    { id: "premium", label: "Premium", icon: "airport_shuttle", mult: 1.55, etaMult: 0.95, avail: "8 min" }
+  ];
   const URBAN_SPEED_KMH = 27;
 
   const trip = {
@@ -49,6 +54,7 @@
     toLat: POIS[1].lat,
     toLng: POIS[1].lng,
     km: 0,
+    vehicle: "car",
     sec: 0,
     route: null,       /* { key, coords:[[lat,lng]], km, sec, real } */
     pickMode: "from",
@@ -191,9 +197,15 @@
     return trip.km;
   }
 
+  function vehicleOf() {
+    return VEHICLES.find(function (v) { return v.id === trip.vehicle; }) || VEHICLES[1];
+  }
+
   function priceFromDistance() {
     const km = updateTripDistance() || 5;
-    return Math.max(FARE.min, Math.round((FARE.base + km * FARE.perKm) / 100) * 100);
+    const v = vehicleOf();
+    const base = Math.max(FARE.min, Math.round((FARE.base + km * FARE.perKm) / 100) * 100);
+    return Math.round((base * v.mult) / 100) * 100;
   }
 
   function fmtKm(km) {
@@ -391,7 +403,7 @@
         : "Tarif : " + ACStore.fmtFCFA(FARE.base) + " + " + ACStore.fmtFCFA(FARE.perKm) + " par km";
     }
     const btn = document.getElementById("request-btn");
-    if (btn) btn.textContent = "Demander un Youss" + (trip.km ? " · " + ACStore.fmtFCFA(price) : "");
+    if (btn) btn.textContent = "Confirmer la course" + (trip.km ? " · " + ACStore.fmtFCFA(price) : "");
     const hint = document.getElementById("pick-hint");
     if (hint) {
       hint.textContent = trip.pickMode === "from"
@@ -989,19 +1001,27 @@
             <p class="font-label-sm text-label-sm text-on-surface-variant">durée estimée</p>
           </div>
         </div>
-        <div class="rounded-2xl border-2 border-[#4285F4]/40 bg-[#4285F4]/10 p-3 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-3 min-w-0">
-            <span class="w-11 h-11 rounded-full bg-white flex items-center justify-center flex-shrink-0">${UI.icon("directions_car", "text-[#4285F4] text-[24px]")}</span>
-            <div class="min-w-0">
-              <p class="font-label-md text-label-md font-bold">Prix de la course</p>
-              <p class="font-label-sm text-label-sm text-on-surface-variant truncate" id="price-formula">Tarif : ${ACStore.fmtFCFA(FARE.base)} + ${ACStore.fmtFCFA(FARE.perKm)} par km</p>
-            </div>
-          </div>
-          <p class="font-headline-sm text-headline-sm font-extrabold text-on-surface flex-shrink-0" id="trip-price">${trip.km ? ACStore.fmtFCFA(priceFromDistance()) : "—"}</p>
+        <div class="space-y-2">
+          ${VEHICLES.map(function (v) {
+            const sel = trip.vehicle === v.id;
+            const p = Math.round((Math.max(FARE.min, Math.round((FARE.base + (trip.km || 5) * FARE.perKm) / 100) * 100) * v.mult) / 100) * 100;
+            return `<button type="button" onclick="Screens._pickVehicle('${v.id}')" class="w-full rounded-2xl border p-3 flex items-center justify-between ${sel ? "border-secondary bg-secondary/10" : "border-outline-variant/30 bg-white"}">
+              <div class="flex items-center gap-3 min-w-0">
+                ${UI.icon(v.icon, "text-[22px]")}
+                <div class="text-left min-w-0">
+                  <p class="font-label-md text-label-md font-bold">${v.label}</p>
+                  <p class="font-label-sm text-label-sm text-on-surface-variant">${v.avail} · ${trip.km ? formatEta(Math.round(etaSecondsFromKm(trip.km) * v.etaMult)) : "—"}</p>
+                </div>
+              </div>
+              <p class="font-title-md text-title-md font-extrabold">${trip.km ? ACStore.fmtFCFA(p) : "—"}</p>
+            </button>`;
+          }).join("")}
         </div>
+        <p class="font-label-sm text-label-sm text-on-surface-variant truncate" id="price-formula">Tarif de base : ${ACStore.fmtFCFA(FARE.base)} + ${ACStore.fmtFCFA(FARE.perKm)}/km</p>
+        <p class="hidden" id="trip-price">${trip.km ? ACStore.fmtFCFA(priceFromDistance()) : "—"}</p>
         <button type="button" id="request-btn" onclick="Screens._transportRequest()"
-          class="w-full h-12 rounded-full bg-[#1a73e8] text-white font-label-lg text-label-lg font-bold shadow-md active:scale-[0.99]">
-          Demander un Youss${trip.km ? " · " + ACStore.fmtFCFA(priceFromDistance()) : ""}
+          class="w-full h-12 rounded-full bg-black text-white font-label-lg text-label-lg font-bold shadow-md active:scale-[0.99]">
+          Confirmer la course${trip.km ? " · " + ACStore.fmtFCFA(priceFromDistance()) : ""}
         </button>
       </div>
     </div>`;
@@ -1092,6 +1112,11 @@
     syncInputs();
   };
 
+  Screens._pickVehicle = function (id) {
+    trip.vehicle = id;
+    App.replace("transport");
+  };
+
   Screens._transportRequest = function () {
     if (trip.fromLat == null || trip.fromLng == null) {
       UI.toast("Indiquez d'où vous partez.", "error");
@@ -1127,15 +1152,29 @@
       if (App.current && App.current.id === "transportSearching") {
         trip.driver = {
           name: "Koffi Adjovi",
-          car: "Toyota Corolla",
+          car: trip.vehicle === "moto" ? "Honda CG 125" : trip.vehicle === "premium" ? "Toyota Camry" : "Toyota Corolla",
           plate: "RB-4821-A",
           rating: 4.8,
           phone: "+229 97 11 22 33",
           avatar: "https://i.pravatar.cc/100?u=koffi-adjovi"
         };
-        App.replace("transportInRide");
+        App.replace("transportDriverFound");
       }
     }, 2200);
+  };
+
+  Screens.transportDriverFound = function (container) {
+    const d = trip.driver || { name: "Koffi Adjovi", car: "Toyota Corolla", plate: "RB-4821-A", rating: 4.8, avatar: "https://i.pravatar.cc/100?u=koffi-adjovi" };
+    const topbar = UI.topBar({ title: "Chauffeur trouvé", back: "App.nav('home')" });
+    const body = `
+    <section class="yc-card p-space-20 flex flex-col items-center text-center space-y-3">
+      <img class="w-20 h-20 rounded-full object-cover" src="${d.avatar}" alt=""/>
+      <h2 class="font-headline-sm text-headline-sm font-bold">${d.name}</h2>
+      <p class="font-body-sm text-body-sm text-on-surface-variant">★ ${d.rating} · ${d.car} · ${d.plate}</p>
+      <p class="font-title-md text-title-md font-bold text-secondary">Arrivée dans 3 min</p>
+    </section>
+    <div class="pt-space-16">${UI.primaryButton("Suivre la course", "App.replace('transportInRide')")}</div>`;
+    Shell.render(container, { topbar, body, nav: false });
   };
 
   Screens.transportSearching = function (container) {
@@ -1190,7 +1229,7 @@
             </div>
           </div>
           <div class="h-1.5 rounded-full bg-surface-container-high overflow-hidden">
-            <div id="ride-progress" class="h-full rounded-full transition-[width] duration-200" style="width:0%;background:#3B1466"></div>
+            <div id="ride-progress" class="h-full rounded-full transition-[width] duration-200" style="width:0%;background:#C9A227"></div>
           </div>
           <p class="font-label-sm text-label-sm text-on-surface-variant">${fmtKm(trip.km)} par la route · ≈ ${formatEta(etaSec)} · ${ACStore.fmtFCFA(FARE.base)} + ${ACStore.fmtFCFA(FARE.perKm)}/km</p>
         </div>
@@ -1227,7 +1266,7 @@
     <div class="flex-1 flex flex-col items-center justify-center text-center space-y-space-20 py-space-24">
       <div class="w-20 h-20 rounded-full bg-error-container flex items-center justify-center text-on-error-container">${UI.icon("sos", "text-[36px]")}</div>
       <h2 class="font-headline-md text-headline-md font-bold">Besoin d'aide immédiate ?</h2>
-      <p class="font-body-sm text-body-sm text-on-surface-variant max-w-[260px]">Votre position et les détails de votre course seront partagés avec le support Dynasty KYA.</p>
+      <p class="font-body-sm text-body-sm text-on-surface-variant max-w-[260px]">Votre position et les détails de votre course seront partagés avec le support AFRICA CONNECT.</p>
       <div class="w-full space-y-3">
         ${UI.primaryButton("Alerter le support", "Screens._sosAlert()", { icon: "campaign" })}
         ${UI.secondaryButton("Retour à la course", "App.back()")}
@@ -1237,7 +1276,7 @@
   };
 
   Screens._sosAlert = function () {
-    ACStore.addNotification("Alerte SOS envoyée", "Le support Dynasty KYA a été notifié.", "transport");
+    ACStore.addNotification("Alerte SOS envoyée", "Le support AFRICA CONNECT a été notifié.", "transport");
     ACStore.emit();
     UI.toast("Support alerté. Restez en ligne.", "success");
     App.back();
@@ -1265,7 +1304,7 @@
         <span class="font-body-md text-body-md">Total à payer</span>
         <span class="font-label-lg text-label-lg font-bold text-primary">${ACStore.fmtFCFA(trip.price)}</span>
       </div>
-      <div class="w-full pt-space-8">${UI.primaryButton("Payer avec Youss Wallet", "Screens._transportPay()", { icon: "account_balance_wallet", green: true })}</div>
+      <div class="w-full pt-space-8">${UI.primaryButton("Payer avec Africa Wallet", "Screens._transportPay()", { icon: "account_balance_wallet" })}</div>
     </div>`;
     Shell.render(container, { topbar, body, nav: false });
   };
@@ -1280,7 +1319,7 @@
       pointsEarned: 25,
       meta: { from: trip.from, to: trip.to, km: String(trip.km || "") }
     }), function () {
-      UI.toast("Paiement réussi · +25 Youss Bonus", "success");
+      UI.toast("Paiement réussi · +25 Africa Rewards", "success");
       App.resetTo("home");
     }, function () {
       App.nav("paymentFailed");
@@ -1294,7 +1333,7 @@
     <div class="flex-1 flex flex-col items-center justify-center text-center space-y-space-16 py-space-40">
       ${UI.icon("error", "text-error text-[48px]")}
       <h2 class="font-headline-sm text-headline-sm font-bold">Paiement impossible</h2>
-      <p class="font-body-sm text-body-sm text-on-surface-variant max-w-[260px]">Solde insuffisant ou hors ligne. Rechargez votre Youss Wallet.</p>
+      <p class="font-body-sm text-body-sm text-on-surface-variant max-w-[260px]">Solde insuffisant ou hors ligne. Rechargez Africa Wallet.</p>
       ${UI.primaryButton("Recharger", "App.nav('walletTopup')", { green: true })}
       ${UI.secondaryButton("Retour", "App.back()")}
     </div>`;

@@ -1,13 +1,13 @@
 {
-  "name": "YOUSS CONNECT",
-  "short_name": "YoussConnect",
-  "description": "Une seule application pour vivre l'Afrique au quotidien. Par KYA CORPORATION.",
+  "name": "AFRICA CONNECT",
+  "short_name": "Africa Connect",
+  "description": "Une seule application pour vivre l'Afrique au quotidien. Portée par KYA CORPORATION.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#f8f9ff",
-  "theme_color": "#1264f5",
+  "background_color": "#FAFAFA",
+  "theme_color": "#0A0A0A",
   "lang": "fr",
   "icons": [
     { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },

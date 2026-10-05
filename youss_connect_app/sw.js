@@ -3,7 +3,7 @@
    Stratégie : network-first pour le code (HTML/JS), cache-first pour les
    icônes. Ainsi chaque déploiement est pris en compte immédiatement quand
    le réseau est disponible, tout en gardant un fallback hors ligne. */
-const VERSION = "youss-connect-v5";
+const VERSION = "africa-connect-v1";
 const CACHE = VERSION;
 const ASSETS = [
   "./",

@@ -11,9 +11,11 @@
   Screens.delivery = function (container) {
     const topbar = UI.topBar({ title: "Livraison", subtitle: "Que souhaitez-vous faire livrer ?", back: "App.nav('home')" });
     const body = `
-    <section class="flex rounded-xl bg-surface-container-low p-1">
-      <button type="button" onclick="Screens._dlMode('repas')" class="flex-1 h-10 rounded-lg font-label-md text-label-md font-semibold ${parcel.mode === "repas" ? "bg-white text-primary shadow-sm" : "text-on-surface-variant"}">Livrer un repas</button>
-      <button type="button" onclick="Screens._dlMode('colis')" class="flex-1 h-10 rounded-lg font-label-md text-label-md font-semibold ${parcel.mode === "colis" ? "bg-white text-primary shadow-sm" : "text-on-surface-variant"}">Envoyer un colis</button>
+    <section class="grid grid-cols-2 gap-2">
+      ${["repas", "colis", "documents", "produits"].map(function (m) {
+        const labels = { repas: "Repas", colis: "Colis", documents: "Documents", produits: "Produits" };
+        return `<button type="button" onclick="Screens._dlMode('${m}')" class="h-11 rounded-2xl font-label-md text-label-md font-semibold ${parcel.mode === m ? "bg-black text-white" : "bg-white border border-outline-variant/30"}">${labels[m]}</button>`;
+      }).join("")}
     </section>
     <section class="flex flex-col space-y-3">
       <label class="flex flex-col space-y-1"><span class="font-label-md text-label-md text-on-surface-variant">Adresse de récupération</span>
@@ -73,7 +75,7 @@
     const body = `
     <div class="flex-1 flex flex-col items-center justify-center text-center space-y-space-20 py-space-40">
       <div class="relative w-24 h-24 rounded-full bg-primary-container/10 flex items-center justify-center"><div class="absolute inset-0 rounded-full pulse-ring"></div>${UI.icon("local_shipping", "text-primary-container text-[40px]")}</div>
-      <h2 class="font-headline-sm text-headline-sm font-bold">Recherche d'un coursier disponible...</h2>
+      <h2 class="font-headline-sm text-headline-sm font-bold">Recherche d'un livreur...</h2>
     </div>`;
     Shell.render(container, { topbar, body, nav: false });
     setTimeout(() => { if (App.current.id === "deliverySearching") App.replace("deliveryTracking"); }, 2000);

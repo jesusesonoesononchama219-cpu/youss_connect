@@ -14,7 +14,8 @@
       body: "Site du patrimoine mondial de l'UNESCO depuis 1985. Les palais des rois du Dahomey (XVIIIe–XIXe s.) abritent aujourd'hui le Musée historique d'Abomey, témoin de l'histoire du royaume et de ses traditions.",
       tone: "from-[#5B2A8F] to-[#3B1466]",
       icon: "account_balance",
-      img: WM("Palais_du_roi_Glele.jpg")
+      img: WM("Palais_du_roi_Glele.jpg"),
+      city: "Cotonou"
     },
     c2: {
       id: "c2",
@@ -23,7 +24,8 @@
       body: "Monument situé au bout de la Route des Esclaves à Ouidah. Elle marque le point d'embarquement des captifs vers les Amériques et constitue un haut lieu de mémoire de la traite atlantique au Bénin.",
       tone: "from-[#0E7C6B] to-[#0B5A4D]",
       icon: "castle",
-      img: WM("Door_of_no_return.jpg")
+      img: WM("Door_of_no_return.jpg"),
+      city: "Cotonou"
     },
     c3: {
       id: "c3",
@@ -32,7 +34,8 @@
       body: "Place publique de Cotonou inaugurée en 2022, dominée par la statue de l'Amazone. Elle rend hommage aux Agojié, guerrières du royaume du Dahomey, symbole fort de l'identité béninoise.",
       tone: "from-[#B45309] to-[#7C2D12]",
       icon: "museum",
-      img: WM("Monument_de_l'Amazone_au_Benin.jpg")
+      img: WM("Monument_de_l'Amazone_au_Benin.jpg"),
+      city: "Cotonou"
     },
     c4: {
       id: "c4",
@@ -41,7 +44,8 @@
       body: "Surnommé la « Venise de l'Afrique », Ganvié est un village sur pilotis sur le lac Nokoué, près de Cotonou. Ses habitants, les Tofinu, y vivent de la pêche et du commerce depuis plusieurs siècles.",
       tone: "from-[#0369A1] to-[#0C4A6E]",
       icon: "water",
-      img: WM("Ganvié.jpg")
+      img: WM("Ganvié.jpg"),
+      city: "Cotonou"
     },
     c5: {
       id: "c5",
@@ -50,7 +54,38 @@
       body: "Plus grand marché ouvert d'Afrique de l'Ouest, Dantokpa s'étend le long de la lagune de Cotonou. On y trouve tissus wax, produits alimentaires, artisanat et commerce régional.",
       tone: "from-[#CA8A04] to-[#854D0E]",
       icon: "storefront",
-      img: WM("Dantokpa.jpg")
+      img: WM("Dantokpa.jpg"),
+      city: "Cotonou"
+    },
+    c6: {
+      id: "c6",
+      name: "Île de Gorée",
+      place: "Dakar · Sénégal",
+      body: "Île classée au patrimoine mondial, lieu de mémoire de la traite atlantique et destination culturelle majeure de Dakar.",
+      tone: "from-[#1E3A5F] to-[#0F172A]",
+      icon: "castle",
+      img: WM("Gorée_Maison_des_Esclaves.jpg"),
+      city: "Dakar"
+    },
+    c7: {
+      id: "c7",
+      name: "Monument de l'Indépendance",
+      place: "Lomé · Togo",
+      body: "Place et monument emblématiques du centre de Lomé, point de départ pour découvrir la capitale togolaise.",
+      tone: "from-[#14532D] to-[#052e16]",
+      icon: "account_balance",
+      img: WM("Monument_de_l'Indépendance_Lomé.jpg"),
+      city: "Lomé"
+    },
+    c8: {
+      id: "c8",
+      name: "Independence Arch",
+      place: "Accra · Ghana",
+      body: "Arc de l'Indépendance à Accra, symbole de l'histoire contemporaine du Ghana et des cérémonies nationales.",
+      tone: "from-[#7C2D12] to-[#1C1917]",
+      icon: "museum",
+      img: WM("Independence_Arch_Accra.jpg"),
+      city: "Accra"
     }
   };
   const COPY = {
@@ -68,12 +103,9 @@
       c4: { body: "Yɛ nɔ ylɔ ɛ ɖɔ “Venise Afrique tɔn”. Ganvié nyí toxo ɖo tɔ Nokoué jí, ɖo Kutɔnu gɔ. Tofinu lɛɛ nɔ nɔ fí, yɛ nɔ hɛn hwe kpó adɔ kpó." },
       c5: { body: "Axi ɖaxo ɖo Afrique ɔ sin yɔyɔ. Dantokpa ɖo Kutɔnu sin tɔ gɔ. É ɖo avɔ wax, nuɖuɖu, nǔwiwa kpó axi kpó." }
     },
-    yo: {
-      c1: { body: "Ilé-ìṣọ̀kan UNESCO láti ọdún 1985. Àwọn ààfin ọba Dahomey (ọ̀rúndún 18–19) ni Músíọ̀mù ìtàn Abomey lónìí, ẹlẹ́rìí ìtàn ìjọba àti àṣà rẹ̀." },
-      c2: { body: "Ère ní òpin Ọ̀nà Ẹrú ní Ouidah. Ibẹ̀ ni a ti ń gbé àwọn ẹlẹ́wọ̀n lọ sí Amẹ́ríkà, ibi ìrántí òwò ẹrú ní Benin." },
-      c3: { body: "Àárín ìlú Cotonou, tí wọ́n ṣí ní ọdún 2022, pẹ̀lú ère Amazon. Ó ń bọ̀wọ̀ fún àwọn Agojie, obìnrin jagunjagun ìjọba Dahomey." },
-      c4: { body: "Wọ́n ń pè é ní “Venice Áfíríkà”. Ganvié jẹ́ abúlé lórí omi Lake Nokoué, nítòsí Cotonou. Àwọn Tofinu ti ń gbé ibẹ̀ pẹ̀lú iṣẹ́ ẹja àti òwò fún ọ̀pọ̀ ọdún." },
-      c5: { body: "Ọjà òde tó tóbi jù lọ ní Ìwọ̀-oòrùn Áfíríkà. Dantokpa wà lẹ́bàá adágún Cotonou. Aṣọ wax, oúnjẹ, iṣẹ́ ọnà àti òwò agbègbè wà níbẹ̀." }
+    wo: {
+      c1: { body: "Kër yu mag yu Dahomey, UNESCO. Palais yu Abomey dañuy wax ci taariix ak aada." },
+      c6: { body: "Dun Gorée ci Dakar, bérab yu am solo ci taariix Afrique." }
     }
   };
 
@@ -81,7 +113,7 @@
     fr: { overview: "Aperçu", history: "Histoire", visit: "Visite", info: "Infos", lang: "Langue", national: "Langues nationales du Bénin", saved: "Sauvegardé ✓", save: "Sauvegarder", explore: "Explorer autour", qr: "Afficher le QR Code du site", discover: "Découverte" },
     en: { overview: "Overview", history: "History", visit: "Visit", info: "Info", lang: "Language", national: "National languages of Benin", saved: "Saved ✓", save: "Save", explore: "Explore nearby", qr: "Show the site QR code", discover: "Discover" },
     fon: { overview: "Kpɔ́", history: "Tan", visit: "Yɛyi", info: "Xó", lang: "Gbè", national: "Benɛ sin gbè lɛɛ", saved: "Hɛn ✓", save: "Hɛn", explore: "Kpɔ́ tɛn ɔ", qr: "Xlɛ́ QR Code tɛn ɔ tɔn", discover: "Nǔxɔ́" },
-    yo: { overview: "Àkótán", history: "Ìtàn", visit: "Ìbẹ̀wò", info: "Ìwífún", lang: "Èdè", national: "Àwọn èdè orílẹ̀-èdè Benin", saved: "Ti fipamọ́ ✓", save: "Fipamọ́", explore: "Ṣàwárí yíká", qr: "Fi QR Code ibi yìí hàn", discover: "Ṣàwárí" }
+    wo: { overview: "Gëstu", history: "Taariix", visit: "Seet", info: "Xibaar", lang: "Làkk", national: "Yeneen làkk yu Afrique", saved: "Denc nañu ✓", save: "Denc", explore: "Seet ci wetu", qr: "Wone QR Code", discover: "Xam" }
   };
 
   function uiCopy() {
@@ -123,30 +155,30 @@
     </button>`;
   }
 
-  Screens.culture = function (container) {
-    const topbar = UI.topBar({ title: "Tourisme & Culture", subtitle: "Découvrez le Bénin", back: "App.nav('home')" });
+  Screens.culture = function (container, params) {
+    const city = params && params.city;
+    const sites = Object.values(SITES).filter(s => !city || (s.city || "").includes(city) || (s.place || "").includes(city));
+    const topbar = UI.topBar({ title: "Découvrez l'Afrique", subtitle: city || "Cotonou · Dakar · Lomé · Accra", back: "App.nav('home')" });
     const body = `
     <section onclick="App.nav('culturalScanner')"
-      class="rounded-2xl bg-gradient-to-br from-primary to-primary-container text-white p-space-16 flex items-center justify-between cursor-pointer active:scale-[0.99] transition-transform shadow-lg shadow-primary/20">
+      class="rounded-2xl bg-black text-white p-space-16 flex items-center justify-between cursor-pointer active:scale-[0.99]">
       <div>
-        <p class="font-label-sm text-label-sm text-white/70 mb-1">Scanner un monument</p>
-        <h3 class="font-title-md text-title-md font-bold">Histoire du patrimoine béninois</h3>
+        <p class="font-label-sm text-label-sm text-secondary mb-1">Scanner un monument</p>
+        <h3 class="font-title-md text-title-md font-bold">Caméra culturelle AFRICA CONNECT</h3>
       </div>
-      <span class="w-12 h-12 rounded-full bg-primary flex items-center justify-center">${UI.icon("qr_code_scanner", "text-[24px]", true)}</span>
+      <span class="w-12 h-12 rounded-full bg-secondary text-on-secondary flex items-center justify-center">${UI.icon("qr_code_scanner", "text-[24px]", true)}</span>
     </section>
-
+    <section class="grid grid-cols-2 gap-3">
+      ${["Cotonou", "Dakar", "Lomé", "Accra"].map(c => `
+      <button type="button" onclick="App.nav('culture', {city:'${c}'})" class="h-20 rounded-2xl ${city === c ? "bg-secondary text-on-secondary" : "bg-zinc-900 text-white"} p-space-12 text-left font-title-md font-bold">${c}</button>`).join("")}
+    </section>
     <section class="flex flex-col space-y-space-12">
-      <h2 class="font-headline-sm text-headline-sm font-bold text-on-surface">Lieux emblématiques</h2>
+      <h2 class="font-headline-sm text-headline-sm font-bold">Monuments, musées et traditions</h2>
       <div class="flex gap-3 overflow-x-auto no-scrollbar pb-1">
-        ${Object.values(SITES).map(siteCard).join("")}
+        ${(sites.length ? sites : Object.values(SITES)).map(siteCard).join("")}
       </div>
-    </section>
-
-    <section class="rounded-2xl border border-outline-variant/30 bg-surface-container-lowest p-space-16">
-      <p class="font-label-md text-label-md font-bold text-on-surface mb-1">Destinations</p>
-      <p class="font-body-sm text-body-sm text-on-surface-variant">Cotonou · Porto-Novo · Ouidah · Abomey · Parakou · Natitingou · Grand-Popo · Ganvié</p>
     </section>`;
-    Shell.render(container, { topbar, body, nav: "culturalScanner" });
+    Shell.render(container, { topbar, body, nav: false });
   };
 
   Screens.cultureDetail = function (container, params) {
@@ -192,7 +224,7 @@
           { id: "fr", label: "FR" },
           { id: "en", label: "EN" },
           { id: "fon", label: "Fon" },
-          { id: "yo", label: "Yoruba" }
+          { id: "wo", label: "Wolof" }
         ].map((l) => `
           <button type="button" onclick="Screens._setLang('${l.id}')"
             class="flex-1 h-10 rounded-xl border font-label-sm text-label-sm font-semibold ${current === l.id ? "border-primary bg-primary/10 text-primary" : "border-outline-variant/40 text-on-surface-variant"}">
@@ -205,7 +237,7 @@
 
     <div class="flex gap-3">
       ${UI.secondaryButton(saved.has(s.id) ? c.saved : c.save, `Screens._toggleSaveSite('${s.id}')`)}
-      ${UI.primaryButton(c.explore, "App.nav('restaurants')")}
+      ${UI.primaryButton(c.explore, "App.nav('culture')")}
     </div>
     <button type="button" onclick="Screens._showSiteQr('${s.id}')"
       class="w-full flex items-center justify-center gap-2 py-2 font-label-md text-label-md font-semibold text-primary active:opacity-70">
@@ -427,7 +459,7 @@
         <div id="yc-site-qr" class="w-[200px] h-[200px] bg-white rounded-xl border border-outline-variant/30 flex items-center justify-center p-2">
           <div class="w-8 h-8 rounded-full border-4 border-primary/20 border-t-primary animate-spin"></div>
         </div>
-        <p class="font-label-sm text-label-sm text-on-surface-variant">Scannez ce code avec YOUSS CONNECT pour ouvrir la fiche du site.</p>
+        <p class="font-label-sm text-label-sm text-on-surface-variant">Scannez ce code avec AFRICA CONNECT pour ouvrir la fiche du site.</p>
         <code class="font-label-sm text-label-sm bg-surface-container-low px-2 py-1 rounded">${payload}</code>
         ${UI.secondaryButton("Fermer", "UI.closeSheet()")}
       </div>`);

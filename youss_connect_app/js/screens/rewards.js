@@ -4,7 +4,7 @@
 
   const CATALOG = [
     { id: "r1", label: "Course gratuite (jusqu'à 2000 FCFA)", cost: 500, icon: "directions_car" },
-    { id: "r2", label: "Réduction 10% Youss Market", cost: 300, icon: "storefront" },
+    { id: "r2", label: "Réduction 10% Africa Market", cost: 300, icon: "storefront" },
     { id: "r3", label: "Boisson offerte partenaire restaurant", cost: 150, icon: "restaurant" },
     { id: "r4", label: "Billet événement -20%", cost: 700, icon: "confirmation_number" }
   ];
@@ -12,7 +12,7 @@
   Screens.rewards = function (container) {
     const r = ACState.rewards;
     const progress = Math.min(100, Math.round((r.points / r.nextTierAt) * 100));
-    const topbar = UI.topBar({ title: "Youss Bonus", subtitle: "Hub fidélité", back: "App.nav('home')" });
+    const topbar = UI.topBar({ title: "Africa Rewards", subtitle: "Mes points", back: "App.nav('home')" });
     const body = `
     <section class="w-full rounded-xl bg-primary-container text-on-primary p-space-20 flex flex-col space-y-space-8">
       <span class="font-label-md text-label-md opacity-80">Statut ${r.tier}</span>

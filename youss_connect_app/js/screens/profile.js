@@ -19,13 +19,13 @@
     </div>`;
 
     const body = `
-    <section class="w-full rounded-2xl bg-gradient-to-br from-primary to-primary-container p-space-16 text-white shadow-lg shadow-primary/15">
+    <section class="w-full rounded-2xl bg-black p-space-16 text-white">
       <div class="flex items-center justify-between mb-space-12">
         <div>
-          <p class="font-label-sm text-label-sm text-white/70 uppercase tracking-wider">Youss Bonus</p>
+          <p class="font-label-sm text-label-sm text-white/70 uppercase tracking-wider">Africa Rewards</p>
           <p class="font-headline-md text-headline-md font-extrabold">${pts.toLocaleString("fr-FR")} pts</p>
         </div>
-        <button type="button" onclick="App.nav('rewards')" class="h-9 px-3 rounded-xl bg-primary text-white font-label-md text-label-md font-bold">Récompenses</button>
+        <button type="button" onclick="App.nav('rewards')" class="h-9 px-3 rounded-xl bg-secondary text-on-secondary font-label-md text-label-md font-bold">Récompenses</button>
       </div>
       <div class="flex justify-between font-label-sm text-label-sm text-white/80 mb-1">
         <span>${ACState.rewards.tier}</span>
@@ -39,9 +39,15 @@
 
     <section class="w-full flex flex-col space-y-2">
       ${menuRow("directions_car", "Mes courses", "App.nav('activities')")}
-      ${menuRow("local_shipping", "Mes livraisons", "App.nav('activities')")}
-      ${menuRow("favorite", "Mes favoris", "App.nav('addresses')")}
+      ${menuRow("restaurant", "Mes commandes", "App.nav('activities')")}
+      ${menuRow("confirmation_number", "Mes billets", "App.nav('myTickets')")}
       ${menuRow("home_pin", "Mes adresses", "App.nav('addresses')")}
+      ${menuRow("credit_card", "Moyens de paiement", "App.nav('paymentMethods')")}
+      ${menuRow("workspace_premium", "Africa Rewards", "App.nav('rewards')")}
+      ${menuRow("storefront", "Africa Business", "App.nav('business')")}
+      ${menuRow("security", "Sécurité", "App.nav('security')")}
+      ${menuRow("language", "Langues", "App.nav('languages')")}
+      ${menuRow("help", "Aide", "Screens._aboutSheet()")}
       ${menuRow("logout", "Déconnexion", "Screens._logout()", true)}
     </section>`;
     Shell.render(container, { topbar, body, nav: "profile" });
@@ -65,7 +71,7 @@
   Screens._logout = function () {
     UI.openSheet(`
       <h3 class="font-headline-sm text-headline-sm font-bold mb-space-8">Se déconnecter ?</h3>
-      <p class="font-body-sm text-body-sm text-on-surface-variant mb-space-20">Vous devrez vous reconnecter avec votre numéro de téléphone pour accéder à nouveau à YOUSS CONNECT.</p>
+      <p class="font-body-sm text-body-sm text-on-surface-variant mb-space-20">Vous devrez vous reconnecter pour accéder à nouveau à AFRICA CONNECT.</p>
       ${UI.primaryButton("Déconnexion", "Screens._confirmLogout()")}
       <div class="mt-3">${UI.secondaryButton("Annuler", "UI.closeSheet()")}</div>
     `);
@@ -156,11 +162,11 @@
     const body = `
     <section class="w-full flex flex-col space-y-2">
       <div class="flex items-center justify-between bg-surface-container-lowest border border-primary-container rounded-xl p-space-16">
-        <div class="flex items-center space-x-3">${UI.icon("account_balance_wallet", "text-primary")}<span class="font-title-md text-title-md">Youss Wallet</span></div>
+        <div class="flex items-center space-x-3">${UI.icon("account_balance_wallet", "text-secondary")}<span class="font-title-md text-title-md">Africa Wallet</span></div>
         ${UI.badge("Par défaut", "primary")}
       </div>
       <div class="flex items-center justify-between bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-space-16">
-        <div class="flex items-center space-x-3">${UI.icon("smartphone", "text-primary")}<span class="font-title-md text-title-md">Mobile Money · MTN</span></div>
+        <div class="flex items-center space-x-3">${UI.icon("smartphone", "text-secondary")}<span class="font-title-md text-title-md">Paiement mobile (conceptuel)</span></div>
         ${UI.icon("chevron_right", "text-outline")}
       </div>
     </section>
@@ -174,9 +180,14 @@
     const topbar = UI.topBar({ title: "Sécurité du compte", back: "App.back()" });
     const body = `
     <section class="w-full flex flex-col space-y-2">
-      ${menuRow("password", "Changer mon code PIN", "App.nav('securityPin', {action:'changePin'})")}
-      ${menuRow("fingerprint", "Authentification biométrique", "Screens._toggleBio()")}
-      ${menuRow("devices", "Sessions actives", "App.nav('settings')")}
+      ${menuRow("verified_user", "Vérification du compte", "UI.toast('Compte vérifié (démo).', 'success')")}
+      ${menuRow("password", "Code PIN", "App.nav('securityPin', {action:'changePin'})")}
+      ${menuRow("fingerprint", "Biométrie", "Screens._toggleBio()")}
+      ${menuRow("devices", "Appareils connectés", "UI.toast('1 appareil · ce téléphone', 'info')")}
+      ${menuRow("history", "Historique des connexions", "UI.toast('Dernière connexion : aujourd\\'hui, Cotonou', 'info')")}
+      ${menuRow("report", "Signalement", "UI.toast('Signalement transmis au support.', 'success')")}
+      ${menuRow("support_agent", "Assistance", "Screens._aboutSheet()")}
+      ${menuRow("sos", "SOS", "UI.toast('SOS AFRICA CONNECT activé (démo).', 'error')")}
     </section>`;
     Shell.render(container, { topbar, body, nav: false });
   };
@@ -204,8 +215,23 @@
       <div class="flex flex-col gap-2">${items}</div>`);
   };
   Screens._aboutSheet = function () {
-    UI.openSheet(`<h3 class="font-headline-sm text-headline-sm font-bold mb-2">YOUSS CONNECT</h3>
-      <p class="font-body-sm text-body-sm text-on-surface-variant mb-space-16">Une seule application pour vivre l'Afrique au quotidien. Développée par KYA CORPORATION.</p>
+    UI.openSheet(`<h3 class="font-headline-sm text-headline-sm font-bold mb-2">AFRICA CONNECT</h3>
+      <p class="font-body-sm text-body-sm text-on-surface-variant mb-space-16">Une seule application pour vivre l'Afrique au quotidien. Portée par KYA CORPORATION.</p>
       ${UI.secondaryButton("Fermer", "UI.closeSheet()")}`);
+  };
+
+  Screens.languages = function (container) {
+    const topbar = UI.topBar({ title: "Langues", subtitle: "Autres langues africaines à venir", back: "App.back()" });
+    const body = `
+    <section class="flex flex-col space-y-2">
+      ${UI.langNames().map(function (l) {
+        const on = l.id === UI.lang();
+        return `<button type="button" onclick="UI.setLang('${l.id}')" class="yc-card p-space-16 flex items-center justify-between ${on ? "border-secondary" : ""}">
+          <span class="font-title-md text-title-md font-bold">${l.label}</span>${on ? UI.icon("check", "text-secondary") : ""}
+        </button>`;
+      }).join("")}
+    </section>
+    <p class="font-body-sm text-body-sm text-on-surface-variant">L'architecture permet d'ajouter d'autres langues africaines progressivement.</p>`;
+    Shell.render(container, { topbar, body, nav: false });
   };
 })();

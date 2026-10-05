@@ -11,10 +11,10 @@
   const favorites = new Set();
 
   Screens.market = function (container) {
-    const topbar = UI.topBar({ title: "Youss Market", subtitle: "Artisanat & produits locaux", back: "App.nav('home')" });
+    const topbar = UI.topBar({ title: "Africa Market", subtitle: "Artisanat & produits locaux", back: "App.nav('home')" });
     const body = `
     <section class="grid grid-cols-4 gap-2">
-      ${["Tout", "Mode", "Beauté", "Maison"].map((c, i) => `<span class="px-2 h-8 flex items-center justify-center rounded-full font-label-sm text-label-sm text-center ${i === 0 ? "bg-primary-container text-on-primary" : "bg-surface-container-lowest border border-outline-variant/30"}">${c}</span>`).join("")}
+      ${["Tout", "Mode", "Accessoires", "Beauté", "Artisanat", "Maison", "Alimentation", "Produits locaux", "Électronique"].map((c, i) => `<span class="px-2 h-8 flex items-center justify-center rounded-full font-label-sm text-label-sm text-center whitespace-nowrap ${i === 0 ? "bg-black text-white" : "bg-white border border-outline-variant/30"}">${c}</span>`).join("")}
     </section>
     <section class="grid grid-cols-2 gap-3">
       ${Object.values(PRODUCTS).map(p => `
@@ -77,7 +77,7 @@
   Screens.cartMarket = function (container) {
     const topbar = UI.topBar({ title: "Panier Market", back: "App.back()" });
     const total = marketTotal();
-    const body = !ACState.cart.market.length ? UI.emptyState({ icon: "shopping_cart", title: "Panier vide", body: "Ajoutez des produits Youss Market pour continuer.", actionLabel: "Voir Youss Market", actionOnclick: "App.resetTo('market')" }) : `
+    const body = !ACState.cart.market.length ? UI.emptyState({ icon: "shopping_cart", title: "Panier vide", body: "Ajoutez des produits Africa Market pour continuer.", actionLabel: "Voir Africa Market", actionOnclick: "App.resetTo('market')" }) : `
     <section class="flex flex-col space-y-2">
       ${ACState.cart.market.map(i => `
       <div class="flex items-center justify-between bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-space-16">
@@ -92,7 +92,7 @@
     <section class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-space-16 flex items-center justify-between">
       <span class="font-title-md text-title-md">Total</span><span class="font-label-lg text-label-lg font-bold text-primary">${ACStore.fmtFCFA(total)}</span>
     </section>
-    <div class="pt-space-8">${UI.primaryButton("Payer avec Youss Wallet", "Screens._payMarket()", { icon: "account_balance_wallet" })}</div>`;
+    <div class="pt-space-8">${UI.primaryButton("Payer avec Africa Wallet", "Screens._payMarket()", { icon: "account_balance_wallet" })}</div>`;
     Shell.render(container, { topbar, body, nav: false });
   };
   Screens._marketQty = function (id, delta) {
@@ -104,11 +104,11 @@
   Screens._payMarket = function () {
     const total = marketTotal();
     ACStore.whenPaid(
-      ACStore.payFromWallet({ amount: total, label: "Achat Youss Market", service: "market", pointsEarned: Math.round(total / 100) }),
+      ACStore.payFromWallet({ amount: total, label: "Achat Africa Market", service: "market", pointsEarned: Math.round(total / 100) }),
       function () {
         ACState.cart.market = [];
         UI.toast("Commande Market confirmée.", "success");
-        App.resetTo("orderTracking", { service: "market", label: "Youss Market" });
+        App.resetTo("orderTracking", { service: "market", label: "Africa Market" });
       },
       function (res) { App.nav("paymentFailed", { retry: "cartMarket", amount: total, reason: res.reason }); }
     );

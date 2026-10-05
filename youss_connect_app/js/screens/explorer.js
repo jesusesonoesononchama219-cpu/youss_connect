@@ -2,29 +2,33 @@
   "use strict";
   window.Screens = window.Screens || {};
 
-  const DISCOVER = [
-    { title: "Festival des Arts Vodoun", tag: "Événement", place: "Ouidah", route: "events" },
-    { title: "Hôtels de Cotonou", tag: "Hébergement", place: "Cotonou · Bénin", route: "restaurants" },
-    { title: "Artisans de Dantokpa", tag: "Youss Market", place: "Cotonou", route: "market" },
-    { title: "Palais royaux d'Abomey", tag: "Culture & Tourisme", place: "Abomey", route: "culture" }
+  const CATS = [
+    { id: "restaurants", label: "Restaurants", icon: "restaurant" },
+    { id: "transport", label: "Transport", icon: "directions_car" },
+    { id: "events", label: "Événements", icon: "confirmation_number" },
+    { id: "market", label: "Commerces", icon: "storefront" },
+    { id: "market", label: "Produits", icon: "shopping_bag" },
+    { id: "culture", label: "Tourisme", icon: "travel_explore" },
+    { id: "culture", label: "Culture", icon: "account_balance" },
+    { id: "activities", label: "Activités", icon: "event" }
   ];
 
   Screens.explorer = function (container) {
-    const topbar = UI.topBar({ title: "Explorer", subtitle: ACState.user.city + " et environs", back: "App.nav('home')" });
+    const filters = ["Distance", "Prix", "Catégorie", "Note", "Disponibilité"];
+    const topbar = UI.topBar({ title: "Explorer", subtitle: "Moteur de découverte" });
     const body = `
-    <div onclick="App.nav('search')" class="w-full h-12 bg-surface-container-lowest rounded-xl border border-outline-variant/40 shadow-sm flex items-center px-space-16 space-x-space-12 cursor-pointer">
-      ${UI.icon("search", "text-outline")}<span class="flex-1 font-body-md text-body-md text-outline">Rechercher...</span>
+    <div onclick="App.nav('search')" class="w-full h-12 bg-white rounded-2xl border border-outline-variant/40 shadow-sm flex items-center px-space-16 gap-3 cursor-pointer">
+      ${UI.icon("search", "text-outline")}<span class="font-body-md text-body-md text-outline">Rechercher dans AFRICA CONNECT</span>
     </div>
+    <section class="flex gap-2 overflow-x-auto no-scrollbar">
+      ${filters.map(f => `<span class="px-3 h-8 rounded-full bg-white border border-outline-variant/30 font-label-sm text-label-sm flex items-center">${f}</span>`).join("")}
+    </section>
     <section class="grid grid-cols-2 gap-3">
-      ${DISCOVER.map(d => `
-      <div onclick="App.nav('${d.route}')" class="rounded-xl overflow-hidden border border-outline-variant/30 bg-surface-container-lowest cursor-pointer">
-        <div class="h-24 bg-surface-container-low flex items-center justify-center text-primary-container">${UI.icon("image", "text-[28px]")}</div>
-        <div class="p-space-12">
-          <span class="font-label-sm text-label-sm text-primary font-semibold">${d.tag}</span>
-          <h3 class="font-title-md text-title-md truncate">${d.title}</h3>
-          <p class="font-body-sm text-body-sm text-on-surface-variant flex items-center space-x-1">${UI.icon("location_on", "text-[14px]")}<span>${d.place}</span></p>
-        </div>
-      </div>`).join("")}
+      ${CATS.map(c => `
+      <button type="button" onclick="App.nav('${c.id}')" class="yc-card yc-card-press p-space-16 text-left">
+        ${UI.icon(c.icon, "text-secondary text-[24px]")}
+        <p class="font-title-md text-title-md font-bold mt-2">${c.label}</p>
+      </button>`).join("")}
     </section>`;
     Shell.render(container, { topbar, body, nav: "explorer" });
   };
@@ -33,19 +37,19 @@
     const q = (params.q || "").toLowerCase();
     const topbar = `
     <div class="w-full px-space-20 py-space-12 flex items-center space-x-3 bg-surface flex-shrink-0">
-      <button onclick="App.back()" class="w-9 h-9 rounded-full bg-surface-container-lowest border border-outline-variant/30 flex items-center justify-center flex-shrink-0">${UI.icon("arrow_back")}</button>
-      <input id="global-search" autofocus value="${params.q || ""}" oninput="Screens._searchType(this.value)" placeholder="Rechercher un service, un lieu, un plat..." class="flex-1 h-11 bg-surface-container-lowest rounded-xl border border-outline-variant/40 px-space-16 font-body-md text-body-md focus:outline-none"/>
+      <button onclick="App.back()" class="w-9 h-9 rounded-full bg-white border border-outline-variant/30 flex items-center justify-center">${UI.icon("arrow_back")}</button>
+      <input id="global-search" autofocus value="${params.q || ""}" oninput="Screens._searchType(this.value)" placeholder="Rechercher dans AFRICA CONNECT" class="flex-1 h-11 bg-white rounded-xl border border-outline-variant/40 px-space-16 font-body-md text-body-md focus:outline-none"/>
     </div>`;
     const results = q ? window.ACSearch.run(q) : [];
     const body = `
     <section class="w-full flex flex-col space-y-2">
-      ${!q ? UI.emptyState({ icon: "search", title: "Recherchez sur YOUSS CONNECT", body: "Restaurants, produits, événements, lieux culturels et services." }) : (
+      ${!q ? UI.emptyState({ icon: "search", title: "Recherchez sur AFRICA CONNECT", body: "Restaurants, transport, événements, commerces, produits, tourisme et culture." }) : (
         results.length ? results.map(r => `
-        <div onclick="App.nav('${r.route}', ${JSON.stringify(r.params || {}).replace(/"/g, "&quot;")})" class="flex items-center justify-between bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-space-16 cursor-pointer">
-          <div class="flex items-center space-x-3"><div class="w-9 h-9 rounded-full bg-surface-container-low text-primary flex items-center justify-center">${UI.icon(r.icon)}</div>
+        <div onclick="App.nav('${r.route}', ${JSON.stringify(r.params || {}).replace(/"/g, "&quot;")})" class="flex items-center justify-between bg-white border border-outline-variant/30 rounded-xl p-space-16 cursor-pointer">
+          <div class="flex items-center space-x-3"><div class="w-9 h-9 rounded-full bg-surface-container-low text-secondary flex items-center justify-center">${UI.icon(r.icon)}</div>
           <div class="flex flex-col"><span class="font-title-md text-title-md">${r.title}</span><span class="font-body-sm text-body-sm text-on-surface-variant">${r.subtitle}</span></div></div>
           ${UI.icon("chevron_right", "text-outline")}
-        </div>`).join("") : UI.emptyState({ icon: "search_off", title: "Aucun résultat", body: "Essayez un autre mot-clé, par exemple « restaurant » ou « billet »." })
+        </div>`).join("") : UI.emptyState({ icon: "search_off", title: "Aucun résultat", body: "Essayez un autre mot-clé." })
       )}
     </section>`;
     Shell.render(container, { topbar, body, nav: false });
@@ -59,17 +63,15 @@
   window.ACSearch = {
     run(q) {
       const all = [
-        { title: "Azalaï Hotel Cotonou", subtitle: "Hôtel · Marina", icon: "hotel", route: "restaurantDetail", keys: "hotel hotel azalai cotonou marina", params: { id: "rest1" } },
-        { title: "Sun Beach Hotel", subtitle: "Hôtel · Fidjrossè", icon: "hotel", route: "restaurantDetail", keys: "hotel sun beach fidjrosse plage", params: { id: "rest2" } },
-        { title: "Hôtel Marie Stella", subtitle: "Hôtel · Cotonou", icon: "hotel", route: "restaurantDetail", keys: "hotel marie stella cotonou", params: { id: "rest3" } },
-        { title: "Robe Wax contemporaine", subtitle: "Youss Market · Mode", icon: "storefront", route: "productDetail", keys: "market produit wax mode", params: { id: "p1" } },
-        { title: "Beurre de karité pur", subtitle: "Youss Market · Beauté", icon: "storefront", route: "productDetail", keys: "market karite beaute", params: { id: "p2" } },
+        { title: "Chez Maman Bénin", subtitle: "Restaurant · Haie Vive", icon: "restaurant", route: "restaurantDetail", keys: "restaurant repas africain maman", params: { id: "rest1" } },
+        { title: "Fast Cotonou", subtitle: "Fast-food · Ganhi", icon: "restaurant", route: "restaurantDetail", keys: "restaurant fast food burger", params: { id: "rest2" } },
+        { title: "Robe Wax contemporaine", subtitle: "Africa Market · Mode", icon: "storefront", route: "productDetail", keys: "market produit wax mode", params: { id: "p1" } },
+        { title: "Beurre de karité pur", subtitle: "Africa Market · Beauté", icon: "storefront", route: "productDetail", keys: "market karite beaute", params: { id: "p2" } },
         { title: "Festival des Arts Vodoun", subtitle: "Événement · Ouidah", icon: "confirmation_number", route: "eventDetail", keys: "evenement festival vodoun ouidah", params: { id: "ev1" } },
-        { title: "Palais royaux d'Abomey", subtitle: "Culture · Abomey", icon: "explore", route: "cultureDetail", keys: "culture musee palais abomey dahomey", params: { id: "c1" } },
-        { title: "Place de l'Amazone", subtitle: "Culture · Cotonou", icon: "museum", route: "cultureDetail", keys: "culture amazone cotonou place", params: { id: "c3" } },
-        { title: "Ganvié", subtitle: "Village lacustre · Lac Nokoué", icon: "water", route: "cultureDetail", keys: "culture ganvie lac nokoue", params: { id: "c4" } },
+        { title: "Palais royaux d'Abomey", subtitle: "Culture · Abomey", icon: "explore", route: "cultureDetail", keys: "culture musee palais abomey", params: { id: "c1" } },
+        { title: "Île de Gorée", subtitle: "Culture · Dakar", icon: "museum", route: "cultureDetail", keys: "culture goree dakar senegal", params: { id: "c6" } },
         { title: "Transport", subtitle: "Réserver une course", icon: "directions_car", route: "transport", keys: "transport course taxi moto" },
-        { title: "Youss Wallet", subtitle: "Voir mon solde", icon: "account_balance_wallet", route: "wallet", keys: "wallet portefeuille solde argent" }
+        { title: "Africa Wallet", subtitle: "Voir mon solde", icon: "account_balance_wallet", route: "wallet", keys: "wallet portefeuille solde argent" }
       ];
       return all.filter(x => x.keys.includes(q) || x.title.toLowerCase().includes(q));
     }

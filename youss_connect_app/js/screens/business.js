@@ -14,7 +14,7 @@
   };
 
   Screens.business = function (container) {
-    const topbar = UI.topBar({ title: "Youss Business", subtitle: "Espace professionnel", back: "App.nav('profile')" });
+    const topbar = UI.topBar({ title: "Africa Business", subtitle: "Espace professionnel", back: "App.nav('profile')" });
     const revenue = biz.orders.reduce((s, o) => s + o.amount, 0);
     const body = `
     <section class="grid grid-cols-3 gap-3">

@@ -55,8 +55,11 @@
   }
 
   Screens.events = function (container) {
-    const topbar = UI.topBar({ title: "Événements", subtitle: "Culture & spectacles · Bénin", back: "App.nav('home')" });
+    const topbar = UI.topBar({ title: "Événements", subtitle: "Concerts, festivals, culture", back: "App.nav('home')" });
     const body = `
+    <section class="flex gap-2 overflow-x-auto no-scrollbar">
+      ${["Concerts", "Festivals", "Conférences", "Spectacles", "Activités culturelles", "Événements sportifs"].map((c, i) => `<span class="px-3 h-8 rounded-full font-label-sm text-label-sm flex items-center whitespace-nowrap ${i === 0 ? "bg-black text-white" : "bg-white border"}">${c}</span>`).join("")}
+    </section>
     <section class="flex flex-col space-y-3">
       ${Object.values(EVENTS).map(e => `
       <div onclick="App.nav('eventDetail', {id:'${e.id}'})" class="yc-card yc-card-press overflow-hidden cursor-pointer">
@@ -103,7 +106,7 @@
         <button onclick="Screens._ticketQty(1,'${e.id}')" class="w-9 h-9 rounded-full bg-surface-container-low flex items-center justify-center active:scale-95">${UI.icon("add", "text-[16px]")}</button>
       </div>
     </section>
-    <div class="pt-space-8">${UI.primaryButton("Réserver et payer", `App.nav('eventCheckout', {id:'${e.id}'})`, { icon: "arrow_forward", green: true })}</div>`;
+    <div class="pt-space-8">${UI.primaryButton("Acheter un billet", `App.nav('eventCheckout', {id:'${e.id}'})`, { icon: "arrow_forward" })}</div>`;
     Shell.render(container, { topbar, body, nav: false });
   };
   Screens._pickTicket = function (id) { selectedTicket = id; App.replace(App.current.id, App.current.params); };
@@ -121,7 +124,7 @@
       <div class="flex items-center justify-between"><span class="font-body-md text-body-md text-on-surface-variant">Billet</span><span class="font-title-md text-title-md">${t.label} × ${ticketQty}</span></div>
       <div class="flex items-center justify-between font-label-lg text-label-lg font-bold border-t border-outline-variant/30 pt-3"><span>Total</span><span class="text-primary">${ACStore.fmtFCFA(total)}</span></div>
     </section>
-    <div class="pt-space-8">${UI.primaryButton("Payer avec Youss Wallet", `Screens._payEvent('${e.id}', ${total})`, { icon: "account_balance_wallet", green: true })}</div>`;
+    <div class="pt-space-8">${UI.primaryButton("Payer avec Africa Wallet", `Screens._payEvent('${e.id}', ${total})`, { icon: "account_balance_wallet" })}</div>`;
     Shell.render(container, { topbar, body, nav: false });
   };
   Screens._payEvent = function (eid, total) {

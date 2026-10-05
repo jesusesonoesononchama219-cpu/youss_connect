@@ -178,7 +178,7 @@
       id: ACStore.uid("txn"), label: opts.label, amount: -opts.amount, type: "debit", date: "À l'instant"
     });
     ACStore.addActivity({ service: opts.service, title: opts.label, amount: opts.amount, status: "Terminé", icon: ACStore.iconForService(opts.service) });
-    ACStore.addNotification("Paiement confirmé", opts.label + " a été réglé via Youss Wallet (" + ACStore.fmtFCFA(opts.amount) + ").", "wallet");
+    ACStore.addNotification("Paiement confirmé", opts.label + " a été réglé via Africa Wallet (" + ACStore.fmtFCFA(opts.amount) + ").", "wallet");
     ACStore.emit();
   }
 
