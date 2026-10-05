@@ -85,10 +85,7 @@
   }
 
   var COUNTRIES = [
-    { code: "BJ", name: "Bénin", dial: "+229", city: "Cotonou" },
-    { code: "SN", name: "Sénégal", dial: "+221", city: "Dakar" },
-    { code: "TG", name: "Togo", dial: "+228", city: "Lomé" },
-    { code: "GH", name: "Ghana", dial: "+233", city: "Accra" }
+    { code: "BJ", name: "Bénin", dial: "+229", city: "Cotonou" }
   ];
 
   function countryOptions(selected) {
@@ -99,8 +96,8 @@
   }
 
   function cityOptions(country, selected) {
-    var cities = { "Bénin": ["Cotonou", "Porto-Novo"], "Sénégal": ["Dakar"], "Togo": ["Lomé"], "Ghana": ["Accra"] };
-    return (cities[country] || ["Cotonou"]).map(function (c) {
+    var cities = { "Bénin": ["Cotonou", "Porto-Novo", "Ouidah", "Abomey", "Parakou"] };
+    return (cities[country] || cities["Bénin"]).map(function (c) {
       return '<option' + (c === selected ? " selected" : "") + ">" + c + "</option>";
     }).join("");
   }

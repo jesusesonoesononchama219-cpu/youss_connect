@@ -34,19 +34,19 @@
       ]
     },
     rest4: {
-      id: "rest4", name: "Café Palmier", tag: "Boissons · Dakar Plateau", rating: 4.5, delivery: "Dakar", avg: "2 000 F",
+      id: "rest4", name: "Café Ganhi", tag: "Boissons · Ganhi, Cotonou", rating: 4.5, delivery: "0,7 km", avg: "2 000 F",
       cats: ["Boissons"], hours: "8h – 20h",
-      body: "Cafés, jus locaux et thés. Point de rencontre entre Plateau et Corniche.",
+      body: "Cafés, jus locaux et thés au cœur de Cotonou. Idéal entre deux courses ou après le marché.",
       menu: [
         { id: "d10", name: "Bissap frais", desc: "Hibiscus, gingembre", price: 1500 },
-        { id: "d11", name: "Café Touba", desc: "Épices, intensité", price: 1200 },
-        { id: "d12", name: "Jus de bouye", desc: "Pain de singe", price: 1800 }
+        { id: "d11", name: "Gingembre maison", desc: "Épicé, rafraîchissant", price: 1200 },
+        { id: "d12", name: "Jus d'ananas local", desc: "Pressé du jour", price: 1800 }
       ]
     },
     rest5: {
-      id: "rest5", name: "Douceurs d'Accra", tag: "Desserts · Osu", rating: 4.8, delivery: "Accra", avg: "2 800 F",
+      id: "rest5", name: "Douceurs d'Akpakpa", tag: "Desserts · Akpakpa", rating: 4.8, delivery: "2,4 km", avg: "2 800 F",
       cats: ["Desserts"], hours: "12h – 21h",
-      body: "Pâtisseries et desserts d'Afrique de l'Ouest, à partager après un spectacle.",
+      body: "Pâtisseries et desserts béninois à partager après un spectacle ou une soirée à Cotonou.",
       menu: [
         { id: "d13", name: "Beignets coco", desc: "Noix de coco, cannelle", price: 1500 },
         { id: "d14", name: "Tarte chocolat", desc: "Part individuelle", price: 2800 },
@@ -85,7 +85,7 @@
 
   Screens.restaurants = function (container) {
     const list = filtered();
-    const topbar = UI.topBar({ title: "Restaurants", subtitle: "Cotonou · Dakar · Lomé · Accra", back: "App.nav('home')" });
+    const topbar = UI.topBar({ title: "Restaurants", subtitle: "Cotonou & environs · Bénin", back: "App.nav('home')" });
     const body = `
     <section class="w-full">
       <label class="h-12 rounded-2xl border border-outline-variant/40 bg-white px-space-12 flex items-center gap-2">

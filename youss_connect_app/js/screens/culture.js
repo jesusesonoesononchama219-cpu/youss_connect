@@ -15,7 +15,7 @@
       tone: "from-[#5B2A8F] to-[#3B1466]",
       icon: "account_balance",
       img: WM("Palais_du_roi_Glele.jpg"),
-      city: "Cotonou"
+      city: "Abomey"
     },
     c2: {
       id: "c2",
@@ -25,7 +25,7 @@
       tone: "from-[#0E7C6B] to-[#0B5A4D]",
       icon: "castle",
       img: WM("Door_of_no_return.jpg"),
-      city: "Cotonou"
+      city: "Ouidah"
     },
     c3: {
       id: "c3",
@@ -59,33 +59,33 @@
     },
     c6: {
       id: "c6",
-      name: "Île de Gorée",
-      place: "Dakar · Sénégal",
-      body: "Île classée au patrimoine mondial, lieu de mémoire de la traite atlantique et destination culturelle majeure de Dakar.",
+      name: "Musée Honmé",
+      place: "Porto-Novo · Bénin",
+      body: "Ancien palais royal de Porto-Novo transformé en musée. Il présente l'histoire, les arts et les traditions du royaume de Porto-Novo.",
       tone: "from-[#1E3A5F] to-[#0F172A]",
-      icon: "castle",
-      img: WM("Gorée_Maison_des_Esclaves.jpg"),
-      city: "Dakar"
+      icon: "museum",
+      img: WM("Musée_Honmé.jpg"),
+      city: "Porto-Novo"
     },
     c7: {
       id: "c7",
-      name: "Monument de l'Indépendance",
-      place: "Lomé · Togo",
-      body: "Place et monument emblématiques du centre de Lomé, point de départ pour découvrir la capitale togolaise.",
+      name: "Grande Mosquée de Porto-Novo",
+      place: "Porto-Novo · Bénin",
+      body: "Édifice emblématique de la capitale, témoin du métissage architectural et culturel de Porto-Novo.",
       tone: "from-[#14532D] to-[#052e16]",
       icon: "account_balance",
-      img: WM("Monument_de_l'Indépendance_Lomé.jpg"),
-      city: "Lomé"
+      img: WM("Grande_Mosquée_de_Porto-Novo.jpg"),
+      city: "Porto-Novo"
     },
     c8: {
       id: "c8",
-      name: "Independence Arch",
-      place: "Accra · Ghana",
-      body: "Arc de l'Indépendance à Accra, symbole de l'histoire contemporaine du Ghana et des cérémonies nationales.",
-      tone: "from-[#7C2D12] to-[#1C1917]",
-      icon: "museum",
-      img: WM("Independence_Arch_Accra.jpg"),
-      city: "Accra"
+      name: "Plage de Fidjrossè",
+      place: "Cotonou · Bénin",
+      body: "Littoral populaire de Cotonou, idéal pour une promenade, les activités en bord de mer et la découverte de la vie cotonouaise.",
+      tone: "from-[#0369A1] to-[#0C4A6E]",
+      icon: "beach_access",
+      img: WM("Cotonou_beach.jpg"),
+      city: "Cotonou"
     }
   };
   const COPY = {
@@ -105,7 +105,7 @@
     },
     wo: {
       c1: { body: "Kër yu mag yu Dahomey, UNESCO. Palais yu Abomey dañuy wax ci taariix ak aada." },
-      c6: { body: "Dun Gorée ci Dakar, bérab yu am solo ci taariix Afrique." }
+      c6: { body: "Musée Honmé ci Porto-Novo, kër bu am solo ci taariix Bénin." }
     }
   };
 
@@ -158,7 +158,7 @@
   Screens.culture = function (container, params) {
     const city = params && params.city;
     const sites = Object.values(SITES).filter(s => !city || (s.city || "").includes(city) || (s.place || "").includes(city));
-    const topbar = UI.topBar({ title: "Découvrez l'Afrique", subtitle: city || "Cotonou · Dakar · Lomé · Accra", back: "App.nav('home')" });
+    const topbar = UI.topBar({ title: "Découvrez le Bénin", subtitle: city || "Cotonou · Porto-Novo · Ouidah · Abomey", back: "App.nav('home')" });
     const body = `
     <section onclick="App.nav('culturalScanner')"
       class="rounded-2xl bg-black text-white p-space-16 flex items-center justify-between cursor-pointer active:scale-[0.99]">
@@ -169,7 +169,7 @@
       <span class="w-12 h-12 rounded-full bg-secondary text-on-secondary flex items-center justify-center">${UI.icon("qr_code_scanner", "text-[24px]", true)}</span>
     </section>
     <section class="grid grid-cols-2 gap-3">
-      ${["Cotonou", "Dakar", "Lomé", "Accra"].map(c => `
+      ${["Cotonou", "Porto-Novo", "Ouidah", "Abomey"].map(c => `
       <button type="button" onclick="App.nav('culture', {city:'${c}'})" class="h-20 rounded-2xl ${city === c ? "bg-secondary text-on-secondary" : "bg-zinc-900 text-white"} p-space-12 text-left font-title-md font-bold">${c}</button>`).join("")}
     </section>
     <section class="flex flex-col space-y-space-12">

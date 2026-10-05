@@ -234,9 +234,67 @@
   .yc-gmap-input {
     border: 0 !important; padding: 0 !important; box-shadow: none !important;
     background: transparent !important; outline: none !important; width: 100%;
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+    font-size: 14px; font-weight: 600; color: #0A0A0A; line-height: 1.3;
   }
+  .yc-gmap-input::placeholder { color: #A1A1AA; font-weight: 500; }
   .yc-gmap-input:focus { --tw-ring-shadow: 0 0 #0000 !important; }
   .yc-gmap-input::-webkit-search-cancel-button, .yc-gmap-input::-webkit-search-decoration { -webkit-appearance: none; display: none; }
+  .yc-place-panel {
+    background: #fff;
+    border-radius: 18px;
+    border: 1px solid rgba(0,0,0,.06);
+    box-shadow: 0 10px 28px rgba(0,0,0,.14), 0 2px 8px rgba(0,0,0,.06);
+    overflow: hidden;
+  }
+  .yc-place-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 12px; min-height: 52px;
+    transition: background .15s ease;
+  }
+  .yc-place-row.is-active { background: rgba(201,162,39,.08); }
+  .yc-place-label {
+    display: block; font-size: 10px; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; color: #71717A; margin-bottom: 2px;
+  }
+  .yc-place-rail {
+    width: 16px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; align-self: stretch; padding: 4px 0;
+  }
+  .yc-place-dot {
+    width: 10px; height: 10px; border-radius: 999px; flex-shrink: 0;
+    box-shadow: 0 0 0 3px rgba(255,255,255,.95);
+  }
+  .yc-place-dot--from { background: #C9A227; }
+  .yc-place-dot--to { background: #0A0A0A; }
+  .yc-place-line {
+    width: 2px; flex: 1; min-height: 10px; margin: 4px 0;
+    background: linear-gradient(180deg, #C9A227 0%, #D4D4D8 50%, #0A0A0A 100%);
+    border-radius: 2px;
+  }
+  .yc-place-actions {
+    display: flex; flex-direction: column; gap: 6px; flex-shrink: 0;
+  }
+  .yc-place-icon-btn {
+    width: 34px; height: 34px; border-radius: 999px; border: 1px solid rgba(0,0,0,.08);
+    background: #FAFAFA; color: #3F3F46; display: flex; align-items: center; justify-content: center;
+    transition: background .15s ease, transform .12s ease;
+  }
+  .yc-place-icon-btn:active { transform: scale(.94); background: #F4E4B3; }
+  .yc-place-suggestions {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid rgba(0,0,0,.06);
+    box-shadow: 0 12px 32px rgba(0,0,0,.16);
+    overflow: hidden;
+  }
+  .yc-place-chip {
+    padding: 0 12px; height: 32px; border-radius: 999px; flex-shrink: 0;
+    background: rgba(255,255,255,.94); border: 1px solid rgba(0,0,0,.06);
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    font: 600 12px "Plus Jakarta Sans", sans-serif; color: #3F3F46;
+    white-space: nowrap;
+  }
+  .yc-place-chip:active { background: #0A0A0A; color: #fff; }
   .yc-city-label { background: rgba(255,255,255,.92); border: 0; border-radius: 999px; padding: 2px 8px; font: 600 11px "Plus Jakarta Sans", sans-serif; color: #2A0D4A; box-shadow: 0 1px 4px rgba(0,0,0,.18); }
   .yc-city-label::before { display: none; }
   .yc-car-icon { transition: transform .12s linear; }
@@ -278,8 +336,9 @@
   }
   .yc-gmap-card {
     background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 1px 4px rgba(0,0,0,.28);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.12), 0 1px 4px rgba(0,0,0,.06);
+    border: 1px solid rgba(0,0,0,.05);
   }
   /* Polish cards & media */
   .yc-card {

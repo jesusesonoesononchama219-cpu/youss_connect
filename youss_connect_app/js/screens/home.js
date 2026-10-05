@@ -85,7 +85,7 @@
         <button type="button" onclick="App.nav('culture')" class="font-label-md text-label-md text-secondary font-semibold">Explorer</button>
       </div>
       <div class="grid grid-cols-2 gap-3">
-        ${["Cotonou", "Dakar", "Lomé", "Accra"].map(city => `
+        ${["Cotonou", "Porto-Novo", "Ouidah", "Abomey"].map(city => `
         <button type="button" onclick="App.nav('culture', {city:'${city}'})"
           class="h-24 rounded-2xl bg-zinc-900 text-white p-space-12 text-left flex flex-col justify-end">
           <span class="font-title-md text-title-md font-bold">${city}</span>

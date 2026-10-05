@@ -410,6 +410,10 @@
         ? "Touchez la carte pour placer le départ"
         : "Touchez la carte pour placer la destination";
     }
+    const fromRow = document.getElementById("place-row-from");
+    const toRow = document.getElementById("place-row-to");
+    if (fromRow) fromRow.classList.toggle("is-active", trip.pickMode === "from");
+    if (toRow) toRow.classList.toggle("is-active", trip.pickMode === "to");
   }
 
   /* ---------- Saisie d'adresse + suggestions (lieux locaux + géocodage Bénin) ---------- */
@@ -466,19 +470,23 @@
     if (!box) return;
     lastSuggestions = list;
     if (!list.length && !(opts && opts.loading)) {
-      box.innerHTML = `<p class="px-4 py-3 font-body-sm text-body-sm text-on-surface-variant">${opts && opts.query ? "Aucun lieu trouvé au Bénin pour « " + escHtml(opts.query) + " »" : "Saisissez une adresse, un quartier ou une ville"}</p>`;
+      box.innerHTML = `<div class="px-4 py-4 flex items-start gap-3">
+        <span class="w-9 h-9 rounded-full bg-zinc-100 text-zinc-500 flex items-center justify-center flex-shrink-0">${UI.icon("search", "text-[18px]")}</span>
+        <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed pt-1">${opts && opts.query ? "Aucun lieu trouvé pour « " + escHtml(opts.query) + " »" : "Saisissez une adresse, un quartier ou une ville"}</p>
+      </div>`;
       box.classList.remove("hidden");
       return;
     }
     box.innerHTML = list.map((s, i) => `
       <button type="button" onmousedown="event.preventDefault()" onclick="Screens._pickSuggestion(${i})"
-        class="w-full flex items-center gap-3 px-3 py-2.5 text-left active:bg-surface-container-low border-b border-outline-variant/20 last:border-0">
-        <span class="w-8 h-8 rounded-full bg-surface-container-low text-on-surface-variant flex items-center justify-center flex-shrink-0">${UI.icon(s.icon || "place", "text-[18px]")}</span>
-        <span class="min-w-0">
-          <span class="block font-label-md text-label-md font-semibold truncate">${escHtml(s.name)}</span>
-          <span class="block font-label-sm text-label-sm text-on-surface-variant truncate">${escHtml(s.detail)}</span>
+        class="w-full flex items-center gap-3 px-3.5 py-3 text-left hover:bg-zinc-50 active:bg-[#F4E4B3]/40 border-b border-zinc-100 last:border-0">
+        <span class="w-9 h-9 rounded-full bg-zinc-100 text-zinc-700 flex items-center justify-center flex-shrink-0">${UI.icon(s.icon || "place", "text-[18px]")}</span>
+        <span class="min-w-0 flex-1">
+          <span class="block font-label-md text-label-md font-semibold text-on-surface truncate">${escHtml(s.name)}</span>
+          <span class="block font-label-sm text-label-sm text-zinc-500 truncate mt-0.5">${escHtml(s.detail)}</span>
         </span>
-      </button>`).join("") + (opts && opts.loading ? `<p class="px-4 py-2 font-label-sm text-label-sm text-on-surface-variant flex items-center gap-2"><span class="w-3.5 h-3.5 rounded-full border-2 border-primary/30 border-t-primary animate-spin"></span>Recherche au Bénin…</p>` : "");
+        ${UI.icon("north_west", "text-[16px] text-zinc-400 flex-shrink-0")}
+      </button>`).join("") + (opts && opts.loading ? `<p class="px-4 py-2.5 font-label-sm text-label-sm text-zinc-500 flex items-center gap-2 border-t border-zinc-100"><span class="w-3.5 h-3.5 rounded-full border-2 border-secondary/30 border-t-secondary animate-spin"></span>Recherche en cours…</p>` : "");
     box.classList.remove("hidden");
   }
 
@@ -491,6 +499,10 @@
     clearTimeout(blurTimer);
     suggestRole = role;
     trip.pickMode = role;
+    const fromRow = document.getElementById("place-row-from");
+    const toRow = document.getElementById("place-row-to");
+    if (fromRow) fromRow.classList.toggle("is-active", role === "from");
+    if (toRow) toRow.classList.toggle("is-active", role === "to");
     const el = document.getElementById(role === "from" ? "from-input" : "dest-input");
     if (el) { try { el.select(); } catch (e) { /* no-op */ } }
     const q = el ? el.value : "";
@@ -939,40 +951,54 @@
       <div id="yc-transport-map" class="yc-gmap-canvas"></div>
 
       <div class="absolute top-0 left-0 right-0 z-[600] p-3 space-y-2 pointer-events-none">
-        <div class="flex items-center gap-2 pointer-events-auto">
+        <div class="flex items-start gap-2 pointer-events-auto">
           <button type="button" onclick="App.nav('home')"
-            class="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center text-on-surface flex-shrink-0">
+            class="w-11 h-11 mt-1 rounded-full bg-white border border-black/5 shadow-[0_6px_18px_rgba(0,0,0,.12)] flex items-center justify-center text-on-surface flex-shrink-0">
             ${UI.icon("arrow_back")}
           </button>
-          <div class="yc-gmap-card flex-1 px-3 py-2 space-y-1.5 relative">
-            <div class="flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-[#34A853] flex-shrink-0"></span>
-              <input id="from-input" value="${escAttr(trip.from)}" placeholder="Où êtes-vous ?" autocomplete="off" spellcheck="false" enterkeyhint="search"
-                onfocus="Screens._placeFocus('from')" oninput="Screens._placeInput('from', this.value)"
-                onkeydown="Screens._placeKey(event, 'from')" onblur="Screens._placeBlur()"
-                class="yc-gmap-input flex-1 font-body-sm text-body-sm truncate"/>
-              <button type="button" onclick="Screens._swapTripPoints()" class="text-outline flex-shrink-0" title="Inverser">${UI.icon("swap_vert", "text-[18px]")}</button>
-            </div>
-            <div class="h-px bg-outline-variant/40 ml-4"></div>
-            <div class="flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-[#EA4335] flex-shrink-0"></span>
-              <input id="dest-input" value="${escAttr(trip.to)}" placeholder="Où allez-vous ?" autocomplete="off" spellcheck="false" enterkeyhint="search"
-                onfocus="Screens._placeFocus('to')" oninput="Screens._placeInput('to', this.value)"
-                onkeydown="Screens._placeKey(event, 'to')" onblur="Screens._placeBlur()"
-                class="yc-gmap-input flex-1 font-body-sm text-body-sm truncate"/>
-              <button type="button" onclick="Screens._useMyPosition()" class="text-[#4285F4] flex-shrink-0" title="Ma position comme départ">${UI.icon("my_location", "text-[18px]")}</button>
+          <div class="yc-place-panel flex-1 relative">
+            <div class="flex">
+              <div class="yc-place-rail pl-3">
+                <span class="yc-place-dot yc-place-dot--from"></span>
+                <span class="yc-place-line"></span>
+                <span class="yc-place-dot yc-place-dot--to"></span>
+              </div>
+              <div class="flex-1 min-w-0 py-1">
+                <div id="place-row-from" class="yc-place-row ${trip.pickMode === "from" ? "is-active" : ""}">
+                  <div class="flex-1 min-w-0">
+                    <span class="yc-place-label">Départ</span>
+                    <input id="from-input" value="${escAttr(trip.from)}" placeholder="Adresse ou lieu de départ" autocomplete="off" spellcheck="false" enterkeyhint="next"
+                      onfocus="Screens._placeFocus('from')" oninput="Screens._placeInput('from', this.value)"
+                      onkeydown="Screens._placeKey(event, 'from')" onblur="Screens._placeBlur()"
+                      class="yc-gmap-input truncate"/>
+                  </div>
+                </div>
+                <div class="h-px bg-zinc-100 mx-3"></div>
+                <div id="place-row-to" class="yc-place-row ${trip.pickMode === "to" ? "is-active" : ""}">
+                  <div class="flex-1 min-w-0">
+                    <span class="yc-place-label">Destination</span>
+                    <input id="dest-input" value="${escAttr(trip.to)}" placeholder="Où allez-vous ?" autocomplete="off" spellcheck="false" enterkeyhint="search"
+                      onfocus="Screens._placeFocus('to')" oninput="Screens._placeInput('to', this.value)"
+                      onkeydown="Screens._placeKey(event, 'to')" onblur="Screens._placeBlur()"
+                      class="yc-gmap-input truncate"/>
+                  </div>
+                </div>
+              </div>
+              <div class="yc-place-actions pr-2.5 py-2.5 justify-center">
+                <button type="button" onclick="Screens._swapTripPoints()" class="yc-place-icon-btn" title="Inverser">${UI.icon("swap_vert", "text-[18px]")}</button>
+                <button type="button" onclick="Screens._useMyPosition()" class="yc-place-icon-btn" title="Ma position">${UI.icon("my_location", "text-[18px]")}</button>
+              </div>
             </div>
           </div>
         </div>
-        <div id="place-suggestions" class="hidden ml-12 yc-gmap-card overflow-hidden pointer-events-auto max-h-[280px] overflow-y-auto"></div>
-        <div class="flex gap-2 overflow-x-auto no-scrollbar pointer-events-auto pl-12">
+        <div id="place-suggestions" class="hidden ml-13 yc-place-suggestions overflow-hidden pointer-events-auto max-h-[280px] overflow-y-auto" style="margin-left:52px"></div>
+        <div class="flex gap-2 overflow-x-auto no-scrollbar pointer-events-auto" style="padding-left:52px">
           ${POIS.slice(0, 6).map((p) => `
-            <button type="button" onclick="Screens._pickPoi('${p.id}')"
-              class="px-3 h-8 flex-shrink-0 rounded-full font-label-sm text-label-sm whitespace-nowrap bg-white shadow-sm text-on-surface-variant">
+            <button type="button" onclick="Screens._pickPoi('${p.id}')" class="yc-place-chip">
               ${p.name.split("·")[0].trim()}
             </button>`).join("")}
         </div>
-        <p id="pick-hint" class="font-label-sm text-label-sm text-on-surface inline-block ml-12 px-3 py-1 rounded-full bg-white/90 shadow-sm pointer-events-none">
+        <p id="pick-hint" class="font-label-sm text-label-sm text-on-surface inline-block px-3 py-1.5 rounded-full bg-white/95 border border-black/5 shadow-sm pointer-events-none" style="margin-left:52px">
           ${trip.pickMode === "from" ? "Touchez la carte pour placer le départ" : "Touchez la carte pour placer la destination"}
         </p>
       </div>

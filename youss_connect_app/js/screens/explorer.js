@@ -69,7 +69,7 @@
         { title: "Beurre de karité pur", subtitle: "Youss Market · Beauté", icon: "storefront", route: "productDetail", keys: "market karite beaute", params: { id: "p2" } },
         { title: "Festival des Arts Vodoun", subtitle: "Événement · Ouidah", icon: "confirmation_number", route: "eventDetail", keys: "evenement festival vodoun ouidah", params: { id: "ev1" } },
         { title: "Palais royaux d'Abomey", subtitle: "Culture · Abomey", icon: "explore", route: "cultureDetail", keys: "culture musee palais abomey", params: { id: "c1" } },
-        { title: "Île de Gorée", subtitle: "Culture · Dakar", icon: "museum", route: "cultureDetail", keys: "culture goree dakar senegal", params: { id: "c6" } },
+        { title: "Musée Honmé", subtitle: "Culture · Porto-Novo", icon: "museum", route: "cultureDetail", keys: "culture musee honme porto-novo", params: { id: "c6" } },
         { title: "Transport", subtitle: "Réserver une course", icon: "directions_car", route: "transport", keys: "transport course taxi moto" },
         { title: "Youss Wallet", subtitle: "Voir mon solde", icon: "account_balance_wallet", route: "wallet", keys: "wallet portefeuille solde argent" }
       ];
