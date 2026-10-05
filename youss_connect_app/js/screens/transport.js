@@ -249,22 +249,29 @@
     }
   }
 
-  function pinIcon(color) {
+  function pinIcon(role) {
+    const isFrom = role === "from";
+    const cls = isFrom ? "yc-map-pin--from" : "yc-map-pin--to";
+    const letter = isFrom ? "A" : "B";
     return L.divIcon({
       className: "",
-      html: `<div class="yc-gmap-pin"><span style="background:${color}"></span></div>`,
-      iconSize: [28, 40],
-      iconAnchor: [14, 38],
-      popupAnchor: [0, -34]
+      html: `<div class="yc-map-pin ${cls}" aria-label="${isFrom ? "Départ" : "Destination"}">
+        <span class="yc-map-pin__head">${letter}</span>
+        <span class="yc-map-pin__tip"></span>
+        <span class="yc-map-pin__pulse"></span>
+      </div>`,
+      iconSize: [40, 52],
+      iconAnchor: [20, 50],
+      popupAnchor: [0, -44]
     });
   }
 
   function userIcon() {
     return L.divIcon({
       className: "",
-      html: `<span style="display:block;width:18px;height:18px;border-radius:50%;background:#4285F4;border:3px solid #fff;box-shadow:0 0 0 8px rgba(66,133,244,.28)"></span>`,
-      iconSize: [18, 18],
-      iconAnchor: [9, 9]
+      html: `<span class="yc-map-user"></span>`,
+      iconSize: [22, 22],
+      iconAnchor: [11, 11]
     });
   }
 
@@ -275,14 +282,14 @@
       className: "",
       html: `<div class="yc-car-icon" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;transform:rotate(${rot}deg)">
         <svg width="26" height="44" viewBox="0 0 26 44" style="filter:drop-shadow(0 3px 5px rgba(0,0,0,.45))">
-          <rect x="3" y="2" width="20" height="40" rx="7" fill="#1a1228"/>
-          <rect x="4.5" y="3.5" width="17" height="37" rx="6" fill="#3B1466"/>
-          <rect x="6" y="10" width="14" height="9" rx="2.5" fill="#cfe3ff" opacity=".95"/>
-          <rect x="6" y="26" width="14" height="7" rx="2.5" fill="#cfe3ff" opacity=".75"/>
-          <rect x="7" y="4" width="4" height="3" rx="1" fill="#fff8b0"/>
-          <rect x="15" y="4" width="4" height="3" rx="1" fill="#fff8b0"/>
-          <rect x="7" y="38" width="4" height="2.5" rx="1" fill="#ff5a5a"/>
-          <rect x="15" y="38" width="4" height="2.5" rx="1" fill="#ff5a5a"/>
+          <rect x="3" y="2" width="20" height="40" rx="7" fill="#0A0A0A"/>
+          <rect x="4.5" y="3.5" width="17" height="37" rx="6" fill="#171717"/>
+          <rect x="6" y="10" width="14" height="9" rx="2.5" fill="#F4E4B3" opacity=".95"/>
+          <rect x="6" y="26" width="14" height="7" rx="2.5" fill="#C9A227" opacity=".85"/>
+          <rect x="7" y="4" width="4" height="3" rx="1" fill="#F4E4B3"/>
+          <rect x="15" y="4" width="4" height="3" rx="1" fill="#F4E4B3"/>
+          <rect x="7" y="38" width="4" height="2.5" rx="1" fill="#52525B"/>
+          <rect x="15" y="38" width="4" height="2.5" rx="1" fill="#52525B"/>
         </svg>
       </div>`,
       iconSize: [44, 44],
@@ -293,7 +300,7 @@
   function driverStartIcon() {
     return L.divIcon({
       className: "",
-      html: `<span style="display:block;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid #3B1466;box-shadow:0 1px 4px rgba(0,0,0,.3)"></span>`,
+      html: `<span style="display:block;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid #C9A227;box-shadow:0 1px 4px rgba(0,0,0,.3)"></span>`,
       iconSize: [12, 12],
       iconAnchor: [6, 6]
     });
@@ -406,14 +413,12 @@
     if (btn) btn.textContent = "Confirmer la course" + (trip.km ? " · " + ACStore.fmtFCFA(price) : "");
     const hint = document.getElementById("pick-hint");
     if (hint) {
-      hint.textContent = trip.pickMode === "from"
+      const isFrom = trip.pickMode === "from";
+      hint.className = "yc-pick-hint pointer-events-none" + (isFrom ? "" : " yc-pick-hint--to");
+      hint.innerHTML = `<span class="yc-pick-hint__dot"></span><span>${isFrom
         ? "Touchez la carte pour placer le départ"
-        : "Touchez la carte pour placer la destination";
+        : "Touchez la carte pour placer la destination"}</span>`;
     }
-    const fromRow = document.getElementById("place-row-from");
-    const toRow = document.getElementById("place-row-to");
-    if (fromRow) fromRow.classList.toggle("is-active", trip.pickMode === "from");
-    if (toRow) toRow.classList.toggle("is-active", trip.pickMode === "to");
   }
 
   /* ---------- Saisie d'adresse + suggestions (lieux locaux + géocodage Bénin) ---------- */
@@ -499,15 +504,12 @@
     clearTimeout(blurTimer);
     suggestRole = role;
     trip.pickMode = role;
-    const fromRow = document.getElementById("place-row-from");
-    const toRow = document.getElementById("place-row-to");
-    if (fromRow) fromRow.classList.toggle("is-active", role === "from");
-    if (toRow) toRow.classList.toggle("is-active", role === "to");
     const el = document.getElementById(role === "from" ? "from-input" : "dest-input");
-    if (el) { try { el.select(); } catch (e) { /* no-op */ } }
-    const q = el ? el.value : "";
+    /* Champ vidé au focus : le placeholder apparaît tout de suite.
+       Si rien n'est confirmé, _placeBlur restaure le dernier lieu validé. */
+    if (el) el.value = "";
     syncInputs();
-    renderSuggestions(localPlaces(q.length >= 2 ? q : ""));
+    renderSuggestions(localPlaces(""));
   };
 
   Screens._placeInput = function (role, value) {
@@ -566,14 +568,22 @@
   function refreshMarkers() {
     if (!mapInst) return;
     if (trip.fromLat != null) {
-      if (fromMarker) fromMarker.setLatLng([trip.fromLat, trip.fromLng]);
-      else fromMarker = L.marker([trip.fromLat, trip.fromLng], { icon: pinIcon("#34A853") }).addTo(mapInst);
-      fromMarker.bindPopup("<b>Départ</b><br>" + trip.from);
+      if (fromMarker) {
+        fromMarker.setLatLng([trip.fromLat, trip.fromLng]);
+        fromMarker.setIcon(pinIcon("from"));
+      } else {
+        fromMarker = L.marker([trip.fromLat, trip.fromLng], { icon: pinIcon("from"), zIndexOffset: 500 }).addTo(mapInst);
+      }
+      fromMarker.bindPopup("<b style='font-family:Plus Jakarta Sans,sans-serif'>Départ</b><br><span style='color:#52525B'>" + escHtml(trip.from) + "</span>");
     }
     if (trip.toLat != null) {
-      if (toMarker) toMarker.setLatLng([trip.toLat, trip.toLng]);
-      else toMarker = L.marker([trip.toLat, trip.toLng], { icon: pinIcon("#EA4335") }).addTo(mapInst);
-      toMarker.bindPopup("<b>Destination</b><br>" + trip.to);
+      if (toMarker) {
+        toMarker.setLatLng([trip.toLat, trip.toLng]);
+        toMarker.setIcon(pinIcon("to"));
+      } else {
+        toMarker = L.marker([trip.toLat, trip.toLng], { icon: pinIcon("to"), zIndexOffset: 520 }).addTo(mapInst);
+      }
+      toMarker.bindPopup("<b style='font-family:Plus Jakarta Sans,sans-serif'>Destination</b><br><span style='color:#52525B'>" + escHtml(trip.to) + "</span>");
     }
     drawRouteLine();
     syncInputs();
@@ -590,11 +600,11 @@
     if (trip.fromLat == null || trip.toLat == null) return;
     const key = currentRouteKey();
     if (trip.route && trip.route.key === key) {
-      routeLine = L.polyline(trip.route.coords, { color: "#4285F4", weight: 6, opacity: 0.95, lineJoin: "round", lineCap: "round" }).addTo(mapInst);
+      routeLine = L.polyline(trip.route.coords, { color: "#0A0A0A", weight: 5, opacity: 0.9, lineJoin: "round", lineCap: "round" }).addTo(mapInst);
     } else {
       routeLine = L.polyline(
         [[trip.fromLat, trip.fromLng], [trip.toLat, trip.toLng]],
-        { color: "#4285F4", weight: 4, opacity: 0.55, dashArray: "8 10" }
+        { color: "#C9A227", weight: 4, opacity: 0.65, dashArray: "8 10" }
       ).addTo(mapInst);
     }
   }
@@ -650,13 +660,13 @@
   function addBeninLayers() {
     if (!mapInst) return;
     beninLayer = L.polygon(BENIN_BORDER, {
-      color: "#3B1466", weight: 2, opacity: 0.85, fillColor: "#3B1466", fillOpacity: 0.06, interactive: false
+      color: "#0A0A0A", weight: 2, opacity: 0.7, fillColor: "#C9A227", fillOpacity: 0.05, interactive: false
     }).addTo(mapInst);
 
     cityLayer = L.layerGroup();
     CITIES.forEach((c) => {
       const m = L.circleMarker([c.lat, c.lng], {
-        radius: c.name === "Cotonou" ? 7 : 5, color: "#fff", weight: 2, fillColor: "#3B1466", fillOpacity: 1
+        radius: c.name === "Cotonou" ? 7 : 5, color: "#fff", weight: 2, fillColor: "#0A0A0A", fillOpacity: 1
       }).bindTooltip(c.name, { permanent: true, direction: "right", offset: [8, 0], className: "yc-city-label" });
       if (mapInteractive) {
         m.on("click", function () {
@@ -810,7 +820,7 @@
       if (doneLine) { mapInst.removeLayer(doneLine); doneLine = null; }
       const done = coords.slice(0, p.index).concat([[p.lat, p.lng]]);
       if (done.length > 1) {
-        doneLine = L.polyline(done, { color: opts.color || "#34A853", weight: 6, opacity: 0.95, lineJoin: "round", lineCap: "round" }).addTo(mapInst);
+        doneLine = L.polyline(done, { color: opts.color || "#C9A227", weight: 6, opacity: 0.95, lineJoin: "round", lineCap: "round" }).addTo(mapInst);
       }
       /* Portion restante (ligne principale) */
       if (routeLine) {
@@ -850,7 +860,7 @@
       meta: "Calcul de l'itinéraire du chauffeur…",
       arrival: "",
       progress: 0,
-      color: "#3B1466",
+      color: "#C9A227",
       chip: "Chauffeur en route"
     });
 
@@ -861,11 +871,11 @@
     ]).then(([approach]) => {
       if (!mapInst || !App.current || App.current.id !== "transportInRide") return;
 
-      /* Ligne d'approche (violette) + on garde la course en bleu pointillé */
+      /* Approche or + course prévue en pointillé noir */
       if (routeLine) { mapInst.removeLayer(routeLine); routeLine = null; }
       const rideCoords = (trip.route && trip.route.coords) || [[trip.fromLat, trip.fromLng], [trip.toLat, trip.toLng]];
-      const ridePreview = L.polyline(rideCoords, { color: "#4285F4", weight: 5, opacity: 0.45, dashArray: "6 10" }).addTo(mapInst);
-      routeLine = L.polyline(approach.coords, { color: "#7C4DBD", weight: 5, opacity: 0.9, dashArray: "1 8", lineCap: "round" }).addTo(mapInst);
+      const ridePreview = L.polyline(rideCoords, { color: "#0A0A0A", weight: 5, opacity: 0.35, dashArray: "6 10" }).addTo(mapInst);
+      routeLine = L.polyline(approach.coords, { color: "#C9A227", weight: 5, opacity: 0.95, dashArray: "1 8", lineCap: "round" }).addTo(mapInst);
 
       mapInst.fitBounds(L.latLngBounds(approach.coords).extend([trip.fromLat, trip.fromLng]), {
         paddingTopLeft: [40, 80], paddingBottomRight: [40, sheetPad()], maxZoom: 16, animate: false
@@ -876,7 +886,7 @@
         visualSec: 22,
         realSec: approachReal,
         totalKm: approach.km,
-        color: "#7C4DBD",
+        color: "#C9A227",
         onTick: function (t, remainKm, remainSec) {
           setRideUI({
             title: formatEta(remainSec),
@@ -916,16 +926,16 @@
       const realEtaSec = etaSecondsFromKm(totalKm);
       const visualSec = Math.min(90, Math.max(35, totalKm * 8));
 
-      routeLine = L.polyline(coords, { color: "#4285F4", weight: 6, opacity: 0.95, lineJoin: "round", lineCap: "round" }).addTo(mapInst);
+      routeLine = L.polyline(coords, { color: "#0A0A0A", weight: 6, opacity: 0.95, lineJoin: "round", lineCap: "round" }).addTo(mapInst);
       mapInst.fitBounds(L.latLngBounds(coords), { paddingTopLeft: [40, 80], paddingBottomRight: [40, sheetPad()], maxZoom: 16, animate: true });
 
-      setRideUI({ label: "Temps restant", color: "#34A853", chip: "En course", progress: 0 });
+      setRideUI({ label: "Temps restant", color: "#C9A227", chip: "En course", progress: 0 });
 
       animateAlong(coords, {
         visualSec: visualSec,
         realSec: realEtaSec,
         totalKm: totalKm,
-        color: "#34A853",
+        color: "#C9A227",
         onTick: function (t, remainKm, remainSec) {
           setRideUI({
             title: t >= 1 ? "Arrivé" : formatEta(remainSec),
@@ -956,63 +966,42 @@
             class="w-11 h-11 mt-1 rounded-full bg-white border border-black/5 shadow-[0_6px_18px_rgba(0,0,0,.12)] flex items-center justify-center text-on-surface flex-shrink-0">
             ${UI.icon("arrow_back")}
           </button>
-          <div class="yc-place-panel flex-1 relative">
-            <div class="flex">
-              <div class="yc-place-rail pl-3">
-                <span class="yc-place-dot yc-place-dot--from"></span>
-                <span class="yc-place-line"></span>
-                <span class="yc-place-dot yc-place-dot--to"></span>
-              </div>
-              <div class="flex-1 min-w-0 py-1">
-                <div id="place-row-from" class="yc-place-row ${trip.pickMode === "from" ? "is-active" : ""}">
-                  <div class="flex-1 min-w-0">
-                    <span class="yc-place-label">Départ</span>
-                    <input id="from-input" value="${escAttr(trip.from)}" placeholder="Adresse ou lieu de départ" autocomplete="off" spellcheck="false" enterkeyhint="next"
-                      onfocus="Screens._placeFocus('from')" oninput="Screens._placeInput('from', this.value)"
-                      onkeydown="Screens._placeKey(event, 'from')" onblur="Screens._placeBlur()"
-                      class="yc-gmap-input truncate"/>
-                  </div>
-                </div>
-                <div class="h-px bg-zinc-100 mx-3"></div>
-                <div id="place-row-to" class="yc-place-row ${trip.pickMode === "to" ? "is-active" : ""}">
-                  <div class="flex-1 min-w-0">
-                    <span class="yc-place-label">Destination</span>
-                    <input id="dest-input" value="${escAttr(trip.to)}" placeholder="Où allez-vous ?" autocomplete="off" spellcheck="false" enterkeyhint="search"
-                      onfocus="Screens._placeFocus('to')" oninput="Screens._placeInput('to', this.value)"
-                      onkeydown="Screens._placeKey(event, 'to')" onblur="Screens._placeBlur()"
-                      class="yc-gmap-input truncate"/>
-                  </div>
-                </div>
-              </div>
-              <div class="yc-place-actions pr-2.5 py-2.5 justify-center">
-                <button type="button" onclick="Screens._swapTripPoints()" class="yc-place-icon-btn" title="Inverser">${UI.icon("swap_vert", "text-[18px]")}</button>
-                <button type="button" onclick="Screens._useMyPosition()" class="yc-place-icon-btn" title="Ma position">${UI.icon("my_location", "text-[18px]")}</button>
-              </div>
+          <div class="yc-gmap-card flex-1 relative px-3 py-1">
+            <div id="place-row-from" class="flex items-center gap-3 h-11">
+              <span class="w-2.5 h-2.5 rounded-full bg-secondary flex-shrink-0"></span>
+              <input id="from-input" value="${escAttr(trip.from)}" placeholder="Point de départ" autocomplete="off" spellcheck="false" enterkeyhint="next"
+                onfocus="Screens._placeFocus('from')" oninput="Screens._placeInput('from', this.value)"
+                onkeydown="Screens._placeKey(event, 'from')" onblur="Screens._placeBlur()"
+                class="yc-gmap-input truncate"/>
+            </div>
+            <div class="h-px bg-zinc-200 ml-5"></div>
+            <div id="place-row-to" class="flex items-center gap-3 h-11">
+              <span class="w-2.5 h-2.5 rounded-sm bg-black flex-shrink-0"></span>
+              <input id="dest-input" value="${escAttr(trip.to)}" placeholder="Où allez-vous ?" autocomplete="off" spellcheck="false" enterkeyhint="search"
+                onfocus="Screens._placeFocus('to')" oninput="Screens._placeInput('to', this.value)"
+                onkeydown="Screens._placeKey(event, 'to')" onblur="Screens._placeBlur()"
+                class="yc-gmap-input truncate"/>
+              <button type="button" onclick="Screens._swapTripPoints()" class="text-zinc-400 flex-shrink-0" title="Inverser">${UI.icon("swap_vert", "text-[20px]")}</button>
             </div>
           </div>
         </div>
-        <div id="place-suggestions" class="hidden ml-13 yc-place-suggestions overflow-hidden pointer-events-auto max-h-[280px] overflow-y-auto" style="margin-left:52px"></div>
+        <div id="place-suggestions" class="hidden yc-gmap-card overflow-hidden pointer-events-auto max-h-[280px] overflow-y-auto" style="margin-left:52px"></div>
         <div class="flex gap-2 overflow-x-auto no-scrollbar pointer-events-auto" style="padding-left:52px">
           ${POIS.slice(0, 6).map((p) => `
             <button type="button" onclick="Screens._pickPoi('${p.id}')" class="yc-place-chip">
               ${p.name.split("·")[0].trim()}
             </button>`).join("")}
         </div>
-        <p id="pick-hint" class="font-label-sm text-label-sm text-on-surface inline-block px-3 py-1.5 rounded-full bg-white/95 border border-black/5 shadow-sm pointer-events-none" style="margin-left:52px">
-          ${trip.pickMode === "from" ? "Touchez la carte pour placer le départ" : "Touchez la carte pour placer la destination"}
-        </p>
+        <div id="pick-hint" class="yc-pick-hint pointer-events-none ${trip.pickMode === "to" ? "yc-pick-hint--to" : ""}" style="margin-left:52px">
+          <span class="yc-pick-hint__dot"></span>
+          <span>${trip.pickMode === "from" ? "Touchez la carte pour placer le départ" : "Touchez la carte pour placer la destination"}</span>
+        </div>
       </div>
 
       <div class="absolute right-3 z-[600] flex flex-col gap-2" style="bottom: calc(42% + 16px)">
-        <button type="button" onclick="Screens._useMyPosition()"
-          class="w-11 h-11 rounded-full bg-white shadow-md flex items-center justify-center text-[#4285F4]"
-          title="Ma position">${UI.icon("my_location")}</button>
-        <button type="button" onclick="Screens._mapZoomCotonou()"
-          class="w-11 h-11 rounded-full bg-white shadow-md flex items-center justify-center text-on-surface-variant"
-          title="Cotonou">${UI.icon("near_me")}</button>
-        <button type="button" onclick="Screens._mapZoomBenin()"
-          class="w-11 h-11 rounded-full bg-white shadow-md flex items-center justify-center text-primary"
-          title="Bénin">${UI.icon("public")}</button>
+        <button type="button" onclick="Screens._useMyPosition()" class="yc-map-fab" title="Ma position">${UI.icon("my_location")}</button>
+        <button type="button" onclick="Screens._mapZoomCotonou()" class="yc-map-fab" title="Cotonou">${UI.icon("near_me")}</button>
+        <button type="button" onclick="Screens._mapZoomBenin()" class="yc-map-fab" title="Bénin">${UI.icon("public")}</button>
       </div>
 
       <div class="absolute bottom-0 left-0 right-0 z-[600] yc-gmap-sheet p-4 space-y-3 max-h-[46%] overflow-y-auto">
@@ -1023,7 +1012,7 @@
             <p class="font-label-sm text-label-sm text-on-surface-variant truncate" id="trip-km">${trip.km ? fmtKm(trip.km) + " · calcul de l'itinéraire…" : "Indiquez départ et destination"}</p>
           </div>
           <div class="text-right flex-shrink-0">
-            <p class="font-headline-sm text-headline-sm font-bold text-[#1a73e8] leading-none" id="trip-eta">${trip.km ? "≈ " + formatEta(etaSecondsFromKm(trip.km)) : "—"}</p>
+            <p class="font-headline-sm text-headline-sm font-bold text-secondary leading-none" id="trip-eta">${trip.km ? "≈ " + formatEta(etaSecondsFromKm(trip.km)) : "—"}</p>
             <p class="font-label-sm text-label-sm text-on-surface-variant">durée estimée</p>
           </div>
         </div>
@@ -1234,7 +1223,7 @@
           class="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center pointer-events-auto">${UI.icon("close")}</button>
         <div class="flex gap-2 pointer-events-auto">
           <span class="inline-flex items-center gap-1 h-10 px-3 rounded-full bg-white text-on-surface font-label-sm text-label-sm font-bold shadow-md">
-            ${UI.icon("verified_user", "text-[14px] text-[#34A853]")} <span id="ride-status-chip">Chauffeur en route</span>
+            ${UI.icon("verified_user", "text-[14px] text-secondary")} <span id="ride-status-chip">Chauffeur en route</span>
           </span>
           <button type="button" onclick="Screens._transportSOS()"
             class="h-10 px-3 rounded-full bg-[#EA4335] text-white font-label-sm text-label-sm font-bold shadow-md">SOS</button>
@@ -1247,7 +1236,7 @@
           <div class="flex justify-between items-end gap-2">
             <div class="min-w-0">
               <p class="font-label-sm text-label-sm text-on-surface-variant" id="ride-phase-label">${d.name.split(" ")[0]} arrive</p>
-              <p class="font-headline-md text-headline-md font-bold text-[#1a73e8] leading-none" id="ride-eta-title">…</p>
+              <p class="font-headline-md text-headline-md font-bold text-secondary leading-none" id="ride-eta-title">…</p>
             </div>
             <div class="text-right min-w-0">
               <p class="font-body-sm text-body-sm text-on-surface-variant truncate" id="ride-eta-meta">${fmtKm(trip.km)} · ${trip.to.split("·")[0].trim()}</p>
@@ -1265,16 +1254,16 @@
             <p class="font-title-md text-title-md font-bold truncate">${d.name} · ★ ${d.rating}</p>
             <p class="font-body-sm text-body-sm text-on-surface-variant truncate">${d.car} · ${d.plate}</p>
           </div>
-          <a href="tel:${d.phone}" class="w-11 h-11 rounded-full bg-[#e8f0fe] text-[#1a73e8] flex items-center justify-center">${UI.icon("call")}</a>
+          <a href="tel:${d.phone}" class="w-11 h-11 rounded-full bg-zinc-100 text-on-surface flex items-center justify-center">${UI.icon("call")}</a>
           <button type="button" onclick="UI.toast('Lien de suivi partagé', 'success')"
-            class="w-11 h-11 rounded-full bg-[#e8f0fe] text-[#1a73e8] flex items-center justify-center">${UI.icon("share")}</button>
+            class="w-11 h-11 rounded-full bg-zinc-100 text-on-surface flex items-center justify-center">${UI.icon("share")}</button>
         </div>
         <div class="flex items-center justify-between px-1">
           <span class="font-body-md text-body-md text-on-surface-variant">Montant</span>
           <span class="font-label-lg text-label-lg font-bold">${ACStore.fmtFCFA(trip.price)}</span>
         </div>
         <button type="button" onclick="Screens._transportFinish()"
-          class="w-full h-12 rounded-full bg-[#1a73e8] text-white font-label-lg text-label-lg font-bold shadow-md">
+          class="w-full h-12 rounded-full bg-black text-white font-label-lg text-label-lg font-bold shadow-md">
           Terminer la course
         </button>
       </div>
