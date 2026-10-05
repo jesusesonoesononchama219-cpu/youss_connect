@@ -210,7 +210,7 @@
     </section>
     <section class="yc-card p-space-16 space-y-2">
       <p class="font-label-sm text-label-sm text-on-surface-variant">Paiement</p>
-      <p class="font-title-md text-title-md font-bold">Africa Wallet</p>
+      <p class="font-title-md text-title-md font-bold">Youss Wallet</p>
       <p class="font-body-sm text-body-sm text-on-surface-variant">Fonctionnalité conceptuelle de l'écosystème.</p>
     </section>
     <p class="font-headline-sm text-headline-sm font-bold">Total ${ACStore.fmtFCFA(total)}</p>

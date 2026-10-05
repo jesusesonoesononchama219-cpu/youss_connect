@@ -1266,7 +1266,7 @@
     <div class="flex-1 flex flex-col items-center justify-center text-center space-y-space-20 py-space-24">
       <div class="w-20 h-20 rounded-full bg-error-container flex items-center justify-center text-on-error-container">${UI.icon("sos", "text-[36px]")}</div>
       <h2 class="font-headline-md text-headline-md font-bold">Besoin d'aide immédiate ?</h2>
-      <p class="font-body-sm text-body-sm text-on-surface-variant max-w-[260px]">Votre position et les détails de votre course seront partagés avec le support AFRICA CONNECT.</p>
+      <p class="font-body-sm text-body-sm text-on-surface-variant max-w-[260px]">Votre position et les détails de votre course seront partagés avec le support YOUSS CONNECT.</p>
       <div class="w-full space-y-3">
         ${UI.primaryButton("Alerter le support", "Screens._sosAlert()", { icon: "campaign" })}
         ${UI.secondaryButton("Retour à la course", "App.back()")}
@@ -1276,7 +1276,7 @@
   };
 
   Screens._sosAlert = function () {
-    ACStore.addNotification("Alerte SOS envoyée", "Le support AFRICA CONNECT a été notifié.", "transport");
+    ACStore.addNotification("Alerte SOS envoyée", "Le support YOUSS CONNECT a été notifié.", "transport");
     ACStore.emit();
     UI.toast("Support alerté. Restez en ligne.", "success");
     App.back();
@@ -1304,7 +1304,7 @@
         <span class="font-body-md text-body-md">Total à payer</span>
         <span class="font-label-lg text-label-lg font-bold text-primary">${ACStore.fmtFCFA(trip.price)}</span>
       </div>
-      <div class="w-full pt-space-8">${UI.primaryButton("Payer avec Africa Wallet", "Screens._transportPay()", { icon: "account_balance_wallet" })}</div>
+      <div class="w-full pt-space-8">${UI.primaryButton("Payer avec Youss Wallet", "Screens._transportPay()", { icon: "account_balance_wallet" })}</div>
     </div>`;
     Shell.render(container, { topbar, body, nav: false });
   };
@@ -1319,7 +1319,7 @@
       pointsEarned: 25,
       meta: { from: trip.from, to: trip.to, km: String(trip.km || "") }
     }), function () {
-      UI.toast("Paiement réussi · +25 Africa Rewards", "success");
+      UI.toast("Paiement réussi · +25 Youss Bonus", "success");
       App.resetTo("home");
     }, function () {
       App.nav("paymentFailed");
@@ -1333,7 +1333,7 @@
     <div class="flex-1 flex flex-col items-center justify-center text-center space-y-space-16 py-space-40">
       ${UI.icon("error", "text-error text-[48px]")}
       <h2 class="font-headline-sm text-headline-sm font-bold">Paiement impossible</h2>
-      <p class="font-body-sm text-body-sm text-on-surface-variant max-w-[260px]">Solde insuffisant ou hors ligne. Rechargez Africa Wallet.</p>
+      <p class="font-body-sm text-body-sm text-on-surface-variant max-w-[260px]">Solde insuffisant ou hors ligne. Rechargez Youss Wallet.</p>
       ${UI.primaryButton("Recharger", "App.nav('walletTopup')", { green: true })}
       ${UI.secondaryButton("Retour", "App.back()")}
     </div>`;

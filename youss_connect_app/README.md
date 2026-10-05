@@ -36,8 +36,8 @@ npx cap open ios      # ou: npx cap open android
 
 ## Ce qui est réellement fonctionnel
 Voir le résumé fourni dans la conversation : authentification, Transport,
-Restaurants, Africa Market, Événements, Culture & Tourisme, Livraison,
-Africa Wallet, Africa Rewards, Activités, Notifications, Profil, Africa
+Restaurants, Youss Market, Événements, Culture & Tourisme, Livraison,
+Youss Wallet, Youss Bonus, Activités, Notifications, Profil, Youss
 Business — tous connectés à un même état partagé (solde, points,
 activités, notifications).
 

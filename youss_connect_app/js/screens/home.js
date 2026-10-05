@@ -7,14 +7,14 @@
     { id: "delivery", label: "Livraison", icon: "local_shipping" },
     { id: "restaurants", label: "Restaurants", icon: "restaurant" },
     { id: "events", label: "Événements", icon: "confirmation_number" },
-    { id: "market", label: "Africa Market", icon: "storefront" },
+    { id: "market", label: "Youss Market", icon: "storefront" },
     { id: "culture", label: "Culture & Tourisme", icon: "account_balance" }
   ];
 
   const NEARBY = [
     { title: "Chez Maman Bénin", meta: "Restaurant · 0,8 km", route: "restaurantDetail", params: { id: "rest1" } },
     { title: "Festival des Arts Vodoun", meta: "Événement · Ouidah", route: "eventDetail", params: { id: "ev1" } },
-    { title: "Robe Wax contemporaine", meta: "Africa Market", route: "productDetail", params: { id: "p1" } }
+    { title: "Robe Wax contemporaine", meta: "Youss Market", route: "productDetail", params: { id: "p1" } }
   ];
 
   Screens.home = function (container) {

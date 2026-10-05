@@ -3,7 +3,7 @@
   window.Screens = window.Screens || {};
 
   Screens.wallet = function (container) {
-    const topbar = UI.topBar({ title: "Africa Wallet", subtitle: "Portefeuille de l'écosystème · conceptuel", back: "App.nav('home')" });
+    const topbar = UI.topBar({ title: "Youss Wallet", subtitle: "Portefeuille de l'écosystème · conceptuel", back: "App.nav('home')" });
     const body = `
     <section class="w-full rounded-2xl bg-black text-white p-space-20 flex flex-col space-y-space-8">
       <span class="font-label-md text-label-md text-secondary tracking-wide">Solde disponible</span>
@@ -18,7 +18,7 @@
       ${walletAction("account_balance", "Retirer", "App.nav('walletWithdraw')")}
       ${walletAction("qr_code_scanner", "QR Pay", "App.nav('walletQrPay')")}
     </section>
-    <p class="font-label-sm text-label-sm text-on-surface-variant">Africa Wallet est une fonctionnalité conceptuelle. Son déploiement réel nécessitera les autorisations réglementaires.</p>
+    <p class="font-label-sm text-label-sm text-on-surface-variant">Youss Wallet est une fonctionnalité conceptuelle. Son déploiement réel nécessitera les autorisations réglementaires.</p>
     <section class="w-full flex flex-col space-y-space-12">
       <h2 class="font-headline-sm text-headline-sm font-bold">Transactions récentes</h2>
       <div class="flex flex-col space-y-2">
@@ -176,7 +176,7 @@
       </div>
       <h2 class="font-title-md text-title-md">${ACState.user.fullName}</h2>
       <p class="font-body-sm text-body-sm text-on-surface-variant">${ACState.user.phone}</p>
-      <p class="font-body-sm text-body-sm text-on-surface-variant max-w-[260px]">Faites scanner ce code par un autre utilisateur AFRICA CONNECT pour recevoir un paiement instantané.</p>
+      <p class="font-body-sm text-body-sm text-on-surface-variant max-w-[260px]">Faites scanner ce code par un autre utilisateur YOUSS CONNECT pour recevoir un paiement instantané.</p>
       <div class="w-full px-space-20">${UI.secondaryButton("Partager mon code", "Screens._shareQr()")}</div>
     </div>`;
     Shell.render(container, { topbar, body, nav: false });
@@ -191,7 +191,7 @@
   Screens._shareQr = function () {
     const payload = receivePayload();
     if (navigator.share) {
-      navigator.share({ title: "Mon code Africa Wallet", text: "Payez-moi avec AFRICA CONNECT : " + payload })
+      navigator.share({ title: "Mon code Youss Wallet", text: "Payez-moi avec YOUSS CONNECT : " + payload })
         .then(() => UI.toast("Code QR partagé.", "success"))
         .catch(() => {});
       return;
@@ -255,7 +255,7 @@
       .then(() => {
         if (App.current.id !== "walletQrPay") { YCScanner.stop(); return; }
         v.classList.remove("opacity-0");
-        if (status) status.textContent = "Visez le QR d'un marchand ou d'un utilisateur Africa Connect.";
+        if (status) status.textContent = "Visez le QR d'un marchand ou d'un utilisateur YOUSS CONNECT.";
       })
       .catch((err) => {
         const fb = document.getElementById("yc-qrpay-fallback");
@@ -287,7 +287,7 @@
       App.nav("scannerResult", { id: p.id });
       return;
     }
-    UI.toast("Ce QR n'est pas un code de paiement Africa Connect.", "error");
+    UI.toast("Ce QR n'est pas un code de paiement YOUSS CONNECT.", "error");
     setTimeout(() => {
       if (App.current && App.current.id === "walletQrPay") Screens._startQrPayCamera();
     }, 1400);
@@ -298,7 +298,7 @@
   Screens._qrPayFromScan = function (p) {
     pendingQrPay = { to: p.to || "", name: p.name || "", amount: p.amount || null };
     const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-    const who = esc(p.name || p.to || "Marchand Africa Connect");
+    const who = esc(p.name || p.to || "Marchand YOUSS CONNECT");
     const amountField = p.amount
       ? `<p class="font-headline-md text-headline-md font-bold text-primary">${ACStore.fmtFCFA(p.amount)}</p>`
       : `<div class="w-full">
@@ -314,7 +314,7 @@
         ${amountField}
         <p class="font-label-sm text-label-sm text-on-surface-variant">Solde : ${ACStore.fmtFCFA(ACState.wallet.balance)}</p>
         <div class="w-full pt-1 space-y-2">
-          ${UI.primaryButton("Payer avec Africa Wallet", "Screens._confirmQrPay()", { green: true, icon: "lock" })}
+          ${UI.primaryButton("Payer avec Youss Wallet", "Screens._confirmQrPay()", { green: true, icon: "lock" })}
           ${UI.secondaryButton("Annuler", "UI.closeSheet(); Screens._qrPayCancel()")}
         </div>
       </div>`);
@@ -335,7 +335,7 @@
       if (!isFinite(amount) || amount < 100) { UI.toast("Saisissez un montant valide.", "error"); return; }
     }
     UI.closeSheet();
-    const label = "Paiement QR · " + (p.name || p.to || "Marchand Africa Connect");
+    const label = "Paiement QR · " + (p.name || p.to || "Marchand YOUSS CONNECT");
     ACStore.whenPaid(
       ACStore.payFromWallet({ amount, label, service: "wallet", pointsEarned: Math.round(amount / 500) }),
       function () {
@@ -353,7 +353,7 @@
   };
 
   Screens.walletWithdraw = function (container) {
-    const topbar = UI.topBar({ title: "Retirer", subtitle: "Africa Wallet · conceptuel", back: "App.back()" });
+    const topbar = UI.topBar({ title: "Retirer", subtitle: "Youss Wallet · conceptuel", back: "App.back()" });
     const body = `
     <p class="font-body-sm text-body-sm text-on-surface-variant">Le retrait réel dépendra du cadre réglementaire. Cette maquette simule un retrait du solde démo.</p>
     <input id="wd-amount" type="number" placeholder="Montant en FCFA" class="h-12 rounded-xl border px-space-16"/>
@@ -365,7 +365,7 @@
     const amount = parseInt(document.getElementById("wd-amount").value, 10);
     if (!amount || amount < 500) { UI.toast("Montant minimum 500 FCFA.", "error"); return; }
     ACStore.whenPaid(
-      ACStore.payFromWallet({ amount, label: "Retrait Africa Wallet", service: "wallet" }),
+      ACStore.payFromWallet({ amount, label: "Retrait Youss Wallet", service: "wallet" }),
       function () { App.resetTo("paymentSuccess", { amount }); },
       function () { App.nav("paymentFailed"); }
     );

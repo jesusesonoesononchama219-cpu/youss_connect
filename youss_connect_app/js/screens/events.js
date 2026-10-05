@@ -124,7 +124,7 @@
       <div class="flex items-center justify-between"><span class="font-body-md text-body-md text-on-surface-variant">Billet</span><span class="font-title-md text-title-md">${t.label} × ${ticketQty}</span></div>
       <div class="flex items-center justify-between font-label-lg text-label-lg font-bold border-t border-outline-variant/30 pt-3"><span>Total</span><span class="text-primary">${ACStore.fmtFCFA(total)}</span></div>
     </section>
-    <div class="pt-space-8">${UI.primaryButton("Payer avec Africa Wallet", `Screens._payEvent('${e.id}', ${total})`, { icon: "account_balance_wallet" })}</div>`;
+    <div class="pt-space-8">${UI.primaryButton("Payer avec Youss Wallet", `Screens._payEvent('${e.id}', ${total})`, { icon: "account_balance_wallet" })}</div>`;
     Shell.render(container, { topbar, body, nav: false });
   };
   Screens._payEvent = function (eid, total) {

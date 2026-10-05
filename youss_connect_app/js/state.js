@@ -1,5 +1,5 @@
 /* =========================================================
-   AFRICA CONNECT — CENTRAL STATE ENGINE
+   YOUSS CONNECT — CENTRAL STATE ENGINE
    Single source of truth shared by every service.
    This is what makes Transport / Wallet / Rewards / Activities /
    Notifications behave like ONE ecosystem instead of separate apps.
@@ -68,8 +68,8 @@
       { id: uid("act"), service: "livraison", title: "Livraison Dantokpa → Ganhi", subtitle: "Arrivée estimée 16:45", amount: null, status: "En cours", icon: "local_shipping" }
     ],
     notifications: [
-      { id: uid("ntf"), title: "Paiement confirmé", body: "Votre course vers Haie Vive a été réglée via Africa Wallet.", read: false, service: "wallet", date: "Aujourd'hui, 14:21" },
-      { id: uid("ntf"), title: "Points Africa Rewards", body: "+25 points ajoutés à votre solde Africa Rewards.", read: false, service: "rewards", date: "Aujourd'hui, 14:21" },
+      { id: uid("ntf"), title: "Paiement confirmé", body: "Votre course vers Haie Vive a été réglée via Youss Wallet.", read: false, service: "wallet", date: "Aujourd'hui, 14:21" },
+      { id: uid("ntf"), title: "Points Youss Bonus", body: "+25 points ajoutés à votre solde Youss Bonus.", read: false, service: "rewards", date: "Aujourd'hui, 14:21" },
       { id: uid("ntf"), title: "Livraison en cours", body: "Votre coursier est en route vers Ganhi, Cotonou.", read: true, service: "livraison", date: "Aujourd'hui, 12:05" }
     ],
     cart: { restaurant: null, items: [], market: [] },
@@ -107,7 +107,7 @@
     State.rewards.history.unshift({ id: uid("rwd"), label, points, date: "Aujourd'hui" });
     if (State.rewards.points >= State.rewards.nextTierAt && State.rewards.tier === "Silver") {
       State.rewards.tier = "Gold";
-      addNotification("Nouveau statut débloqué", "Félicitations, vous êtes passé Gold Africa Rewards.", "rewards");
+      addNotification("Nouveau statut débloqué", "Félicitations, vous êtes passé Gold Youss Bonus.", "rewards");
     }
   }
 
@@ -143,10 +143,10 @@
       id: uid("txn"), label, amount: -amount, type: "debit", date: "À l'instant"
     });
     addActivity({ service, title: label, amount, status: "Terminé", icon: iconForService(service) });
-    addNotification("Paiement confirmé", label + " a été réglé via Africa Wallet (" + fmtFCFA(amount) + ").", "wallet");
+    addNotification("Paiement confirmé", label + " a été réglé via Youss Wallet (" + fmtFCFA(amount) + ").", "wallet");
     if (pointsEarned > 0) {
       addRewardPoints(pointsEarned, label);
-      addNotification("Points Africa Rewards", "+" + pointsEarned + " points ajoutés à votre solde Africa Rewards.", "rewards");
+      addNotification("Points Youss Bonus", "+" + pointsEarned + " points ajoutés à votre solde Youss Bonus.", "rewards");
     }
     emit();
     return { ok: true };

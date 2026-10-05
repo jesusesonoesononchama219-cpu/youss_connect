@@ -1,5 +1,5 @@
 /* =========================================================
-   AFRICA CONNECT — ROUTER
+   YOUSS CONNECT — ROUTER
    Every screen module registers itself into window.Screens.
    App.nav(id, params) pushes history; App.back() pops it.
    ========================================================= */

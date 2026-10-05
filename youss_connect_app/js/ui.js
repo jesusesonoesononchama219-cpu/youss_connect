@@ -1,5 +1,5 @@
 /* =========================================================
-   AFRICA CONNECT — SHARED UI HELPERS
+   YOUSS CONNECT — SHARED UI HELPERS
    Identité : noir, blanc, or, gris. Portée par KYA CORPORATION.
    ========================================================= */
 (function () {
@@ -16,28 +16,28 @@
   const I18N = {
     fr: {
       nav_home: "Accueil", nav_explorer: "Explorer", nav_activities: "Activités", nav_wallet: "Wallet", nav_profile: "Profil",
-      hello: "Bonjour", wallet: "Africa Wallet", wallet_btn: "Portefeuille",
+      hello: "Bonjour", wallet: "Youss Wallet", wallet_btn: "Portefeuille",
       search: "Que recherchez-vous ?", nearby: "À proximité", recos: "Recommandé pour vous",
       upcoming: "Événements à venir", discover: "Découvrez l'Afrique",
       lang_title: "Langue", lang_done: "Langue : Français", settings_lang: "Langue"
     },
     en: {
       nav_home: "Home", nav_explorer: "Explore", nav_activities: "Activity", nav_wallet: "Wallet", nav_profile: "Profile",
-      hello: "Hello", wallet: "Africa Wallet", wallet_btn: "Wallet",
+      hello: "Hello", wallet: "Youss Wallet", wallet_btn: "Wallet",
       search: "What are you looking for?", nearby: "Nearby", recos: "Recommended for you",
       upcoming: "Upcoming events", discover: "Discover Africa",
       lang_title: "Language", lang_done: "Language: English", settings_lang: "Language"
     },
     fon: {
       nav_home: "Aigba", nav_explorer: "Kpɔ́n", nav_activities: "Azɔ lɛɛ", nav_wallet: "Wallet", nav_profile: "Nyɛ",
-      hello: "Nú mi", wallet: "Africa Wallet", wallet_btn: "Akwɛ́",
+      hello: "Nú mi", wallet: "Youss Wallet", wallet_btn: "Akwɛ́",
       search: "Étɛ wè nɔ ɖi ?", nearby: "Ɖo nɔwiwa", recos: "Nú ɖó wè",
       upcoming: "Hunxwé lɛɛ", discover: "Kpɔ́n Africa",
       lang_title: "Gbè", lang_done: "Gbè : Fon", settings_lang: "Gbè"
     },
     wo: {
       nav_home: "Kër", nav_explorer: "Seet", nav_activities: "Jëf", nav_wallet: "Wallet", nav_profile: "Profil",
-      hello: "Salaam", wallet: "Africa Wallet", wallet_btn: "Wallet",
+      hello: "Salaam", wallet: "Youss Wallet", wallet_btn: "Wallet",
       search: "Looy wut ?", nearby: "Ci wetu", recos: "Ngir yaw",
       upcoming: "Ay eveneman", discover: "Xam Afrique",
       lang_title: "Làkk", lang_done: "Làkk : Wolof", settings_lang: "Làkk"

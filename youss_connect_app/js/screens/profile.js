@@ -22,7 +22,7 @@
     <section class="w-full rounded-2xl bg-black p-space-16 text-white">
       <div class="flex items-center justify-between mb-space-12">
         <div>
-          <p class="font-label-sm text-label-sm text-white/70 uppercase tracking-wider">Africa Rewards</p>
+          <p class="font-label-sm text-label-sm text-white/70 uppercase tracking-wider">Youss Bonus</p>
           <p class="font-headline-md text-headline-md font-extrabold">${pts.toLocaleString("fr-FR")} pts</p>
         </div>
         <button type="button" onclick="App.nav('rewards')" class="h-9 px-3 rounded-xl bg-secondary text-on-secondary font-label-md text-label-md font-bold">Récompenses</button>
@@ -43,8 +43,8 @@
       ${menuRow("confirmation_number", "Mes billets", "App.nav('myTickets')")}
       ${menuRow("home_pin", "Mes adresses", "App.nav('addresses')")}
       ${menuRow("credit_card", "Moyens de paiement", "App.nav('paymentMethods')")}
-      ${menuRow("workspace_premium", "Africa Rewards", "App.nav('rewards')")}
-      ${menuRow("storefront", "Africa Business", "App.nav('business')")}
+      ${menuRow("workspace_premium", "Youss Bonus", "App.nav('rewards')")}
+      ${menuRow("storefront", "Youss Business", "App.nav('business')")}
       ${menuRow("security", "Sécurité", "App.nav('security')")}
       ${menuRow("language", "Langues", "App.nav('languages')")}
       ${menuRow("help", "Aide", "Screens._aboutSheet()")}
@@ -71,7 +71,7 @@
   Screens._logout = function () {
     UI.openSheet(`
       <h3 class="font-headline-sm text-headline-sm font-bold mb-space-8">Se déconnecter ?</h3>
-      <p class="font-body-sm text-body-sm text-on-surface-variant mb-space-20">Vous devrez vous reconnecter pour accéder à nouveau à AFRICA CONNECT.</p>
+      <p class="font-body-sm text-body-sm text-on-surface-variant mb-space-20">Vous devrez vous reconnecter pour accéder à nouveau à YOUSS CONNECT.</p>
       ${UI.primaryButton("Déconnexion", "Screens._confirmLogout()")}
       <div class="mt-3">${UI.secondaryButton("Annuler", "UI.closeSheet()")}</div>
     `);
@@ -162,7 +162,7 @@
     const body = `
     <section class="w-full flex flex-col space-y-2">
       <div class="flex items-center justify-between bg-surface-container-lowest border border-primary-container rounded-xl p-space-16">
-        <div class="flex items-center space-x-3">${UI.icon("account_balance_wallet", "text-secondary")}<span class="font-title-md text-title-md">Africa Wallet</span></div>
+        <div class="flex items-center space-x-3">${UI.icon("account_balance_wallet", "text-secondary")}<span class="font-title-md text-title-md">Youss Wallet</span></div>
         ${UI.badge("Par défaut", "primary")}
       </div>
       <div class="flex items-center justify-between bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-space-16">
@@ -187,7 +187,7 @@
       ${menuRow("history", "Historique des connexions", "UI.toast('Dernière connexion : aujourd\\'hui, Cotonou', 'info')")}
       ${menuRow("report", "Signalement", "UI.toast('Signalement transmis au support.', 'success')")}
       ${menuRow("support_agent", "Assistance", "Screens._aboutSheet()")}
-      ${menuRow("sos", "SOS", "UI.toast('SOS AFRICA CONNECT activé (démo).', 'error')")}
+      ${menuRow("sos", "SOS", "UI.toast('SOS YOUSS CONNECT activé (démo).', 'error')")}
     </section>`;
     Shell.render(container, { topbar, body, nav: false });
   };
@@ -215,7 +215,7 @@
       <div class="flex flex-col gap-2">${items}</div>`);
   };
   Screens._aboutSheet = function () {
-    UI.openSheet(`<h3 class="font-headline-sm text-headline-sm font-bold mb-2">AFRICA CONNECT</h3>
+    UI.openSheet(`<h3 class="font-headline-sm text-headline-sm font-bold mb-2">YOUSS CONNECT</h3>
       <p class="font-body-sm text-body-sm text-on-surface-variant mb-space-16">Une seule application pour vivre l'Afrique au quotidien. Portée par KYA CORPORATION.</p>
       ${UI.secondaryButton("Fermer", "UI.closeSheet()")}`);
   };

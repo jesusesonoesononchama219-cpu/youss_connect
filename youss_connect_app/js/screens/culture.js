@@ -164,7 +164,7 @@
       class="rounded-2xl bg-black text-white p-space-16 flex items-center justify-between cursor-pointer active:scale-[0.99]">
       <div>
         <p class="font-label-sm text-label-sm text-secondary mb-1">Scanner un monument</p>
-        <h3 class="font-title-md text-title-md font-bold">Caméra culturelle AFRICA CONNECT</h3>
+        <h3 class="font-title-md text-title-md font-bold">Caméra culturelle YOUSS CONNECT</h3>
       </div>
       <span class="w-12 h-12 rounded-full bg-secondary text-on-secondary flex items-center justify-center">${UI.icon("qr_code_scanner", "text-[24px]", true)}</span>
     </section>
@@ -459,7 +459,7 @@
         <div id="yc-site-qr" class="w-[200px] h-[200px] bg-white rounded-xl border border-outline-variant/30 flex items-center justify-center p-2">
           <div class="w-8 h-8 rounded-full border-4 border-primary/20 border-t-primary animate-spin"></div>
         </div>
-        <p class="font-label-sm text-label-sm text-on-surface-variant">Scannez ce code avec AFRICA CONNECT pour ouvrir la fiche du site.</p>
+        <p class="font-label-sm text-label-sm text-on-surface-variant">Scannez ce code avec YOUSS CONNECT pour ouvrir la fiche du site.</p>
         <code class="font-label-sm text-label-sm bg-surface-container-low px-2 py-1 rounded">${payload}</code>
         ${UI.secondaryButton("Fermer", "UI.closeSheet()")}
       </div>`);

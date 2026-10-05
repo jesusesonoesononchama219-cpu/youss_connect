@@ -18,7 +18,7 @@
     const topbar = UI.topBar({ title: "Explorer", subtitle: "Moteur de découverte" });
     const body = `
     <div onclick="App.nav('search')" class="w-full h-12 bg-white rounded-2xl border border-outline-variant/40 shadow-sm flex items-center px-space-16 gap-3 cursor-pointer">
-      ${UI.icon("search", "text-outline")}<span class="font-body-md text-body-md text-outline">Rechercher dans AFRICA CONNECT</span>
+      ${UI.icon("search", "text-outline")}<span class="font-body-md text-body-md text-outline">Rechercher dans YOUSS CONNECT</span>
     </div>
     <section class="flex gap-2 overflow-x-auto no-scrollbar">
       ${filters.map(f => `<span class="px-3 h-8 rounded-full bg-white border border-outline-variant/30 font-label-sm text-label-sm flex items-center">${f}</span>`).join("")}
@@ -38,12 +38,12 @@
     const topbar = `
     <div class="w-full px-space-20 py-space-12 flex items-center space-x-3 bg-surface flex-shrink-0">
       <button onclick="App.back()" class="w-9 h-9 rounded-full bg-white border border-outline-variant/30 flex items-center justify-center">${UI.icon("arrow_back")}</button>
-      <input id="global-search" autofocus value="${params.q || ""}" oninput="Screens._searchType(this.value)" placeholder="Rechercher dans AFRICA CONNECT" class="flex-1 h-11 bg-white rounded-xl border border-outline-variant/40 px-space-16 font-body-md text-body-md focus:outline-none"/>
+      <input id="global-search" autofocus value="${params.q || ""}" oninput="Screens._searchType(this.value)" placeholder="Rechercher dans YOUSS CONNECT" class="flex-1 h-11 bg-white rounded-xl border border-outline-variant/40 px-space-16 font-body-md text-body-md focus:outline-none"/>
     </div>`;
     const results = q ? window.ACSearch.run(q) : [];
     const body = `
     <section class="w-full flex flex-col space-y-2">
-      ${!q ? UI.emptyState({ icon: "search", title: "Recherchez sur AFRICA CONNECT", body: "Restaurants, transport, événements, commerces, produits, tourisme et culture." }) : (
+      ${!q ? UI.emptyState({ icon: "search", title: "Recherchez sur YOUSS CONNECT", body: "Restaurants, transport, événements, commerces, produits, tourisme et culture." }) : (
         results.length ? results.map(r => `
         <div onclick="App.nav('${r.route}', ${JSON.stringify(r.params || {}).replace(/"/g, "&quot;")})" class="flex items-center justify-between bg-white border border-outline-variant/30 rounded-xl p-space-16 cursor-pointer">
           <div class="flex items-center space-x-3"><div class="w-9 h-9 rounded-full bg-surface-container-low text-secondary flex items-center justify-center">${UI.icon(r.icon)}</div>
@@ -65,13 +65,13 @@
       const all = [
         { title: "Chez Maman Bénin", subtitle: "Restaurant · Haie Vive", icon: "restaurant", route: "restaurantDetail", keys: "restaurant repas africain maman", params: { id: "rest1" } },
         { title: "Fast Cotonou", subtitle: "Fast-food · Ganhi", icon: "restaurant", route: "restaurantDetail", keys: "restaurant fast food burger", params: { id: "rest2" } },
-        { title: "Robe Wax contemporaine", subtitle: "Africa Market · Mode", icon: "storefront", route: "productDetail", keys: "market produit wax mode", params: { id: "p1" } },
-        { title: "Beurre de karité pur", subtitle: "Africa Market · Beauté", icon: "storefront", route: "productDetail", keys: "market karite beaute", params: { id: "p2" } },
+        { title: "Robe Wax contemporaine", subtitle: "Youss Market · Mode", icon: "storefront", route: "productDetail", keys: "market produit wax mode", params: { id: "p1" } },
+        { title: "Beurre de karité pur", subtitle: "Youss Market · Beauté", icon: "storefront", route: "productDetail", keys: "market karite beaute", params: { id: "p2" } },
         { title: "Festival des Arts Vodoun", subtitle: "Événement · Ouidah", icon: "confirmation_number", route: "eventDetail", keys: "evenement festival vodoun ouidah", params: { id: "ev1" } },
         { title: "Palais royaux d'Abomey", subtitle: "Culture · Abomey", icon: "explore", route: "cultureDetail", keys: "culture musee palais abomey", params: { id: "c1" } },
         { title: "Île de Gorée", subtitle: "Culture · Dakar", icon: "museum", route: "cultureDetail", keys: "culture goree dakar senegal", params: { id: "c6" } },
         { title: "Transport", subtitle: "Réserver une course", icon: "directions_car", route: "transport", keys: "transport course taxi moto" },
-        { title: "Africa Wallet", subtitle: "Voir mon solde", icon: "account_balance_wallet", route: "wallet", keys: "wallet portefeuille solde argent" }
+        { title: "Youss Wallet", subtitle: "Voir mon solde", icon: "account_balance_wallet", route: "wallet", keys: "wallet portefeuille solde argent" }
       ];
       return all.filter(x => x.keys.includes(q) || x.title.toLowerCase().includes(q));
     }

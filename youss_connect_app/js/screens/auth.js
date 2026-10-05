@@ -7,7 +7,7 @@
     { title: "Livraison, restaurants, commerce", body: "Faites livrer un colis, commandez un repas ou achetez un produit local depuis la même application." },
     { title: "Événements et activités", body: "Concerts, festivals, spectacles et sports : découvrez, réservez, puis retrouvez votre billet numérique." },
     { title: "Culture et tourisme", body: "Destinations, monuments et scanner culturel pour vivre l'histoire de l'Afrique, pas seulement la traverser." },
-    { title: "Un seul écosystème", body: "Transport, services, commerce, événements, culture et Wallet. AFRICA CONNECT relie tout." }
+    { title: "Un seul écosystème", body: "Transport, services, commerce, événements, culture et Wallet. YOUSS CONNECT relie tout." }
   ];
 
   Screens.splash = function (container) {
@@ -15,7 +15,7 @@
       <div id="yc-splash-root" class="yc-splash-white relative flex-1 flex flex-col overflow-hidden select-none bg-white">
         <main class="flex-1 flex flex-col items-center justify-center px-space-24 text-center">
           <p class="font-label-sm text-label-sm tracking-[0.28em] text-secondary font-bold">KYA CORPORATION</p>
-          <h1 class="mt-4 font-headline-lg text-headline-lg font-extrabold text-on-surface tracking-tight">AFRICA CONNECT</h1>
+          <h1 class="mt-4 font-headline-lg text-headline-lg font-extrabold text-on-surface tracking-tight">YOUSS CONNECT</h1>
           <p class="yc-anim yc-anim-d1 mt-space-16 font-body-md text-body-md text-on-surface-variant max-w-[280px] leading-relaxed">
             Une seule application pour vivre l'Afrique au quotidien.
           </p>
@@ -42,7 +42,7 @@
       <div class="yc-onboard relative flex-1 flex flex-col overflow-hidden text-white select-none">
         <div class="yc-splash-skyline" aria-hidden="true"></div>
         <header class="relative z-10 flex items-center justify-between px-space-20 pt-space-20">
-          <p class="font-label-sm text-label-sm tracking-[0.2em] text-secondary font-bold">AFRICA CONNECT</p>
+          <p class="font-label-sm text-label-sm tracking-[0.2em] text-secondary font-bold">YOUSS CONNECT</p>
           <button type="button" onclick="Screens._enterDemo()" class="font-label-md text-label-md text-white/70">Passer</button>
         </header>
         <main class="relative z-10 flex-1 flex flex-col px-space-24 pb-space-32 justify-end">
@@ -110,7 +110,7 @@
       ${UI.topBar({ title: "Connexion", back: "App.back()" })}
       <main class="flex-1 flex flex-col px-space-20 space-y-space-16 overflow-y-auto pb-space-24">
         <div class="text-center py-2">
-          <p class="font-label-sm text-label-sm tracking-[0.22em] text-secondary font-bold">AFRICA CONNECT</p>
+          <p class="font-label-sm text-label-sm tracking-[0.22em] text-secondary font-bold">YOUSS CONNECT</p>
           <p class="font-body-sm text-body-sm text-on-surface-variant mt-2">Portée par KYA CORPORATION</p>
         </div>
         ${field("li-phone", "Numéro de téléphone", "tel", "+229 97 00 00 00")}
@@ -147,7 +147,7 @@
     container.innerHTML = `
       ${UI.topBar({ title: "Créer un compte", back: "App.back()" })}
       <main class="flex-1 flex flex-col px-space-20 space-y-space-12 overflow-y-auto pb-space-24">
-        <p class="font-body-sm text-body-sm text-on-surface-variant">Rejoignez AFRICA CONNECT. Un compte unique pour tous les services.</p>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Rejoignez YOUSS CONNECT. Un compte unique pour tous les services.</p>
         ${field("su-last", "Nom", "text", "Koffi")}
         ${field("su-first", "Prénom", "text", "Alassane")}
         ${field("su-phone", "Numéro de téléphone", "tel", "+229 97 00 00 00")}
